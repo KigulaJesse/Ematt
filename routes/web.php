@@ -21,6 +21,16 @@ Route::get('/about-us', function () {
     return view('top.about-us');
 });
 
+Route::get('/home',function(){
+    return view('home');
+});
+
+Route::get('/update',function(){
+    return view('auth.update');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/products/{product}','ProductController@show');

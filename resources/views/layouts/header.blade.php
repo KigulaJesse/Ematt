@@ -15,7 +15,10 @@
 						<ul class="navbar-nav ml-auto main-nav ">
                         
                                 <li class = "{{Request::is('/') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/">Home</a></li>
-                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link dropdown-toggle" href="/about-us">About Us</a></li>
+                                <li class = "{{Request::is('home') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/home">Dashboard</a></li>
+                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="#">Category</a></li>
+                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/about-us">About Us</a></li>
+                                
                             <!--<li class="nav-item dropdown dropdown-slide">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Dashboard<span><i class="fa fa-angle-down"></i></span>
                                     </a>
@@ -94,6 +97,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -113,7 +117,8 @@
 
   
 							
-						</ul>
+                        </ul>
+                        @guest
 						<ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
 								<a class="nav-link login-button" href="{{ route('login') }}">Login</a>
@@ -121,7 +126,21 @@
 							<!--<li class="nav-item">
 								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Add Listing</a>
 							</li>-->
-						</ul>
+                        </ul>
+                        @else 
+                        <ul class="navbar-nav ml-auto mt-10">
+							<li class="nav-item">
+                                <a class="nav-link login-button" href="{{ route('logout') }}"onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"> {{ __('Logout') }}</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                </form>
+							</li>
+							<!--<li class="nav-item">
+								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Add Listing</a>
+                            </li>-->
+                        </ul>
+                        @endguest
 					</div>
 				</nav>
 			</div>

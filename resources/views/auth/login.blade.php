@@ -13,19 +13,19 @@
                         @csrf
                         <fieldset class="p-4">
                                 <input id="email" placeholder="Email" type="email" class="border p-3 w-100 my-2 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <input id="password" placeholder="Password" type="password" class="border p-3 w-100 my-2 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
+                                <input id="password" placeholder="Password" type="password" class="border p-3 w-100 my-2 form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                
                                 <div class="loggedin-forgot">
                                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="pt-3 pb-2" for="remember" >
