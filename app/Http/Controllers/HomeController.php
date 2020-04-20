@@ -21,11 +21,22 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
+     * 
      */
-    public function index()
+
+    public function index(){
+        
+        $products = Product::take(9)->latest()->get();
+        return view('Home.index',[
+            "products"=>$products
+        ]);
+
+    }
+
+    public function home()
     {
         $products = Product::take(9)->latest()->get();
-        return view('Product.index',[
+        return view('Product.home',[
             'products' => $products
         ]);
     }

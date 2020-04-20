@@ -34,19 +34,7 @@
 					<div class="product-slider">
 						<!-- a foreach loop might help -->
 						<div class="product-slider-item my-4" data-image="/images/products/products-1.jpg">
-							<img class="img-fluid w-100" src="/images/products/products-1.jpg" alt="product-img">
-						</div>
-						<div class="product-slider-item my-4" data-image="/images/products/products-2.jpg">
-							<img class="d-block img-fluid w-100" src="/images/products/products-2.jpg" alt="Second slide">
-						</div>
-						<div class="product-slider-item my-4" data-image="/images/products/products-3.jpg">
-							<img class="d-block img-fluid w-100" src="/images/products/products-3.jpg" alt="Third slide">
-						</div>
-						<div class="product-slider-item my-4" data-image="/images/products/products-1.jpg">
-							<img class="d-block img-fluid w-100" src="/images/products/products-1.jpg" alt="Third slide">
-						</div>
-						<div class="product-slider-item my-4" data-image="/images/products/products-2.jpg">
-							<img class="d-block img-fluid w-100" src="/images/products/products-2.jpg" alt="Third slide">
+							<img class="img-fluid w-50" src="/images/products/{{$product->id}}/1.jpg" alt="product-img">
 						</div>
 					</div>
 
@@ -219,9 +207,8 @@
 						<p class="member-time">Member Since {{$user->created_at}}</p>
 						<a href="">See all ads</a>
 						<ul class="list-inline mt-20">
-							<li class="list-inline-item"><a href="" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
-							<li class="list-inline-item"><a href="" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Make an
-									offer</a></li>
+							<!--<li class="list-inline-item"><a href="" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>-->
+							<li class="list-inline-item"><a href="/cart/{{$product->id}}" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Add to Cart</a></li>
 						</ul>
 					</div>
 					<!-- Map Widget -->

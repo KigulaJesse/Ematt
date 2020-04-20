@@ -5,7 +5,7 @@
 			<div class="col-md-12">
 				<nav class="navbar navbar-expand-lg navbar-light navigation">
 					<a class="navbar-brand" href="/">
-						<img src="/images/logo.png" alt="">
+						<!--<img src="/images/logo.png" alt="">-->
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,53 +15,18 @@
 						<ul class="navbar-nav ml-auto main-nav ">
                         
                                 <li class = "{{Request::is('/') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/">Home</a></li>
-                                <li class = "{{Request::is('home') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/home">Dashboard</a></li>
-                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="#">Category</a></li>
-                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/about-us">About Us</a></li>
+                                <li class = "{{Request::is('home') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/home">Buy Now</a></li>
                                 
-                            <!--<li class="nav-item dropdown dropdown-slide">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Dashboard<span><i class="fa fa-angle-down"></i></span>
+                                <li class="{{Request::is('products') ? 'nav-item active' : ''}} nav-item dropdown dropdown-slide">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Sell Now<span><i class="fa fa-angle-down"></i></span>
                                     </a>
-
-                                    Dropdown list 
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="dashboard.html">Dashboard</a>
-                                        <a class="dropdown-item" href="dashboard-my-ads.html">Dashboard My Ads</a>
-                                        <a class="dropdown-item" href="dashboard-favourite-ads.html">Dashboard Favourite Ads</a>
-                                        <a class="dropdown-item" href="dashboard-archived-ads.html">Dashboard Archived Ads</a>
-                                        <a class="dropdown-item" href="dashboard-pending-ads.html">Dashboard Pending Ads</a>
+                                        <a class="dropdown-item" href="/product">Add Product</a>
+                                        <a class="dropdown-item" href="/products">View Your Products</a>  
                                     </div>
-                                </li> -->
-                            
-						<!--	<li class="nav-item dropdown dropdown-slide">
-								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Pages <span><i class="fa fa-angle-down"></i></span>
-								</a>
-								 Dropdown list 
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="contact-us.html">Contact Us</a>
-									<a class="dropdown-item" href="user-profile.html">User Profile</a>
-									<a class="dropdown-item" href="404.html">404 Page</a>
-									<a class="dropdown-item" href="package.html">Package</a>
-									<a class="dropdown-item" href="single.html">Single Page</a>
-									<a class="dropdown-item" href="store.html">Store Single</a>
-									<a class="dropdown-item" href="single-blog.html">Single Post</a>
-									<a class="dropdown-item" href="blog.html">Blog</a>
-
-								</div>
-							</li>-->
-							<!--<li class="nav-item dropdown dropdown-slide">
-								<a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Listing <span><i class="fa fa-angle-down"></i></span>
-								</a>
-								 Dropdown list 
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="category.html">Ad-Gird View</a>
-									<a class="dropdown-item" href="ad-listing-list.html">Ad-List View</a>
-								</div>
-							</li>-->
-							
-
+                                </li> 
+                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/about-us">About Us</a></li>
+                        
 							 <!-- <div id="app">
                                  <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -123,9 +88,9 @@
 							<li class="nav-item">
 								<a class="nav-link login-button" href="{{ route('login') }}">Login</a>
 							</li>
-							<!--<li class="nav-item">
-								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Add Listing</a>
-							</li>-->
+							<li class="nav-item">
+								<a class="nav-link text-white add-button" href="#"><i class="fa fa-shopping-cart"></i></a>
+							</li>
                         </ul>
                         @else 
                         <ul class="navbar-nav ml-auto mt-10">
@@ -136,9 +101,9 @@
                                         @csrf
                                 </form>
 							</li>
-							<!--<li class="nav-item">
-								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Add Listing</a>
-                            </li>-->
+							<li class="nav-item">
+                                <a class="nav-link text-white add-button" href="/cart"><i class="fa fa-shopping-cart"></i></a>
+                            </li>
                         </ul>
                         @endguest
 					</div>

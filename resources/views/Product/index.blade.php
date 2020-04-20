@@ -1,495 +1,157 @@
 @extends('layouts.app')
 
 @section('content')
-
-@include('layouts.product.header')
-
-<section class="section-sm">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="search-result bg-gray">
-					<h2>Results For "Electronics"</h2>
-					<p>123 Results on 12 December, 2017</p>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="row">
-		
-			<div class="col-md-3">
-
-			<!--============================
-			=         SideBar            =
-			=============================-->
-				<div class="category-sidebar">
-					<div class="widget category-list">
-						<h4 class="widget-header">All Category</h4>
-						<ul class="category-list">
-							<li><a href="category.html">Laptops <span>93</span></a></li>
-							<li><a href="category.html">Iphone <span>233</span></a></li>
-							<li><a href="category.html">Microsoft  <span>183</span></a></li>
-							<li><a href="category.html">Monitors <span>343</span></a></li>
-						</ul>
-					</div>
-
-					<div class="widget category-list">
-						<h4 class="widget-header">Nearby</h4>
-						<ul class="category-list">
-							<li><a href="category.html">New York <span>93</span></a></li>
-							<li><a href="category.html">New Jersy <span>233</span></a></li>
-							<li><a href="category.html">Florida  <span>183</span></a></li>
-							<li><a href="category.html">California <span>120</span></a></li>
-							<li><a href="category.html">Texas <span>40</span></a></li>
-							<li><a href="category.html">Alaska <span>81</span></a></li>
-						</ul>
-					</div>
-
-					<div class="widget filter">
-						<h4 class="widget-header">Show Produts</h4>
-						<select>
-							<option>Popularity</option>
-							<option value="1">Top rated</option>
-							<option value="2">Lowest Price</option>
-							<option value="4">Highest Price</option>
-						</select>
-					</div>
-
-					<div class="widget price-range w-100">
-						<h4 class="widget-header">Price Range</h4>
-						<div class="block">
-											<input class="range-track w-100" type="text" data-slider-min="0" data-slider-max="5000" data-slider-step="5"
-											data-slider-value="[0,5000]">
-									<div class="d-flex justify-content-between mt-2">
-											<span class="value">$10 - $5000</span>
-									</div>
-						</div>
-					</div>
-
-					<div class="widget product-shorting">
-						<h4 class="widget-header">By Condition</h4>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-								Brand New
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-								Almost New
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-								Gently New
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-									Havely New
-							</label>
-						</div>
-					</div>
-
-				</div>
-			</div>
-
-			<div class="col-md-9">
-
-				<!--============================
-                 =         SEARCH FILTER       =
-                 =============================-->
-				<div class="category-search-filter">
-					<div class="row">
-						<div class="col-md-6">
-							<strong>Short</strong>
-							<select>
-								<option>Most Recent</option>
-								<option value="1">Most Popular</option>
-								<option value="2">Lowest Price</option>
-								<option value="4">Highest Price</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<div class="view">
-								<strong>Views</strong>
-								<ul class="list-inline view-switcher">
-									<li class="list-inline-item">
-										<a href="#" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
-									</li>
-									<li class="list-inline-item">
-										<a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!--============================
-				=         PRODUCT LIST         =
-				=============================-->
-				<div class="product-grid-list">
-					<div class="row mt-30">
-						@foreach($products as $product)
-						<div class="col-sm-12 col-lg-4 col-md-6">
-						
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> -->
-										<a href="/products/{{$product->id}}">
-											<img class="card-img-top img-fluid" src="images/products/products-1.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->name}}</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										@if ($product->short_description)
-											<p class="card-text">{{$product->short_decription}}</p>
-										@else
-											<p class="card-text">This {{$product->name}} is for sale</p>
-										@endif
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						@endforeach
-
-						<!--
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">Study Table Combo</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Furnitures</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-3.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-1.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">Study Table Combo</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Furnitures</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-3.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-1.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">Study Table Combo</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Furnitures</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12 col-lg-4 col-md-6">
-							<!-- product card 
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<!-- <div class="price">$200</div> 
-										<a href="single.html">
-											<img class="card-img-top img-fluid" src="images/products/products-3.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
-										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						
-						</div>-->
-					</div>
-				</div>
-
-				<!--============================
-				=      PAGE LIST AT BOTTOM     =
-				=============================-->
-				<div class="pagination justify-content-center">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-								</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-
-			</div>
-
-		</div>
-	</div>
-</section>
-
+<section class="dashboard section">
+    <!-- Container Start -->
+    <div class="container">
+      <!-- Row Start -->
+      <div class="row">
+        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+          
+          <div class="sidebar">
+            <!-- User Widget -->
+            <div class="widget user-dashboard-profile">
+              <!-- User Image -->
+              <div class="profile-thumb">
+                <img src="images/user/user-thumb.jpg" alt="" class="rounded-circle">
+              </div>
+              <!-- User Name -->
+              @auth
+                <h5 class="text-center">{{ Auth::user()->name }}</h5>
+              @else
+              {{ route('/') }}
+             @endauth
+              <p>Joined February 06, 2017</p>
+              <a href="/update" class="btn btn-main-sm">Edit Profile</a>
+            </div>
+            <!-- Dashboard Links -->
+            <div class="widget user-dashboard-menu">
+              <ul>
+                <li class="active"><a href="dashboard-my-ads.html"><i class="fa fa-user"></i> My Ads</a></li>
+                <li><a href="dashboard-favourite-ads.html"><i class="fa fa-bookmark-o"></i> Favourite Ads <span>5</span></a></li>
+                <li><a href="dashboard-archived-ads.html"><i class="fa fa-file-archive-o"></i>Archived Ads <span>12</span></a></li>
+                <li><a href="dashboard-pending-ads.html"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Logout</a></li>
+                <li><a href="" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete
+                    Account</a></li>
+              </ul>
+            </div>
+            
+            <!-- delete-account modal -->
+                                      <!-- delete account popup modal start-->
+                  <!-- Modal -->
+                  <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body text-center">
+                          <img src="images/account/Account1.png" class="img-fluid mb-2" alt="">
+                          <h6 class="py-2">Are you sure you want to delete your account?</h6>
+                          <p>Do you really want to delete these records? This process cannot be undone.</p>
+                          <textarea name="message" id="" cols="40" rows="4" class="w-100 rounded"></textarea>
+                        </div>
+                        <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                          <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- delete account popup modal end-->
+            <!-- delete-account modal -->
+  
+          </div>
+        </div>
+        
+        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+          <!-- Recently Favorited -->
+          <div class="widget dashboard-container my-adslist">
+            <h3 class="widget-header">My Products</h3>
+            <table class="table table-responsive product-dashboard-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Title</th>
+                  <th class="text-center">Category</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              @foreach($products as $product)
+                <tr>
+                  <td class="product-thumb">
+                    <img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></td>
+                  <td class="product-details">
+                    <h3 class="title">{{$product->product_name}}</h3>
+                    <span class="add-id"><strong>Ad ID:</strong> </span>
+                    <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
+                    <span class="status active"><strong>price</strong>{{$product->price}}</span>
+                    <span class="location"><strong>Location</strong></span>
+                  </td>
+                  <td class="product-category"><span class="categories">Laptops</span></td>
+                  <td class="action" data-title="Action">
+                    <div class="">
+                      <ul class="list-inline justify-content-center">
+                        <li class="list-inline-item">
+                          <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="/products/{{$product->id}}">
+                            <i class="fa fa-eye"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="/products/{{$product->id}}/edit">
+                              <i class="fa fa-pencil"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete" href ="/products/{{$product->id}}/delete">
+                              <i class="fa fa-trash"></i>
+                          </a>
+                      </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              @endforeach
+              </tbody>
+            </table>
+  
+          </div>
+  
+          <!-- pagination -->
+          <div class="pagination justify-content-center">
+                      <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                              <li class="page-item">
+                                  <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                      <span class="sr-only">Previous</span>
+                                  </a>
+                              </li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item">
+                                  <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </div>
+          <!-- pagination -->
+  
+        </div>
+      </div>
+      <!-- Row End -->
+    </div>
+    <!-- Container End -->
+  </section>
 
 @endsection
