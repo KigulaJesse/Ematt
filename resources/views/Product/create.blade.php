@@ -39,18 +39,11 @@
                         </div>
                         <div class="col-lg-6">
                             <h6 class="font-weight-bold pt-4 pb-1">Select Ad Category:</h6>
-                            <select name="" id="inputGroupSelect" class="w-100">
-
-                                <option value="1">Select category</option>
-                                <option value="2">Laptops</option>
-                                <option value="3">iphone</option>
-                                <option value="4">microsoft</option>
-                                <option value="5">monitors</option>
-                                <option value="6">11inch Macbook Air</option>
-                                <option value="7">Study Table Combo</option>
-                                <option value="8">11inch Macbook Air</option>
-                                <option value="9">Study Table Combo</option>
-                                <option value="10">11inch Macbook Air</option>
+                            <select name = "category" id = "inputGroupSelect" class="w-100">
+                                <option>Select category</option>
+                                    @foreach($categories as $category)
+                                        <option value = "{{$category->category_name}}">{{$category->category_name}}</option>
+                                    @endforeach
                             </select>
                             <div class="price">
                                 <h6 class="font-weight-bold pt-4 pb-1">Item Price ($ USD):</h6>

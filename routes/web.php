@@ -22,7 +22,7 @@ use App\Product;
                     "products"=>$products
                 ]);
             });
-            
+
         //This is a route to the about-us page to contact us
             Route::get('/about-us', function () {
                 return view('Home.about-us');
@@ -44,7 +44,8 @@ use App\Product;
             Route::get('/cart','CartController@index');
         //
             Route::get('/cart/{cart}','CartController@create');
-
+        //
+            Route::get('/cart/{product}/delete','CartController@destroy');
 /*-----------------------------------------*/
 
 
@@ -70,3 +71,11 @@ use App\Product;
             Route::get('/products/{product}/delete','ProductController@destroy');
 /*----------------------------------------------*/
 
+/*----------------CATEGORY ROUTES-----------------*/
+        //Used to post a query to find some category
+            Route::post('/category','CategoryController@show');
+        
+        //
+
+
+/*------------------------------------------------*/

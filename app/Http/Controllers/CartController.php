@@ -120,6 +120,9 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        if (empty($product)) {
+            abort(404);
+        }
+        
     }
 }

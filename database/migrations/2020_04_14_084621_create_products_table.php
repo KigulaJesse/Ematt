@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('condition')->nullable();
             $table->string('short_description',512)->nullable();
             $table->text('long_description',2000)->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
             $table->foreign('category_id')  

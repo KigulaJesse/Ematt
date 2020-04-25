@@ -2,7 +2,6 @@
 
 @section('content')
 <section class="dashboard section">
-    <!-- Container Start -->
     <div class="container">
       <!-- Row Start -->
       <div class="row">
@@ -89,12 +88,12 @@
                     <img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></td>
                   <td class="product-details">
                     <h3 class="title">{{$product->product_name}}</h3>
-                    <span class="add-id"><strong>Ad ID:</strong> </span>
+                    <span class="status active"><strong>Price:</strong>{{$product->price}}</span>
+                    <span class="location"><strong>Brand:</strong></span>
+                    <span class="add-id"><strong>Color:</strong></span>
                     <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
-                    <span class="status active"><strong>price</strong>{{$product->price}}</span>
-                    <span class="location"><strong>Location</strong></span>
                   </td>
-                  <td class="product-category"><span class="categories">Laptops</span></td>
+                  <td class="product-category"><span class="categories">Something</span></td>
                   <td class="action" data-title="Action">
                     <div class="">
                       <ul class="list-inline justify-content-center">

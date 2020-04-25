@@ -6,6 +6,8 @@ use App\Product;
 use Illuminate\Http\Request;
 use Image;
 use File;
+use App\Category;
+use DB;
 
 class ProductController extends Controller
 {
@@ -25,7 +27,9 @@ class ProductController extends Controller
 
     
     public function home(){
+        
         $products = Product::take(9)->latest()->get();
+        
         return view('Product.home',[
             'products' => $products
         ]);
@@ -36,8 +40,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('Product.create');
+    {   
+        $categories = Category::all();
+        return view('Product.create',[
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -50,6 +57,7 @@ class ProductController extends Controller
     {
         $this->validate($request,[
             'product_name'=> ['required', 'max:255'],
+            'category'=>'required',
             'price'=>'required',
             'short'=>'max:30',
             'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -60,12 +68,17 @@ class ProductController extends Controller
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
         $product->user_id = $user->id;
-        $product->quantity= $request->input('');
+        //$product->quantity= $request->input('');
         //$product->brand = 
         //$product->condition;
         $product->short_description = $request->input('long');
         $product->long_description = $request->input('short');
+
+        $category = Category::where('category_name','=',$request->input('category'));
+        $category = $category->first();
+        $product->category_id= $category->id;
             
+        //This persists the product in the database
         $product->save();
 
         if ($request->hasFile('file-upload')){
@@ -77,15 +90,10 @@ class ProductController extends Controller
             File::makeDirectory($path);
             
             $img->resize(480,480)->save($path.'/1.jpg');
-
-            // --------- [ Resize Image ] ---------------
-            /*$img->resize(150, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$input['imagename']);
-            $image->move($destinationPath, $input['imagename']);*/
-   
         }
+
         return redirect('/products');
+    
     }
 
     /**
