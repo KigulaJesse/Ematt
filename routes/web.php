@@ -23,10 +23,19 @@ use App\Product;
                 ]);
             });
 
-        //This is a route to the about-us page to contact us
+        //This is a route to the about-us page to know about us
             Route::get('/about-us', function () {
                 return view('Home.about-us');
             });
+
+        //This is a route to the contact-us page to contact us
+            Route::get('/contact-us', function () {
+                return view('Home.contact-us');
+            });
+        //This is a route to the contact-us page to contact us
+        Route::get('/Terms-and-conditions', function () {
+            return view('Home.Terms-and-conditions');
+        });
 /*-------------------------------------------*/
 
 /*-----------USER AND AUTH ROUTES------------*/
@@ -36,7 +45,6 @@ use App\Product;
             Route::get('/update',function(){
                 return view('auth.update');
             });
-
 /*------------------------------------------*/
 
 /*-------------CART ROUTES-------------*/
@@ -44,8 +52,10 @@ use App\Product;
             Route::get('/cart','CartController@index');
         //
             Route::get('/cart/{cart}','CartController@create');
-        //
+        // Is a route to the CartController destroy method used to delete products from cart_product
             Route::get('/cart/{product}/delete','CartController@destroy');
+        //
+            Route::get('/carts/checkout','CartController@checkout');
 /*-----------------------------------------*/
 
 
@@ -73,9 +83,9 @@ use App\Product;
 
 /*----------------CATEGORY ROUTES-----------------*/
         //Used to post a query to find some category
-            Route::post('/category','CategoryController@show');
-        
-        //
+            Route::post('/category','CategoryController@show');  
+        //Used to get sub_categories when creating a product
+            Route::get('/category/get_sub_categories/{id}','CategoryController@get_sub_category');
 
 
 /*------------------------------------------------*/

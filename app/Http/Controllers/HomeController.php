@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -27,8 +28,9 @@ class HomeController extends Controller
     public function index(){
         
         $products = Product::take(9)->latest()->get();
+        
         return view('Home.index',[
-            "products"=>$products
+            "products"=>$products,
         ]);
 
     }
@@ -36,8 +38,10 @@ class HomeController extends Controller
     public function home()
     {
         $products = Product::take(9)->latest()->get();
+        $categories = Category::all()->whereNull('category_id');
         return view('Product.home',[
-            'products' => $products
+            'products' => $products,
+            "categories"=>$categories
         ]);
     }
 }

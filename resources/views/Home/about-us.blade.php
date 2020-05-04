@@ -4,7 +4,7 @@
 <!--================================
 =            Page Title            =
 =================================-->
-<section class="page-title">
+<section class="page-title" style ="background-color:forestgreen;   ">
 	<!-- Container Start -->
 	<div class="container">
 		<div class="row">
@@ -28,17 +28,14 @@
             <div class="col-lg-6 pt-5 pt-lg-0">
                 <div class="about-content">
                     <h3 class="font-weight-bold">Introduction</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est justo, aliquam nec tempor
-                        fermentum, commodo et libero. Quisque et rutrum arcu. Vivamus dictum tincidunt magna id
-                        euismod. Nam sollicitudin mi quis orci lobortis feugiat.</p>
+                    <p>This is Ematt your one stop shopping centre for all gadgets and goods. Thank you for choosing us and being part
+                        of our brand. Browse through a selection of all kinds of goods.</p>
                     <h3 class="font-weight-bold">How we can help</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est justo, aliquam nec tempor
-                        fermentum, commodo et libero. Quisque et rutrum arcu. Vivamus dictum tincidunt magna id
-                        euismod. Nam sollicitudin mi quis orci lobortis feugiat. Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Nunc est justo, aliquam nec tempor fermentum, commodo et libero.
-                        Quisque et rutrum arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc est
-                        justo, aliquam nec tempor fermentum, commodo et libero. Quisque et rutrum arcu. Vivamus dictum
-                        tincidunt magna id euismod. Nam sollicitudin mi quis orci lobortis feugiat.</p>
+                    <p>We can help you sell all your goods online. we provide delivery services at a fee
+                        to a range of locations within Uganda. You can contact-us on the contact page for more
+                        information on how to use Ematt. Some of our ctageories include restaurants'
+                        hostels, online shop, jobs. You name it, we have got yoyu covered.
+                    </p>
                 </div>
             </div>
         </div>

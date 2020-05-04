@@ -9,7 +9,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="search-result bg-gray">
-					<h2>Results For "Electronics"</h2>
+					<!--<h2>Results For "Electronics</h2>-->
+					<h2>Top Results</h2>
 					<p>123 Results on 12 December, 2017</p>
 				</div>
 			</div>
@@ -27,22 +28,22 @@
 					<div class="widget category-list">
 						<h4 class="widget-header">All Category</h4>
 						<ul class="category-list">
-							<li><a href="category.html">Laptops <span>93</span></a></li>
-							<li><a href="category.html">Iphone <span>233</span></a></li>
-							<li><a href="category.html">Microsoft  <span>183</span></a></li>
-							<li><a href="category.html">Monitors <span>343</span></a></li>
+							<form method="POST" action="/category" id="sample_form">
+								@csrf
+								@foreach($categories as $category)
+									<li><a href = "#" onclick="submitForm();">{{$category->category_name}}</a> </li> 
+									<input type="hidden" name="category" value='{{$category->category_name}}'/> 
+								@endforeach
+							</form>
 						</ul>
 					</div>
 
 					<div class="widget category-list">
 						<h4 class="widget-header">Nearby</h4>
 						<ul class="category-list">
-							<li><a href="category.html">New York <span>93</span></a></li>
-							<li><a href="category.html">New Jersy <span>233</span></a></li>
-							<li><a href="category.html">Florida  <span>183</span></a></li>
-							<li><a href="category.html">California <span>120</span></a></li>
-							<li><a href="category.html">Texas <span>40</span></a></li>
-							<li><a href="category.html">Alaska <span>81</span></a></li>
+							<li><a href="#">Kampala<span>93</span></a></li>
+							<li><a href="#">Ntinda<span>233</span></a></li>
+							<li><a href="#">Lubowa<span>183</span></a></li>
 						</ul>
 					</div>
 
@@ -59,10 +60,10 @@
 					<div class="widget price-range w-100">
 						<h4 class="widget-header">Price Range</h4>
 						<div class="block">
-											<input class="range-track w-100" type="text" data-slider-min="0" data-slider-max="5000" data-slider-step="5"
-											data-slider-value="[0,5000]">
+											<input class="range-track w-100" type="text" data-slider-min="1000" data-slider-max="500000" data-slider-step="500"
+											data-slider-value="[1000,500000]">
 									<div class="d-flex justify-content-between mt-2">
-											<span class="value">$10 - $5000</span>
+											<span class="value">Ush1000 - Ush500000</span>
 									</div>
 						</div>
 					</div>
@@ -122,7 +123,7 @@
 										<a href="#" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
 									</li>
 									<li class="list-inline-item">
-										<a href="ad-list-view.html"><i class="fa fa-reorder"></i></a>
+										<a href="#"><i class="fa fa-reorder"></i></a>
 									</li>
 								</ul>
 							</div>
@@ -147,7 +148,7 @@
 										</a>
 									</div>
 									<div class="card-body">
-										<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->name}}</a></h4>
+										<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->product_name}}</a></h4>
 										<ul class="list-inline product-meta">
 											<li class="list-inline-item">
 												<form method="POST" action="/category" id="sample_form">
@@ -160,10 +161,10 @@
 												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
 											</li>
 										</ul>
-										@if ($product->short_description)
-											<p class="card-text">{{$product->short_decription}}</p>
+										@if ($product->long_description)
+											<p class="card-text">{{$product->long_description}}</p>
 										@else
-											<p class="card-text">This {{$product->name}} is for sale</p>
+											<p class="card-text">This {{$product->product_name}} is for sale</p>
 										@endif
 										<div class="product-ratings">
 											<ul class="list-inline">
@@ -185,7 +186,7 @@
 				<!--============================
 				=      PAGE LIST AT BOTTOM     =
 				=============================-->
-				<div class="pagination justify-content-center">
+				<!--<div class="pagination justify-content-center">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination">
 							<li class="page-item">
@@ -205,7 +206,7 @@
 							</li>
 						</ul>
 					</nav>
-				</div>
+				</div>-->
 
 			</div>
 

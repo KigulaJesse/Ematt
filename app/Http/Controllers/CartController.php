@@ -45,8 +45,8 @@ class CartController extends Controller
     {
         $product = Product::find($id);
         $user = \Auth::user();
-        $cart = Cart::where('user_id',$user->id)->get();
-        $cart = $cart->first();
+        $cart = $user->carts;
+
         if ($cart){
             $this->store($product,$cart);
         }
@@ -118,11 +118,25 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Product $product)
     {
+
         if (empty($product)) {
             abort(404);
         }
+        $user = \Auth::user();
+        $cart = $user->carts;
+
+        DB::delete("DELETE FROM cart_product WHERE cart_id = ? AND product_id = ?", [$cart->id,$product->id]);
+
+        return redirect('/cart');
+    }
+
+    public function checkout(){
+        return view('cart.checkout');
+    }
+
+    public function checkout_processing(){
         
     }
 }

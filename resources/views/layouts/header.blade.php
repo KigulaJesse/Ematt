@@ -17,15 +17,23 @@
                                 <li class = "{{Request::is('/') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/">Home</a></li>
                                 <li class = "{{Request::is('home') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/home">Buy Now</a></li>
                                 
-                                <li class="{{Request::is('products') ? 'nav-item active' : ''}} nav-item dropdown dropdown-slide">
+                                <li class="{{Request::is('products')||Request::is('product') ? 'nav-item active' : ''}} nav-item dropdown dropdown-slide">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Sell Now<span><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/product">Add Product</a>
                                         <a class="dropdown-item" href="/products">View Your Products</a>  
                                     </div>
+                                </li>
+                                <li class="{{Request::is('about-us') || Request::is('update')  ? 'nav-item active' : ''}} nav-item dropdown dropdown-slide">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Help<span><i class="fa fa-angle-down"></i></span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/update">Your Profile</a>
+                                        <a class="dropdown-item" href="/about-us">About-Us</a>  
+                                    </div>
                                 </li> 
-                                <li class = "{{Request::is('about-us') ? 'nav-item active' : ''}} nav-item"><a class="nav-link" href="/about-us">About Us</a></li>
+                                
                         
 							 <!-- <div id="app">
                                  <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">

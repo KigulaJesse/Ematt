@@ -33,8 +33,8 @@
 					<!-- PICTURE AND PICTURES AT THE BOTTOM SLIDING -->
 					<div class="product-slider">
 						<!-- a foreach loop might help -->
-						<div class="product-slider-item my-4" data-image="/images/products/products-1.jpg">
-							<img class="img-fluid w-50" src="/images/products/{{$product->id}}/1.jpg" alt="product-img">
+						<div class="product-slider-item my-4" data-image="/images/products/{{$product->id}}">
+							<img class="img-fluid w-50" style = "position:relative; left:160px" src="/images/products/{{$product->id}}/1.jpg" alt="product-img">
 						</div>
 					</div>
 
@@ -64,7 +64,7 @@
 								<p>
 									@if ($product->long_description)
 									@else
-										{{$product->name}} for sale
+										{{$product->product_name}} for sale
 									@endif
 								</p>
 
@@ -84,36 +84,41 @@
 									<tbody>
 										<tr>
 											<td>Seller Price</td>
-											<td>{{$product->price}}</td>
+											<td>Ush {{number_format($product->price)}}</td>
 										</tr>
 										<tr>
 											<td>Added</td>
-											<td>26th December</td>
+											<td>{{$product->created_at}}</td>
 										</tr>
+
+										@if($user->district)
 										<tr>
 											<td>State</td>
-											<td>Dhaka</td>
+											<td>{{$user->district}}</td>
 										</tr>
+										@endif
+
+										@if($product->brand)
 										<tr>
 											<td>Brand</td>
-											<td>Apple</td>
+											<td>{{$product->brand}}</td>
 										</tr>
+										@endif
+
 										<tr>
 											<td>Condition</td>
-											<td>Used</td>
+											<td>{{$product->condition}}</td>
 										</tr>
-										<tr>
+										
+										
+										<!--<tr>
 											<td>Model</td>
 											<td>2017</td>
 										</tr>
 										<tr>
-											<td>State</td>
-											<td>Dhaka</td>
-										</tr>
-										<tr>
 											<td>Battery Life</td>
 											<td>23</td>
-										</tr>
+										</tr>-->
 									</tbody>
 								</table>
 							</div>
@@ -195,10 +200,10 @@
 
 			<div class="col-md-4">
 				<!--side bar with seller information -->
-				<div class="sidebar">
-					<div class="widget price text-center">
+				<div class="sidebar" >
+					<div class="widget price text-center" style="background-color: forestgreen;">
 						<h4>Price</h4>
-						<p>{{$product->price}}</p>
+						<p>Ush {{number_format($product->price)}}</p>
 					</div>
 					<!-- User Profile widget -->
 					<div class="widget user text-center">
@@ -211,12 +216,12 @@
 							<li class="list-inline-item"><a href="/cart/{{$product->id}}" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Add to Cart</a></li>
 						</ul>
 					</div>
-					<!-- Map Widget -->
+					<!-- Map Widget 
 					<div class="widget map">
 						<div class="map">
 							<div id="map_canvas" data-latitude="51.507351" data-longitude="-0.127758"></div>
 						</div>
-					</div>
+					</div>-->
 					<!-- Rate Widget -->
 					<div class="widget rate">
 						<!-- Heading -->

@@ -43,9 +43,22 @@
 					<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-lg-12 col-md-12 align-content-center">
-								<form>
+								<form method = "POST" action = "/category">
+									@csrf			
 									<div class="form-row">
+										<div class="form-group col-md-3">
+											<input type="text" name = 'category' class="form-control my-2 my-lg-0" id="inputCategory4" placeholder="Category">
+										</div>
 										<div class="form-group col-md-4">
+											<input type="text" class="form-control my-2 my-lg-0" id="inputtext4" placeholder="Brand">
+										</div>
+										<div class="form-group col-md-3">
+											<input type="text" class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location">
+										</div>
+										<div class="form-group col-md-2">
+											<button type="submit" class="btn btn-primary" style = "">Search Now</button>
+										</div>
+										<!--<div class="form-group col-md-4">
 											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4" placeholder="What are you looking for">
 										</div>
 										<div class="form-group col-md-3">
@@ -61,7 +74,7 @@
 										</div>
 										<div class="form-group col-md-2 align-self-center">
 											<button type="submit" class="btn btn-primary">Search Now</button>
-										</div>
+										</div>--->
 									</div>
 								</form>
 							</div>

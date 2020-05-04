@@ -29,9 +29,10 @@ class ProductController extends Controller
     public function home(){
         
         $products = Product::take(9)->latest()->get();
-        
+        $categories = Category::all()->whereNull('category_id');
         return view('Product.home',[
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
     /**
@@ -46,7 +47,7 @@ class ProductController extends Controller
             'categories' => $categories
         ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -58,6 +59,8 @@ class ProductController extends Controller
         $this->validate($request,[
             'product_name'=> ['required', 'max:255'],
             'category'=>'required',
+            'quantity'=>'required',
+            'condition'=>'required',
             'price'=>'required',
             'short'=>'max:30',
             'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -68,15 +71,13 @@ class ProductController extends Controller
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
         $product->user_id = $user->id;
-        //$product->quantity= $request->input('');
-        //$product->brand = 
-        //$product->condition;
-        $product->short_description = $request->input('long');
-        $product->long_description = $request->input('short');
-
-        $category = Category::where('category_name','=',$request->input('category'));
-        $category = $category->first();
-        $product->category_id= $category->id;
+        $product->quantity= $request->input('quantity');
+        $product->brand = $request->input('brand');
+        $product->condition = $request->input('condition');
+        $product->color = $request->input('color');
+        $product->short_description = $request->input('short');
+        $product->long_description = $request->input('long');
+        $product->category_id= $request->input('category');
             
         //This persists the product in the database
         $product->save();
@@ -103,8 +104,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
-    {
-        
+    {     
         $user = $product->user;
         return view('Product.show',[
             'product'=>$product,
@@ -136,7 +136,7 @@ class ProductController extends Controller
     {
         //
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -148,9 +148,39 @@ class ProductController extends Controller
         if (empty($product)) {
             abort(404);
         }
+
+        $destinationPath         =       public_path('/images/products');
+        $path                    =       $destinationPath.'/'.$product->id;
         
+        $rm =$this->deleteDirectory($path);
+
         $product->delete();
 
         return redirect('/products');
     }
+
+    public function deleteDirectory($dir) {
+        if (!file_exists($dir)) {
+            return true;
+        }
+    
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+    
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+    
+            if (!($this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item))) {
+                return false;
+            }
+    
+        }
+    
+        return rmdir($dir);
+    }
+
+    
 }

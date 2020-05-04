@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+<!--================================
+=            Page Title            =
+=================================-->
+<section class="page-title" style ="background-color:forestgreen;   ">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<!-- Title text -->
+                <h3>{{Auth::user()->name}} profile</h3>
+			</div>
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+
 <section class="user-profile section">
 	<div class="container">
 		<div class="row">
@@ -33,7 +49,8 @@
 					<p>Hey {{ Auth::user()->name }}, we'd like to get to know you better.</p>
 				</div>
 				<!-- Edit Personal Info -->
-				<div class="row">
+				<div class="row">	
+					<!--------------CHANGE PERSONAL INFO-------------->
 					<div class="col-lg-6 col-md-6">
 						<div class="widget personal-info">
 							<h3 class="widget-header user">Edit Personal Information</h3>
@@ -75,51 +92,63 @@
 							</form>
 						</div>
 					</div>
+					<!------------------------------------------------>
+				</div>
+
+				<div class = 'row'>
+					<!--------------CHANGE PASSWORD ------------------>
 					<div class="col-lg-6 col-md-6">
-						<!-- Change Password -->
-					<div class="widget change-password">
-						<h3 class="widget-header user">Edit Password</h3>
-						<form action="#">
-							<!-- Current Password -->
-							<div class="form-group">
-								<label for="current-password">Current Password</label>
-								<input type="password" name="password" class="form-control" id="current-password">
-							</div>
-							<!-- New Password -->
-							<div class="form-group">
-								<label for="new-password">New Password</label>
-								<input type="password" class="form-control" id="new-password">
-							</div>
-							<!-- Confirm New Password -->
-							<div class="form-group">
-								<label for="confirm-password">Confirm New Password</label>
-								<input type="password" class="form-control" id="confirm-password">
-							</div>
-							<!-- Submit Button -->
-							<button class="btn btn-transparent">Change Password</button>
-						</form>
+						<div class="widget change-password">
+							<h3 class="widget-header user">Edit Password</h3>
+							<form method = "POST" action="{{ route('password.update') }}">
+								@csrf
+								<!-- Current Password -->
+								<div class="form-group">
+									<label for="current-password">Current Password</label>
+									<input type="password" name="password" class="form-control" id="current-password">
+								</div>
+								<!-- New Password -->
+								<div class="form-group">
+									<label for="new-password">New Password</label>
+									<input type="password" class="form-control" id="new-password">
+								</div>
+								<!-- Confirm New Password -->
+								<div class="form-group">
+									<label for="confirm-password">Confirm New Password</label>
+									<input type="password" class="form-control" id="confirm-password">
+								</div>
+								<!-- Submit Button -->
+								<button class="btn btn-transparent">Change Password</button>
+							</form>
+						</div>
 					</div>
-					</div>
+					<!------------------------------------------------>
+				</div>
+				
+				<div class="row">
+					<!------------------CHANGE EMAIL------------------>
 					<div class="col-lg-6 col-md-6">
 						<!-- Change Email Address -->
-					<div class="widget change-email mb-0">
-						<h3 class="widget-header user">Edit Email Address</h3>
-						<form action="#">
-							<!-- Current Password -->
-							<div class="form-group">
-								<label for="current-email">Current Email</label>
-								<input type="email" class="form-control" id="current-email">
-							</div>
-							<!-- New email -->
-							<div class="form-group">
-								<label for="new-email">New email</label>
-								<input type="email" class="form-control" id="new-email">
-							</div>
-							<!-- Submit Button -->
-							<button class="btn btn-transparent">Change email</button>
-						</form>
+						<div class="widget change-email mb-0">
+							<h3 class="widget-header user">Edit Email Address</h3>
+							<form action="#">
+								<!-- Current Password -->
+								<div class="form-group">
+									<label for="current-email">Current Email</label>
+									<input type="email" class="form-control" id="current-email">
+								</div>
+								<!-- New email -->
+								<div class="form-group">
+									<label for="new-email">New email</label>
+									<input type="email" class="form-control" id="new-email">
+								</div>
+								<!-- Submit Button -->
+								<button class="btn btn-transparent">Change email</button>
+							</form>
+						</div>
 					</div>
-					</div>
+					<!------------------------------------------------>
+
 				</div>
 			</div>
 		</div>

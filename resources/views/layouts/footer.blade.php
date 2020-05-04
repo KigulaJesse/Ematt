@@ -9,9 +9,9 @@
             <!-- footer logo -->
             <img src="/images/logo-footer.png" alt="">
             <!-- description -->
-            <p class="alt-color">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="alt-color">This is Ematt your one stop shopping centre for all gadgets and goods. Thank you for choosing us and being part
+              of our brand. Browse through a selection of all kinds of goods.
+            </p>
           </div>
         </div>
         <!-- Link list -->
@@ -19,11 +19,11 @@
           <div class="block">
             <h4>Site Pages</h4>
             <ul>
-              <li><a href="#">Boston</a></li>
-              <li><a href="#">How It works</a></li>
-              <li><a href="#">Deals & Coupons</a></li>
-              <li><a href="#">Articls & Tips</a></li>
-              <li><a href="terms-condition.html">Terms & Conditions</a></li>
+              <li><a href="/about-us">About-Us</a></li>
+              <li><a href="/contact-us">Contact-Us</a></li>
+             <!-- <li><a href="#">Deals & Coupons</a></li>
+              <li><a href="#">Articls & Tips</a></li>-->
+              <li><a href="/Terms-and-conditions">Terms & Conditions</a></li>
             </ul>
           </div>
         </div>
@@ -98,6 +98,7 @@
   </footer>
   
   <!-- JAVASCRIPTS -->
+
   <script src="/plugins/jQuery/jquery.min.js"></script>
   <script src="/plugins/bootstrap/js/popper.min.js"></script>
   <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>

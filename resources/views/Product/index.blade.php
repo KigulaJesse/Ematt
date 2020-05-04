@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+<!--================================
+=            Page Title            =
+=================================-->
+<section class="page-title" style ="background-color:forestgreen;   ">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<!-- Title text -->
+                <h3>{{Auth::user()->name}}'s products</h3>
+			</div>
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+
 <section class="dashboard section">
     <div class="container">
       <!-- Row Start -->
@@ -30,9 +46,13 @@
                 <li><a href="dashboard-favourite-ads.html"><i class="fa fa-bookmark-o"></i> Favourite Ads <span>5</span></a></li>
                 <li><a href="dashboard-archived-ads.html"><i class="fa fa-file-archive-o"></i>Archived Ads <span>12</span></a></li>
                 <li><a href="dashboard-pending-ads.html"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a></li>
-                <li><a href="#"><i class="fa fa-cog"></i> Logout</a></li>
-                <li><a href="" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete
-                    Account</a></li>
+                <li><a href="{{route('logout')}}" href="{{ route('logout') }}"onclick="event.preventDefault();
+                  document.getElementById('logout-form-product-index').submit();"><i class="fa fa-cog"></i>{{ __('Logout') }}</a></li>
+                <form id="logout-form-product-index" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+<!--<li><a href="" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete
+                    Account</a></li>-->
               </ul>
             </div>
             
@@ -70,7 +90,6 @@
         <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
           <!-- Recently Favorited -->
           <div class="widget dashboard-container my-adslist">
-            <h3 class="widget-header">My Products</h3>
             <table class="table table-responsive product-dashboard-table">
               <thead>
                 <tr>
@@ -89,11 +108,17 @@
                   <td class="product-details">
                     <h3 class="title">{{$product->product_name}}</h3>
                     <span class="status active"><strong>Price:</strong>{{$product->price}}</span>
-                    <span class="location"><strong>Brand:</strong></span>
-                    <span class="add-id"><strong>Color:</strong></span>
-                    <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
+                    <span class="status"><strong>Quantity:</strong>{{$product->quantity}}</span>
+                    @if($product->brand)
+                      <span class="location"><strong>Brand:</strong>{{$product->brand}}</span>
+                    @endif
+                    @if($product->color)
+                      <span class="add-id"><strong>Color:</strong>{{$product->color}}</span>
+                    @else
+                      <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
+                    @endif
                   </td>
-                  <td class="product-category"><span class="categories">Something</span></td>
+                  <td class="product-category"><span class="categories">{{$product->category->category_name}}</span></td>
                   <td class="action" data-title="Action">
                     <div class="">
                       <ul class="list-inline justify-content-center">
@@ -122,7 +147,7 @@
   
           </div>
   
-          <!-- pagination -->
+          <!-- pagination 
           <div class="pagination justify-content-center">
                       <nav aria-label="Page navigation example">
                           <ul class="pagination">

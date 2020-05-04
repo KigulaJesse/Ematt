@@ -74,31 +74,11 @@ class CategoryController extends Controller
             }
         }
 
+        $categories = Category::all()->whereNull('category_id');
         return view('Product.home',[
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
-
-        /*//sub category e.g smart_phone / basic phone
-        $category_sub = Category::where('category_id','=',$category->id);
-        $category_sub = $category_sub->first();
-        //dd($category_sub->category_name);
-
-        //sub sub category e.g IOS / android
-        $category_sub_sub = Category::where('category_id','=',$category_sub->id);
-        $category_sub_sub = $category_sub_sub->first();        
-        //dd($category_sub_sub->category_name);
-
-        $category_sub_sub_sub = Category::where('category_id','=',$category_sub_sub->id);
-        dd($category_sub_sub_sub->first());
-        $category_sub_sub_sub = $category_sub_sub_sub->first();        
-        //dd($category_sub_sub->category_name);
-
-        $products = $category_sub_sub->products;
-        return view('Product.home',[
-            'products' => $products
-        ]);*/
-
-        
 
     }
 
@@ -135,4 +115,10 @@ class CategoryController extends Controller
     {
         //
     }
+    public function get_sub_category($id){        
+        $category = Category::find($id);
+        $subcategories = $category->sub_category->pluck("category_name","id");
+        return json_encode($subcategories);
+    }
+
 }
