@@ -17,6 +17,7 @@ class CartProduct extends Migration
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity')->nullable();
+            $table->string('bought')->nullable();
             $table->timestamps();
 
             $table->unique(['cart_id','product_id']);

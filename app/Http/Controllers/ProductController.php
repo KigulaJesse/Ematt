@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {   
-        $categories = Category::all();
+        $categories = Category::all()->whereNull('category_id');
         return view('Product.create',[
             'categories' => $categories
         ]);
@@ -58,6 +58,7 @@ class ProductController extends Controller
     {
         $this->validate($request,[
             'product_name'=> ['required', 'max:255'],
+            'terms'=>'required',
             'category'=>'required',
             'quantity'=>'required',
             'condition'=>'required',
@@ -79,7 +80,7 @@ class ProductController extends Controller
         $product->long_description = $request->input('long');
         $product->category_id= $request->input('category');
             
-        //This persists the product in the database
+        //This persists the product in the database i.e saves the data into the database
         $product->save();
 
         if ($request->hasFile('file-upload')){
@@ -120,8 +121,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $categories = Category::all();
         return view('Product.update',[
-            'product'=>$product
+            'product'=>$product,
+            'categories'=>$categories
         ]);
     }
 
@@ -134,7 +137,30 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $this->validate($request,[
+            'product_name'=> ['required', 'max:255'],
+            'category'=>'required',
+            'quantity'=>'required',
+            'condition'=>'required',
+            'price'=>'required',
+            'short'=>'max:30',
+        ]);
+        $user = \Auth::user();
+        $product->product_name = $request->input('product_name');
+        $product->price = $request->input('price');
+        $product->user_id = $user->id;
+        $product->quantity= $request->input('quantity');
+        $product->brand = $request->input('brand');
+        $product->condition = $request->input('condition');
+        $product->color = $request->input('color');
+        $product->short_description = $request->input('short');
+        $product->long_description = $request->input('long');
+        $product->category_id= $request->input('category');
+            
+        //This persists the product in the database
+        $product->save();
+
+        return redirect('/products');
     }
     
     /**

@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('contact')->nullable();
+            $table->text('address')->nullable();
+            $table->integer('total_rating')->nullable();
+            $table->integer('no_ppl_that_rated')->nullable();
+            $table->integer('average_rating')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

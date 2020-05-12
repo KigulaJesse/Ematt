@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use Redirect;
 use App\Product;
+use App\Address;
+use App\Contact;
 use Illuminate\Http\Request;
 use DB;
 
@@ -21,15 +24,18 @@ class CartController extends Controller
         $cart = Cart::where('user_id','=',$user->id)->get();
         //getting the cart 
         $cart = $cart->first();
+        $products = [];
+
         if (!($cart)){
             $cart = new Cart;
             $cart->user_id = $user->id;
             $cart->save();
-            return view('cart.index');
+            return view('cart.index',[
+                'products' => $products
+            ]);
         }
         else {
             //an array from the cart_product table is returned
-            $products = [];
             $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ?', [$cart->id]);
             foreach ($full_cart as $full){
                 $products[] = Product::find($full->product_id);
@@ -133,10 +139,42 @@ class CartController extends Controller
     }
 
     public function checkout(){
-        return view('cart.checkout');
+        $products = [];
+        $user = \Auth::user();
+        $cart = $user->carts;
+
+        $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ?', [$cart->id]);
+        foreach ($full_cart as $full){
+            $products[] = Product::find($full->product_id);
+        }
+
+        return view('cart.checkout',[
+            'products' => $products,
+            
+        ]);
     }
 
-    public function checkout_processing(){
+    public function address(Request $request){
+        $this->validate($request,[
+            'address'=> ['required'],
+            'contact'=> ['required', 'min:10' ,'max:10']
+        ]);
         
+        $user = \Auth::user();
+        $user->address = $request->input('address');
+        $user->contact = $request->input('contact');
+
+        $user->save();
+
+        return redirect('/carts/checkout');
+        
+    }
+    
+    public function qty($qty,$id){
+        $user = \Auth::user();
+        $cart = $user->carts;
+        DB::update('UPDATE cart_product SET quantity ='.$qty.' WHERE cart_id ='. $cart->id.' AND '.$product_id.' = '.$id);
+
+        return ('success');
     }
 }

@@ -265,11 +265,16 @@
 
             <!-- submit button -->
             <div class="checkbox d-inline-flex">
-                <input type="checkbox" id="terms-&-condition" class="mt-1">
+                <input type="checkbox" id="terms-&-condition" name = 'terms' class="mt-1">
                 <label for="terms-&-condition" class="ml-2">By click you must agree with our
                     <span> <a class="text-success" href="terms-condition.html">Terms & Condition and Posting Rules.</a></span>
                 </label>
+                
             </div>
+            @error('terms')
+                    <p class="alert alert-danger">{{$errors->first('terms')}}</p>
+            @enderror
+
             <button type="submit" class="btn btn-primary d-block mt-2">Post Your Ad</button>
         </form>
     </div>

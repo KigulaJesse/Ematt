@@ -56,6 +56,8 @@ use App\Product;
             Route::get('/cart/{product}/delete','CartController@destroy');
         //
             Route::get('/carts/checkout','CartController@checkout');
+        //Used to change address used
+            Route::post('/carts/address','CartController@address');
 /*-----------------------------------------*/
 
 
