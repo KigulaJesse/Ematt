@@ -61,16 +61,17 @@
                                         </td>
                                         <td class="product-category">
                                             <span class="categories" >
-                                                <select name = "category_{{$product->id}}" id = "inputGroupSelect" class="w-1" value = "{{old('category')}}">
+                                                <select name = "category_{{$product->id}}" id = "inputGroupSelect_{{$product->id}}" class="w-1" onchange="subtotal(this, {{$product->id}}, {{$product->price}})">
                                                     @for ($i = 1; $i <= $product->quantity; $i++)
                                                         <option value="{{$i}}">{{$i}}</option>    
                                                     @endfor
-                                            </select>            
+                                                </select>            
                                             </span>
                                         </td>
                                         <td>
                                         <span class="categories" style = "position:relative; left:12px;" name = "sub-total" id= "subtotal_{{$product->id}}">{{number_format($product->price)}} </span>
                                         </td>
+                                        
                                         <td class="action" data-title="Action">
                                             <div class="">
                                                 <ul class="list-inline justify-content-center">
@@ -83,25 +84,9 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    
                                 @endforeach
-                            </tbody>
-                            <script type="text/javascript">  
-                                jQuery(document).ready(function (){
-                                    var id = '<?php echo $product->id?>';
-                                    var name ='select[name="category'+id+'"]';
-                                    jQuery(name).on('change',function(){
-                                            alert('here');
-                                           /*var qty = jQuery(this).val();
-                                           var price = '<?php echo $product->price?>';
-                                           //var id = '<?php echo $product->id?>';
-                                           var subtotal = qty * price;
-                                           var x = '#subtotal_'+id;
-                                           
-                                           jQuery(x).empty();
-                                           jQuery(x).append(subtotal);*/
-                                    });
-                                });
-                            </script>
+                            </tbody> 
                             @else
                                     <tr><td style = "position:relative; left:450px;" >
                                         <i class="fa fa-trash fa-5x" style="position:relative; left:60px;"></i>
@@ -125,7 +110,7 @@
                             @php($total = 0)
                            
                                 @foreach($products as $product)
-                                    <li>{{$product->product_name}}<span class="float-right">{{number_format($product->price)}}</span></li>
+                                    <li>{{$product->product_name}}<span class="float-right" id = 'side_sub_total_{{$product->id}}' >{{number_format($product->price)}}</span></li>
                                     @php($total += $product->price)
                                 @endforeach
                                 <li>Discount <span class="float-right">---</span></a></li>
@@ -143,4 +128,17 @@
         </div>
     </div>
 </section>
+<script>
+    function subtotal(ele,y,price){
+        var qty = ele.value;
+        var subtotal = qty * price;
+        var x = '#subtotal_'+y;
+        var z = '#side_sub_total_'+y;
+        jQuery(x).empty();
+        jQuery(x).append(subtotal);
+        jQuery(z).empty();
+        jQuery(z).append(subtotal);
+        
+    }
+</script>
 @endsection
