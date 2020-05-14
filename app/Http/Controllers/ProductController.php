@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function home(){
         
         $products = Product::take(9)->latest()->get();
-        $categories = Category::all()->whereNull('category_id');
+        $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,
             'categories' => $categories
@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {   
-        $categories = Category::all()->whereNull('category_id');
+        $categories = Category::all()->whereNull('parent_id');   
         return view('Product.create',[
             'categories' => $categories
         ]);
@@ -67,6 +67,7 @@ class ProductController extends Controller
             'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         
+        
         $user = \Auth::user();
         $product = new Product;
         $product->product_name = $request->input('product_name');
@@ -78,11 +79,17 @@ class ProductController extends Controller
         $product->color = $request->input('color');
         $product->short_description = $request->input('short');
         $product->long_description = $request->input('long');
-        $product->category_id= $request->input('category');
-            
         //This persists the product in the database i.e saves the data into the database
         $product->save();
 
+        $category = Category::find($request->input('category'));
+        $category->products()->attach($product->id);
+
+        if($request->input('subcategory')){
+            $subcategory = Category::find($request->input('subcategory'));
+            $subcategory->products()->attach($product->id);
+        }    
+    
         if ($request->hasFile('file-upload')){
             
             $image                   =       $request->file('file-upload'); 
@@ -95,7 +102,7 @@ class ProductController extends Controller
         }
 
         return redirect('/products');
-    
+        
     }
 
     /**
@@ -121,7 +128,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $categories = Category::all()->whereNull('parent_id');
         return view('Product.update',[
             'product'=>$product,
             'categories'=>$categories
@@ -139,28 +146,28 @@ class ProductController extends Controller
     {
         $this->validate($request,[
             'product_name'=> ['required', 'max:255'],
-            'category'=>'required',
             'quantity'=>'required',
             'condition'=>'required',
             'price'=>'required',
             'short'=>'max:30',
         ]);
+    
         $user = \Auth::user();
+        
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
-        $product->user_id = $user->id;
         $product->quantity= $request->input('quantity');
         $product->brand = $request->input('brand');
         $product->condition = $request->input('condition');
         $product->color = $request->input('color');
         $product->short_description = $request->input('short');
         $product->long_description = $request->input('long');
-        $product->category_id= $request->input('category');
             
         //This persists the product in the database
         $product->save();
 
         return redirect('/products');
+        
     }
     
     /**

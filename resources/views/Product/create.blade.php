@@ -69,50 +69,43 @@
                             @enderror
                             <!--end of long description-------->
                         </div>
-
-
+                        
                         <div class="col-lg-6">
                             <!---------Category under which product falls --->
                             <h6 class="font-weight-bold pt-4 pb-1">Select Category:</h6>
-                            <select name = "category" id = "inputGroupSelect" class="w-100" value = "{{old('category')}}">
-                                    <option value="">Category</option>
+                            <select name = "category" id = "inputGroupSelect" class="w-100" onchange = "sub(this)" >
+                                    <option value="">Category</option>   
                                     @foreach($categories as $category)
-                                        <option value = "{{$category->id}}">{{$category->category_name}} </option>  
+                                        <option value = "{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->category_name}} </option>  
                                     @endforeach
                             </select>
 
-                            <!--<h6 class="font-weight-bold pt-4 pb-1">Select Sub Category:</h6>
-                            <select name = "subcategory" id = "inputGroupSelect" class="w-100 subcategory">
+                            <h6 class="font-weight-bold pt-4 pb-1">Select Sub Category:</h6>
+                            <select name = "subcategory" id = "subcategory" class = "w-100 subcategory" style = "after{content: none}">
                                 <option value="">Sub category</option>
-                            </select>-->
+                            </select>
 
-                            <script type="text/javascript">  
-                                jQuery(document).ready(function (){
-                                    jQuery('select[name="category"]').on('change',function(){
-                                            var category_ID = jQuery(this).val();
-                                            if(category_ID){
-                                                jQuery.ajax({
-                                                    url : '/category/get_sub_categories/'+category_ID,
-                                                    type : "GET",
-                                                    dataType : "json",
-                                                    success:function(data){
-                                                        console.log(data);
-                                                        jQuery('select[name="subcategory"]').empty();
-                                                        jQuery.each(data, function(key,value){
-                                                            jQuery('select[name="subcategory"]').append('<option value="'+ key +'">'+ value +'</option>');
-                                                            $('select[name="subcategory"').on('change', function (e){
-                                                                $('div').append("//not sure how to write code here");
-                                                             });     
-                                                        });
-                                                    }
-                                                });
-                                            }   
-                                            else{
-                                                $('select[name="subcategory"]').empty();
-                                            }
+                            <script>  
+                                function sub(chosen){
+                                    y = '/category/get_sub_categories/'+chosen.value;
+                                    jQuery.ajax({
+                                        url: y,  
+                                        method:"GET",
+                                        dataType: "json",
+                                        success: function(data) {
+                                            console.log(data);
+                                            jQuery('#subcategory').empty();
+                                            jQuery('.subcategory .list').empty();
+                                            jQuery.each(data, function(key,value) {
+                                                jQuery('#subcategory').append('<option value = "'+key+'">'+value+'</option>');
+                                                jQuery('.subcategory .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                            }); 
+                                        }   
                                     });
-                                });
+                                }
                             </script>
+    
+                            
                             @error('category')
                             <p class="alert alert-danger">{{$errors->first('category')}}</p>
                             @enderror
@@ -124,7 +117,7 @@
                                 <div class="row px-3">
                                     <div class="col-lg-4 mr-lg-4 rounded bg-white my-2 ">
                                         <input type="text" name="price" class="border-0 py-2 w-100 price" placeholder="Price"
-                                            id="price" value = "{{old('price')}}">
+                                            id="price" value = "{{number_format(old('price'))}}">
                                     </div>
 
                                     <div class="col-lg-4 mrx-4  bg-white my-2 ">
@@ -158,11 +151,11 @@
                             <!-----------Condition of the product---------------------------->
                             <h6 class="font-weight-bold pt-4 pb-1">Condition:</h6>
                             <select name = "condition" id = "inputGroupSelect" class="w-100" value = "{{old('condition')}}">
-                                    <option value="">Condition</option>
-                                    <option value="brand new">Brand New</option>
-                                    <option value="like new">Like New</option>
-                                    <option value="fairly used">Fairly Used</option>
-                                    <option value="Used">Used</option>
+                                    <option value="" >Condition</option>
+                                    <option value="brand new" @if(old('condition')) selected @endif> Brand New</option>
+                                    <option value="like new" @if(old('condition')) selected @endif>Like New</option>
+                                    <option value="fairly used" @if(old('condition')) selected @endif">Fairly Used</option>
+                                    <option value="Used" @if(old('condition')) selected @endif>Used</option>
                             </select>
                             @error('condition')
                                 <p class="alert alert-danger">{{$errors->first('condition')}}</p>

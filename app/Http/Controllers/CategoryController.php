@@ -45,60 +45,28 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {
-        //super category e.g phone
-        
-        $categories = Category::where('category_name','=',$request->input('search'))->latest();
-        $categories = $categories->first();
-        $products_searched_for = Product::where('product_name','=',$request->input('search'));
-        $products_searched_for = $products_searched_for->get();
-        $brand_searched_for = Product::where('brand','=',$request->input('search'))->latest();
-        $brand_searched_for = $brand_searched_for->get();
-        //dd($brand_searched_for[0]->product_name);
+    public function show(Request $request){
 
-        $products=[];
+        /*SEARCH BUY BRAND AND STORE PRODUCTS */
+        $products = Product::where('brand','=',$request->input('search'))->get();
 
-        if($categories){
-            if(count($categories->sub_category)>0){
-                foreach($categories->sub_category as $category){
-                    if(count($category->sub_category)>0){
-                        foreach($category->sub_category as $child){
-                            foreach($child->products->take(3) as $product){
-                                $products[] = $product;    
-                            }
-                        }
-                    }
-                    else{
-                        foreach($category->products->take(3) as $product){
-                            $products[] = $product;
-                        }                     
-                    }        
-                }
-            }
-            else{
-                foreach($categories->products->take(3) as $product){
-                    $products[] = $product;
-                }
+        if(count($products) == 0){
+            $products = Product::where('product_name','=',$request->input('search'))->get();
+        }
+        if(count($products) == 0){
+            $category = Category::where('category_name','=',$request->input('search'))->get()->first();
+            if($category != null ){
+                $products = $category->products;
             }
         }
-        else if($products_searched_for){
-            dd('here 1');
-            $products = $products_searched_for;
-        }
-        else if($brand_searched_for){
-            dd('here');
-            dd($brand_searched_for[0]->product_name);
-            $products = $brand_searched_for;
-        }
-        
-        
-        $categories = Category::all()->whereNull('category_id');
+    
+        $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'searched' => $request->input('search')
         ]);
-
+        
     }
 
     /**
@@ -138,13 +106,7 @@ class CategoryController extends Controller
         $output = "";    
         $category = Category::find($id);
         $subcategories = $category->sub_category->pluck("category_name","id");
-        /*if($subcategories){
-            foreach ($subcategories as $subcategory) {
-                $output.= '<option value = "'.$subcategory->id.'">'.$subcategory->name.'</option>';                   
-            }
-            return Response($output);
-        }*/
-
+        
         return json_encode($subcategories);
     }
 

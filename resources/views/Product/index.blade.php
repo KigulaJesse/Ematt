@@ -118,7 +118,7 @@
                       <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
                     @endif
                   </td>
-                  <td class="product-category"><span class="categories">{{$product->category->category_name}}</span></td>
+                <td class="product-category"><span class="categories">{{$product->category->last()->category_name}}</span></td>
                   <td class="action" data-title="Action">
                     <div class="">
                       <ul class="list-inline justify-content-center">

@@ -8,10 +8,10 @@ class Category extends Model
 {
     public function products(){
 
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
     public function sub_category(){
-        return $this->hasMany('App\Category','category_id');
+        return $this->hasMany('App\Category','parent_id');
     }
 }

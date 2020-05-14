@@ -146,7 +146,6 @@
     </div>
 </section>
 <script>
-
     function subtotal(ele,y,price){
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var qty = ele.value;

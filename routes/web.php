@@ -38,6 +38,13 @@ use App\Product;
         });
 /*-------------------------------------------*/
 
+/*----------------ADMIN ROUTES---------------*/
+        Route::get('/admin',function(){
+            return view('admin.dashboard');
+        });
+
+/*-------------------------------------------*/
+
 /*-----------USER AND AUTH ROUTES------------*/
         //
             Auth::routes();
@@ -62,9 +69,6 @@ use App\Product;
             Route::get('/UpdateQuantity/{id}/{qty}','CartController@quantity');
 
 /*-----------------------------------------*/
-
-
-
 
 
 /*--------------PRODUCTS ROUTES---------------*/
