@@ -79,7 +79,8 @@ class CartController extends Controller
         if($check){
             return 0;
         }
-        DB::insert('INSERT INTO cart_product (cart_id,product_id) VALUES (?,?)', [$cart->id, $product->id]);
+
+        $cart->products()->attach($product->id);
         return 0;
     }
 
@@ -133,7 +134,7 @@ class CartController extends Controller
         $user = \Auth::user();
         $cart = $user->carts;
 
-        DB::delete("DELETE FROM cart_product WHERE cart_id = ? AND product_id = ?", [$cart->id,$product->id]);
+        $cart->products()->detach($product->id);
 
         return redirect('/cart');
     }
@@ -170,11 +171,14 @@ class CartController extends Controller
         
     }
     
-    public function qty($qty,$id){
+    public function quantity($id,$qty){
         $user = \Auth::user();
         $cart = $user->carts;
-        DB::update('UPDATE cart_product SET quantity ='.$qty.' WHERE cart_id ='. $cart->id.' AND '.$product_id.' = '.$id);
+        $product_id = $id;
+        $quantity = $qty; 
 
-        return ('success');
+        DB::update('UPDATE cart_product SET quantity = ? WHERE cart_id = ? AND product_id = ?',[$quantity,$cart->id,$product_id]);
+
+        return json_encode('done');
     }
 }

@@ -137,17 +137,28 @@
                         <h5 class="widget-header">Price Details</h5>
                         <ul class="category-list">
                             @php($total = 0)
-                           
-                                @foreach($products as $product)
-                                    <li><a href="">{{$product->product_name}}<span class="float-right">{{number_format($product->price)}}</span></a></li>
-                                    @php($total += $product->price)
+                                @foreach(Auth::user()->carts->products as $product)
+                                    @if($product->pivot->quantity == null)
+                                        <li>{{$product->product_name}}
+                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                {{number_format($product->price)}}
+                                            </span>
+                                        </li>
+                                            @php($total += $product->price)
+                                    @else
+                                        <li>{{$product->product_name}}
+                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                {{number_format($product->price * $product->pivot->quantity )}}
+                                            </span>
+                                        </li>
+                                            @php($total += $product->price * $product->pivot->quantity)
+                                    @endif
                                 @endforeach
                                 <li>Discount <span class="float-right">---</span></a></li>
                                 <li>Delivery Fee<span class="float-right">5000</span></a></li>
                                 @php($total += 5000)
                                 <li><h3 class="widget-header"><h3> Total<span class="float-right">{{number_format($total)}}</span></h3></h3></li>
-                                <li class="list-inline-item"><a href="/carts/checkout" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white">Confirm Order</a></li>
-                            
+                                <li class="list-inline-item"><a href="/carts/checkout" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white">Checkout</a></li>
                         </ul>
                     </div>
 				</div>

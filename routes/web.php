@@ -58,6 +58,9 @@ use App\Product;
             Route::get('/carts/checkout','CartController@checkout');
         //Used to change address used
             Route::post('/carts/address','CartController@address');
+        //Used to update the quantity of the products in cart_product
+            Route::get('/UpdateQuantity/{id}/{qty}','CartController@quantity');
+
 /*-----------------------------------------*/
 
 

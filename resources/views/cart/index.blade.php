@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                                @foreach($products as $product)
+                                @foreach(Auth::user()->carts->products as $product)
                                     <tr>
                                         <td class="product-thumb">
                                             <a href="/products/{{$product->id}}"><img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></a>
@@ -63,13 +63,19 @@
                                             <span class="categories" >
                                                 <select name = "category_{{$product->id}}" id = "inputGroupSelect_{{$product->id}}" class="w-1" onchange="subtotal(this, {{$product->id}}, {{$product->price}})">
                                                     @for ($i = 1; $i <= $product->quantity; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>    
+                                                        <option value="{{$i}}" @if($i == ($product->pivot->quantity)) selected @endif >{{$i}}</option>    
                                                     @endfor
                                                 </select>            
                                             </span>
                                         </td>
                                         <td>
-                                        <span class="categories" style = "position:relative; left:12px;" name = "sub-total" id= "subtotal_{{$product->id}}">{{number_format($product->price)}} </span>
+                                        <span class="categories" style = "position:relative; left:12px;" name = "sub-total" id= "subtotal_{{$product->id}}">
+                                            @if($product->pivot->quantity == null)
+                                                {{number_format($product->price)}}
+                                            @else
+                                                {{number_format($product->price * $product->pivot->quantity)}}
+                                            @endif
+                                        </span>
                                         </td>
                                         
                                         <td class="action" data-title="Action">
@@ -84,7 +90,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    
                                 @endforeach
                             </tbody> 
                             @else
@@ -96,7 +101,6 @@
                                     
                             @endif
                     </table>
-                         
                 </div>
             </div>
 
@@ -109,9 +113,22 @@
                         <ul class="category-list">
                             @php($total = 0)
                            
-                                @foreach($products as $product)
-                                    <li>{{$product->product_name}}<span class="float-right" id = 'side_sub_total_{{$product->id}}' >{{number_format($product->price)}}</span></li>
-                                    @php($total += $product->price)
+                                @foreach(Auth::user()->carts->products as $product)
+                                    @if($product->pivot->quantity == null)
+                                        <li>{{$product->product_name}}
+                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                {{number_format($product->price)}}
+                                            </span>
+                                        </li>
+                                            @php($total += $product->price)
+                                    @else
+                                        <li>{{$product->product_name}}
+                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                {{number_format($product->price * $product->pivot->quantity )}}
+                                            </span>
+                                        </li>
+                                            @php($total += $product->price * $product->pivot->quantity)
+                                    @endif
                                 @endforeach
                                 <li>Discount <span class="float-right">---</span></a></li>
                                 <li>Delivery Fee<span class="float-right">5000</span></a></li>
@@ -129,16 +146,34 @@
     </div>
 </section>
 <script>
+
     function subtotal(ele,y,price){
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var qty = ele.value;
         var subtotal = qty * price;
+        subtotal=commafy(subtotal);
         var x = '#subtotal_'+y;
         var z = '#side_sub_total_'+y;
+        $.ajax({
+            url: '/UpdateQuantity/'+y+'/'+qty,  
+            method:"GET",
+            dataType: "json",
+            success: function( data ) {
+                 console.log(data);
+            }   
+        }); 
         jQuery(x).empty();
         jQuery(x).append(subtotal);
         jQuery(z).empty();
         jQuery(z).append(subtotal);
-        
     }
+
+    function commafy( num ) {
+    var str = num.toString().split('.');
+    if (str[0].length >= 4) {
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    return str.join('.');
+}
 </script>
 @endsection
