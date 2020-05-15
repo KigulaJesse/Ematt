@@ -39,10 +39,34 @@ use App\Product;
 /*-------------------------------------------*/
 
 /*----------------ADMIN ROUTES---------------*/
-        Route::get('/admin',function(){
-            return view('admin.dashboard');
-        });
+        Route::group(['middleware'=>['auth','admin']],function(){
+        
+        //Used to bring the admin dashboard
+            Route::get('/administrator','AdminController@dashboard');
+        //Used to view the admins profile
+            Route::get('/admini/profile','AdminController@profile');
+        
 
+        //Used to edit the site
+            Route::get('/admini/edit','AdminController@edit');
+        //Used to add a district to the database
+            Route::post('/admini/district','DistrictController@store');
+        //Used to update a district 
+            Route::put('/admini/{district}/update','DistrictController@update');
+        //Used to delete a user from database
+            Route::get('/admini/{district}/deleteDistrict','DistrictController@destroy');
+            
+        //Used to show a user
+            Route::get('/admini/single/{id}','AdminController@show');
+        //Used to update user info by the admin
+            Route::put('/admini/{user}','AdminController@updateUser');
+        //Used to delete a user from database
+            Route::get('/admini/{user}/deleteUser','AdminController@destroyUser');
+        
+
+        //Used to delete a product from database
+            Route::get('/admini/{product}/delete','AdminController@destroy');
+        }); 
 /*-------------------------------------------*/
 
 /*-----------USER AND AUTH ROUTES------------*/

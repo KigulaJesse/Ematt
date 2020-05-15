@@ -35,7 +35,22 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'district_name'=> ['required', 'max:30', 'unique:districts'],
+            'fee'=>'required',
+        ]);
+
+        if(preg_match("/^[0-9,]+$/", $request->input('fee'))){ 
+            $fee = str_replace(',','',$request->input('fee'));
+        }
+        
+        $district = new District;
+        $district->district_name = $request->input('district_name');
+        $district->delivery_fee = $fee;
+        $district->save();
+
+        return redirect('/admini/edit');
+
     }
 
     /**
@@ -69,7 +84,20 @@ class DistrictController extends Controller
      */
     public function update(Request $request, District $district)
     {
-        //
+        $this->validate($request,[
+            'district_name'=> ['required', 'max:30', 'unique:districts'],
+            'fee'=>'required',
+        ]);
+
+        if(preg_match("/^[0-9,]+$/", $request->input('fee'))){ 
+            $fee = str_replace(',','',$request->input('fee'));
+        }
+       
+        $district->district_name = $request->input('district_name');
+        $district->delivery_fee = $fee;
+        $district->save();
+
+        return redirect('/admini/edit');
     }
 
     /**
@@ -80,6 +108,8 @@ class DistrictController extends Controller
      */
     public function destroy(District $district)
     {
-        //
+        $district->delete();
+
+        return redirect('/admini/edit');
     }
 }

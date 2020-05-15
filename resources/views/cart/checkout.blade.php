@@ -96,6 +96,7 @@
                             <input type="text" placeholder="address" name="address" required>
                             <input type="text" placeholder="contact" name="contact" required>
                             <button type="submit" class="btn">Add Address</button>
+                            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                         </form>
                     </div>
                     @endif

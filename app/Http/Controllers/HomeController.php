@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\District;
 
 class HomeController extends Controller
 {
@@ -38,10 +39,13 @@ class HomeController extends Controller
     public function home()
     {
         $products = Product::take(9)->latest()->get();
-        $categories = Category::all()->whereNull('category_id');
+        $categories = Category::all()->whereNull('parent_id');
+        $districts = District::take(9)->latest()->get();
+
         return view('Product.home',[
             'products' => $products,
-            "categories"=>$categories
+            'categories'=>$categories,
+            'districts'=>$districts,
         ]);
     }
 }

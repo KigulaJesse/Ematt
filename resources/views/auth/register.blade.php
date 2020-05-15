@@ -18,6 +18,14 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+
+                                <input id="con0tact" placeholder="Contact" type="text" class="border p-3 w-100 my-2 form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact" autofocus>
+                                @error('contact')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                
                                 
                                 <input id="email" placeholder="Email*" type="email" class="border p-3 w-100 my-2 form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                 @error('email')
@@ -35,9 +43,15 @@
                     
                                 <input id="password-confirm" placeholder="Confirm Password*"  type="password" class="border p-3 w-100 my-2 form-control" name="password_confirmation" required autocomplete="new-password">
                                 <div class="loggedin-forgot d-inline-flex my-3">
-                                    <input type="checkbox" id="registering" class="mt-1">
+                                    <input name = 'terms' type="checkbox" id="registering" class="mt-1">
                                     <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="/Terms-and-conditions">Terms & Conditions</a></label>
                                 </div>
+                                @error('terms')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                    
 
                                 <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
                                     {{ __('Register') }}

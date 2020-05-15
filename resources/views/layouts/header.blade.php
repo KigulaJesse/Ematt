@@ -33,6 +33,10 @@
                                         <a class="dropdown-item" href="/about-us">About-Us</a>  
                                     </div>
                                 </li> 
+
+                                @if(isset(Auth::user()->user_type) == 'admin')
+                                    <li class = "nav-item"><a class="nav-link" href="/administrator">Admin</a></li>
+                                @endif
                                 
                         
 							 <!-- <div id="app">

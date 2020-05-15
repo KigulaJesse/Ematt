@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\District;
+use App\Category;
 use Illuminate\Http\Request;
 use Image;
 use File;
-use App\Category;
 use DB;
+
 
 class ProductController extends Controller
 {
@@ -30,9 +32,17 @@ class ProductController extends Controller
         
         $products = Product::take(9)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
+        $districts = App\District::take(9)->latest()->get();
+
+        foreach($districts as $district){
+
+        }
+        dd('here');
+        
         return view('Product.home',[
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'districts' => $districts
         ]);
     }
     /**
@@ -67,11 +77,14 @@ class ProductController extends Controller
             'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         
+        if(preg_match("/^[0-9,]+$/", $request->input('price'))){ 
+            $fee = str_replace(',','',$request->input('price'));
+        }
         
         $user = \Auth::user();
         $product = new Product;
         $product->product_name = $request->input('product_name');
-        $product->price = $request->input('price');
+        $product->price = $fee;
         $product->user_id = $user->id;
         $product->quantity= $request->input('quantity');
         $product->brand = $request->input('brand');

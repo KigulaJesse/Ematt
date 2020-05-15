@@ -38,7 +38,7 @@
 								@csrf
 								@foreach($categories as $category)
 									<li><a href = "#" onclick="submitForm();">{{$category->category_name}}</a> </li> 
-									<input type="hidden" name="category" value='{{$category->category_name}}'/> 
+									<input type="hidden" name="search" value='{{$category->category_name}}'/> 
 								@endforeach
 							</form>
 						</ul>
@@ -47,22 +47,11 @@
 					<div class="widget category-list">
 						<h4 class="widget-header">Nearby</h4>
 						<ul class="category-list">
-							<li><a href="#">Kampala<span>93</span></a></li>
-							<li><a href="#">Ntinda<span>233</span></a></li>
-							<li><a href="#">Lubowa<span>183</span></a></li>
+							@foreach($districts as $district)
+								<li><a href="#">{{$district->district_name}}<span></span></a></li>
+							@endforeach
 						</ul>
 					</div>
-
-					<div class="widget filter">
-						<h4 class="widget-header">Show Produts</h4>
-						<select>
-							<option>Popularity</option>
-							<option value="1">Top rated</option>
-							<option value="2">Lowest Price</option>
-							<option value="4">Highest Price</option>
-						</select>
-					</div>
-
 					<div class="widget price-range w-100">
 						<h4 class="widget-header">Price Range</h4>
 						<div class="block">
@@ -113,14 +102,19 @@
 				<div class="category-search-filter">
 					<div class="row">
 						<div class="col-md-6">
-							<strong>Short</strong>
-							<select>
-								<option>Most Recent</option>
-								<option value="1">Most Popular</option>
-								<option value="2">Lowest Price</option>
-								<option value="4">Highest Price</option>
-							</select>
+							<strong>Sort By</strong>
+							<form method="POST" action="/category" id="sample_form">
+								@csrf
+	
+								<select name = search onchange="submitForm()">
+									<option>Most Recent</option>
+									<option value="1">Most Popular</option>
+									<option value="2">Lowest Price</option>
+									<option value="4">Highest Price</option>
+								</select>
+							</form>
 						</div>
+						
 						<div class="col-md-6">
 							<div class="view">
 								<strong>Views</strong>

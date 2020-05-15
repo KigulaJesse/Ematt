@@ -107,7 +107,7 @@
                     <img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></td>
                   <td class="product-details">
                     <h3 class="title">{{$product->product_name}}</h3>
-                    <span class="status active"><strong>Price:</strong>{{$product->price}}</span>
+                    <span class="status active"><strong>Price:</strong>{{number_format($product->price)}}</span>
                     <span class="status"><strong>Quantity:</strong>{{$product->quantity}}</span>
                     @if($product->brand)
                       <span class="location"><strong>Brand:</strong>{{$product->brand}}</span>
