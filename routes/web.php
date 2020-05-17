@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Product;
-
+use App\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,8 +18,10 @@ use App\Product;
         //This is a route to the top page of the app with some popular products
             Route::get('/', function(){
                 $products = Product::take(9)->latest()->get();
+                $categories = Category::all()->whereNull('parent_id'); 
                 return view('Home.index',[
-                    "products"=>$products
+                    "products"=>$products,
+                    "categories"=>$categories
                 ]);
             });
 
@@ -30,7 +32,12 @@ use App\Product;
 
         //This is a route to the contact-us page to contact us
             Route::get('/contact-us', function () {
-                return view('Home.contact-us');
+                $products = Product::take(9)->latest()->get();
+                $categories = Category::all()->whereNull('parent_id'); 
+                return view('Home.contact-us',[
+                    "products"=>$products,
+                    "categories"=>$categories
+                ]);
             });
         //This is a route to the contact-us page to contact us
         Route::get('/Terms-and-conditions', function () {
@@ -41,31 +48,34 @@ use App\Product;
 /*----------------ADMIN ROUTES---------------*/
         Route::group(['middleware'=>['auth','admin']],function(){
         
-        //Used to bring the admin dashboard
-            Route::get('/administrator','AdminController@dashboard');
-        //Used to view the admins profile
-            Route::get('/admini/profile','AdminController@profile');
-        
+                //Used to bring the admin dashboard
+                    Route::get('/administrator','AdminController@dashboard');
+                //Used to view the admins profile
+                    Route::get('/admini/profile','AdminController@profile');
+                //Used to show orders
+                    Route::get('/admini/orders','AdminController@getorders');
+                
 
-        //Used to edit the site
-            Route::get('/admini/edit','AdminController@edit');
-        //Used to add a district to the database
-            Route::post('/admini/district','DistrictController@store');
-        //Used to update a district 
-            Route::put('/admini/{district}/update','DistrictController@update');
-        //Used to delete a user from database
-            Route::get('/admini/{district}/deleteDistrict','DistrictController@destroy');
-            
-        //Used to show a user
-            Route::get('/admini/single/{id}','AdminController@show');
-        //Used to update user info by the admin
-            Route::put('/admini/{user}','AdminController@updateUser');
-        //Used to delete a user from database
-            Route::get('/admini/{user}/deleteUser','AdminController@destroyUser');
-        
+                //Used to edit the site
+                    Route::get('/admini/edit','AdminController@edit');
+                //Used to add a district to the database
+                    Route::post('/admini/district','DistrictController@store');
+                //Used to update a district 
+                    Route::put('/admini/{district}/update','DistrictController@update');
+                //Used to delete a user from database
+                    Route::get('/admini/{district}/deleteDistrict','DistrictController@destroy');
 
-        //Used to delete a product from database
-            Route::get('/admini/{product}/delete','AdminController@destroy');
+                    
+                //Used to show a user
+                    Route::get('/admini/single/{id}','AdminController@show');
+                //Used to update user info by the admin
+                    Route::put('/admini/{user}','AdminController@updateUser');
+                //Used to delete a user from database
+                    Route::get('/admini/{user}/deleteUser','AdminController@destroyUser');
+                
+
+                //Used to delete a product from database
+                    Route::get('/admini/{product}/delete','AdminController@destroy');
         }); 
 /*-------------------------------------------*/
 
@@ -79,6 +89,7 @@ use App\Product;
 /*------------------------------------------*/
 
 /*-------------CART ROUTES-------------*/
+
         //
             Route::get('/cart','CartController@index');
         //
@@ -91,6 +102,8 @@ use App\Product;
             Route::post('/carts/address','CartController@address');
         //Used to update the quantity of the products in cart_product
             Route::get('/UpdateQuantity/{id}/{qty}','CartController@quantity');
+        //Used to confirm order
+            Route::get('/carts/confirm-order/{cart}','CartController@order');
 
 /*-----------------------------------------*/
 
@@ -109,14 +122,20 @@ use App\Product;
         //used to get form for editing the product
             Route::get('/products/{product}/edit','ProductController@edit');
         //used to store the results of updating a product
-            Route::put('/products/{product}','ProductController@update');
+            Route::put('/products/{product}','ProductController@update');     
         //Used to delete a product from database
             Route::get('/products/{product}/delete','ProductController@destroy');
 /*----------------------------------------------*/
 
 /*----------------CATEGORY ROUTES-----------------*/
         //Used to post a query to find some category
-            Route::post('/category','CategoryController@show');  
+            Route::post('/category','CategoryController@show');
+        //Used to get products of a category on the side bar
+            Route::get('/category/{category}','CategoryController@showcategory');
+        //Used to get products of a category on the side bar
+            Route::get('/category/district/{id}','CategoryController@showbydistrict');
+        //Used to get products of a user on the show page
+            Route::get('/category/user/{id}','CategoryController@showbyuser');
         //Used to get sub_categories when creating a product
             Route::get('/category/get_sub_categories/{id}','CategoryController@get_sub_category');
 

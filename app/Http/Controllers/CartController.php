@@ -12,6 +12,11 @@ use DB;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +41,7 @@ class CartController extends Controller
         }
         else {
             //an array from the cart_product table is returned
-            $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ?', [$cart->id]);
+            $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]);
             foreach ($full_cart as $full){
                 $products[] = Product::find($full->product_id);
             }
@@ -80,7 +85,7 @@ class CartController extends Controller
             return 0;
         }
 
-        $cart->products()->attach($product->id);
+        $cart->products()->attach($product->id,['quantity'=>1]);
         return 0;
     }
 
@@ -116,7 +121,22 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        
+    }
+
+    public function order(Cart $cart){
+
+        $user = \Auth::user();
+
+        //check if the items are already in the database;
+        $check = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]); 
+        if(!$check){
+            return 0;
+        }
+
+        DB::update('UPDATE cart_product SET ordered = "yes" WHERE cart_id = ?',[$cart->id]);
+        
+        return redirect('/cart');
     }
 
     /**

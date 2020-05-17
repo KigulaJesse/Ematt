@@ -114,7 +114,7 @@
                                                 <td>{{$product->product_name}}</td>
                                                 <td style="position:relative; left:-15px;">{{number_format($product->price)}}</td>
                                                 <td style="position:relative; left:17px;">{{$product->quantity}}</td>
-                                                <td><a class="delete" data-toggle="tooltip" data-placement="top" title="Delete from cart" href="/admini/{{$product->id}}/delete" style="position:relative; left:15px;">
+                                                <td><a class="delete" data-toggle="tooltip" data-placement="top" title="Delete from products" href="/admini/{{$product->id}}/delete" style="position:relative; left:15px;">
                                                     <i class="fa fa-trash"></i>
                                                 </a></td>
                                             </tr>

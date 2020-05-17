@@ -14,25 +14,25 @@
 					@auth
 						<h1>Hello, {{Auth::user()->name}}</h1>
 					@else
-						<h1>Hello<h1>
+						<h1>Hello</h1>
 					@endauth
 					<p>Join Ematt to buy and sell from each other <br> everyday in local communities around the world</p>
 					<div class="short-popular-category-list text-center">
 						<h2>Popular Category</h2>
 						<ul class="list-inline">
 							<li class="list-inline-item">
-								<a href="category.html"><i class="fa fa-bed"></i> Hostel</a></li>
+								<a href="#"><i class="fa fa-bed"></i> Hostel</a></li>
 							<!--<li class="list-inline-item">
 								<a href="category.html"><i class="fa fa-grav"></i> Fitness</a>
 							</li>-->
 							<li class="list-inline-item">
-								<a href="category.html"><i class="fa fa-car"></i> Cars</a>
+								<a href="#"><i class="fa fa-car"></i> Cars</a>
 							</li>
 							<li class="list-inline-item">
-								<a href="category.html"><i class="fa fa-cutlery"></i> Restaurants</a>
+								<a href="#"><i class="fa fa-cutlery"></i> Restaurants</a>
 							</li>
 							<li class="list-inline-item">
-								<a href="category.html"><i class="fa fa-shopping-bag"></i>Shop Online</a>
+								<a href="/home"><i class="fa fa-shopping-bag"></i>Shop Online</a>
 							</li>
 						</ul>
 					</div>
@@ -93,15 +93,15 @@
 						<div class="product-item bg-light">
 							<div class="card">
 								<div class="thumb-content">
-									<a href="single.html">
+									<a href="/products/{{$product->id}}">
 										<img class="card-img-top img-fluid" src="images/products/{{$product->id}}/1.jpg" alt="Card image cap">
 									</a>
 								</div>
 								<div class="card-body">
-									<h4 class="card-title"><a href="single.html">{{$product->product_name}}</a></h4>
+									<h4 class="card-title"><a href="">{{$product->product_name}}</a></h4>
 									<ul class="list-inline product-meta">
 										<li class="list-inline-item">
-											<a href="single.html"><i class="fa fa-folder-open-o"></i>Electronics</a>
+											<a href="/products/{{$product->id}}"><i class="fa fa-folder-open-o"></i>Electronics</a>
 										</li>
 										<li class="list-inline-item">
 											<a href="#"><i class="fa fa-calendar"></i>26th December</a>
@@ -152,19 +152,19 @@
 						<div class="category-block">
 							<div class="header">
 								<i class="fa fa-laptop icon-bg-1"></i> 
-								<h4>Electronics</h4>
+								<h4>Online Shop</h4>
 							</div>
+							
 							<ul class="category-list" >
-								<li><a href="category.html">Laptops <span>93</span></a></li>
-								<li><a href="category.html">Iphone <span>233</span></a></li>
-								<li><a href="category.html">Microsoft  <span>183</span></a></li>
-								<li><a href="category.html">Monitors <span>343</span></a></li>
+								@foreach($categories as $category)	
+									<li><a href = "/category/{{$category->category_name}}">{{$category->category_name}}<span></span></a> </li>
+								@endforeach
 							</ul>
 						</div>
 					</div> 
 					<!-- Electronics Category On Home Page -->
 
-					<!--Restaurant Category On Home Page-->
+					<!--Restaurant Category On Home Page
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">
 							<div class="header">
@@ -181,7 +181,7 @@
 					</div>
 					 <!--Restaurant Category On Home Page -->
 
-					<!-- Hostels Category On Home Page -->
+					<!-- Hostels Category On Home Page 
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">
 							<div class="header">
@@ -196,7 +196,7 @@
 					</div>
 					 <!-- Hostels Category List -->
 
-					<!-- Online Shopping Category On Home Page -->
+					<!-- Online Shopping Category On Home Page 
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">
 							<div class="header">
@@ -213,7 +213,7 @@
 					</div> 
 					<!-- Online Shopping Category On Home Page -->
 					
-					<!-- Jobs Category On Home Page -->
+					<!-- Jobs Category On Home Page 
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">
 							<div class="header">
@@ -230,7 +230,7 @@
 					</div> 
 					<!-- Jobs Category On Home Page -->
 					
-					<!-- Vehicles Category On Home Page -->
+					<!-- Vehicles Category On Home Page 
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">
 							<div class="header">
@@ -246,7 +246,7 @@
 						</div>
 					</div> <!-- Vehicles Category On Home Page -->
 					
-					<!-- Services Category on home page-->
+					<!-- Services Category on home page
 					<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
 						<div class="category-block">						
 							<div class="header">
@@ -285,8 +285,8 @@
 					<h2>Start today to get more exposure and
 					grow your business</h2>
 					<ul class="list-inline mt-30">
-						<li class="list-inline-item"><a class="btn btn-main" href="ad-listing.html">Add Listing</a></li>
-						<li class="list-inline-item"><a class="btn btn-secondary" href="category.html">Browser Listing</a></li>
+						<li class="list-inline-item"><a class="btn btn-main" href="/product">Add Listing</a></li>
+						<li class="list-inline-item"><a class="btn btn-secondary" href="/home">Browser Products</a></li>
 					</ul>
 				</div>
 			</div>

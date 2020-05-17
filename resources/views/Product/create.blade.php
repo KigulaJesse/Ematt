@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-md-8 offset-md-2 text-center">
 				<!-- Title text -->
-                <h3>{{Auth::user()->name}}, Add some Products</h3>
+                <h3>@if(isset(Auth::user()->name)){{Auth::user()->name}},@endif Add some Products</h3>
 			</div>
 		</div>
 	</div>
@@ -31,6 +31,9 @@
                         <div class="col-lg-6">
                             <!--product name -->
                             <h6 class="font-weight-bold pt-4 pb-1">Name Of Product:</h6>
+                            @if($errors->any())
+                                {{ implode('', $errors->all('<div>:message</div>')) }}
+                            @endif
                             <input type="text" 
                                    name='product_name' 
                                    class="border w-100 p-2 bg-white text-capitalize" 
@@ -130,6 +133,7 @@
                                 @error('quantity')
                                 <p class="alert alert-danger">{{$errors->first('quantity')}}</p>
                                 @enderror
+
                             </div>
                             <!---------------------end of price and quantity--------------->
 
@@ -161,18 +165,42 @@
                                 <p class="alert alert-danger">{{$errors->first('condition')}}</p>
                             @enderror
                             <!---------------end of condition of the product----------------->
-
+                            
+                            <style>
+                                .show {
+                                    display:none;
+                                }
+                            </style>
 
                             <!--------------------uploading image/images of product -------------->
                             <div class="choose-file text-center my-4 py-4 rounded">
                                 <label for="file-upload">
-                                    <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
-                                    <span class="d-block">or</span>
+                                    <!--<span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+                                    <span class="d-block">or</span>-->
                                     <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
-                                    <span class="d-block">Maximum upload file size: 500 KB</span>
-                                    <input type="file" class="form-control-file d-none" id="file-upload" name="file-upload">
+                                    <!--<span class="d-block">Maximum upload file size: 500 KB</span>-->
+                                    <input type="file" class="form-control-file d-none" id ="file-upload" name="file-upload" multiple>
                                 </label>
                             </div>
+                            
+                            <script type="text/javascript">
+                                
+                                $(function() {
+                                    $(":file").change(function() {
+                                        if (this.files && this.files[0]) {
+                                            for (var i = 0; i < this.files.length; i++) {
+                                                var reader = new FileReader();
+                                                reader.onload = imageIsLoaded;
+                                                reader.readAsDataURL(this.files[i]);
+                                            }
+                                        }
+                                    });
+                                });
+                                function imageIsLoaded(e) {
+                                    $('#fileyes').append('<img src=' + e.target.result + '>');
+                                };
+                            </script>
+                            
                             @error('file-upload')
                                 <p class="alert alert-danger">{{$errors->first('file-upload')}}</p>
                             @enderror

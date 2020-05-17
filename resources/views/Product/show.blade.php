@@ -8,7 +8,7 @@
 ====================================-->
 <section class="section bg-gray">
 	<!-- Container Start -->
-	<div class="container">
+	<div class="container" style = "position: relative; top:-80px;">
 		<div class="row">
 			<!-- Left sidebar -->
 			<div class="col-md-8">
@@ -17,42 +17,44 @@
 						@if ($product->short_description)
 							{{$product->short_description}}
 						@else
-							{{$product->name}} for sale
+							{{$product->product_name}} for sale
 						@endif
 					</h1>
 					
 					<!--META-INFORMATION AT THE TOP OF IMAGES -->
 					<div class="product-meta">
 						<ul class="list-inline">
-							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="">{{$user->name}}</a></li>
-							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">Electronics</a></li>
-							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="">Dhaka Bangladesh</a></li>
+							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="/category/user/{{$user->id}}">{{$user->name}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="/category/{{$product->category->last()->category_name}}">{{$product->category->last()->category_name}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="/category/district/{{$user->district->id}}">{{$user->district->district_name}} District</a></li>
 						</ul>
 					</div>
 
-					<!-- PICTURE AND PICTURES AT THE BOTTOM SLIDING -->
+					<!-- PICTURE AND PICTURES AT THE BOTTOM SLIDING 
 					<div class="product-slider">
 						<!-- a foreach loop might help -->
 						<div class="product-slider-item my-4" data-image="/images/products/{{$product->id}}">
 							<img class="img-fluid w-50" style = "position:relative; left:160px" src="/images/products/{{$product->id}}/1.jpg" alt="product-img">
 						</div>
-					</div>
+					<!--</div>-->
 
 					<!-- PRODUCT DESCRIPTION,SPECIFICATIONS, AND REVIEW -->
-					<div class="content mt-5 pt-5">
+					<div class="content mt-5 pt-5" style = "position: relative; top:-80px;">
 						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
 								 aria-selected="true">Product Details</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
-								 aria-selected="false">Specifications</a>
-							</li>
-							<li class="nav-item">
+							@if($product->long_description != null)
+								<li class="nav-item">
+									<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
+									aria-selected="false">Specifications</a>
+								</li>
+							@endif
+							<!--<li class="nav-item">
 								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
 								 aria-selected="false">Reviews</a>
-							</li>
+							</li>-->
 						</ul>
 						 
 						<div class="tab-content" id="pills-tabContent">
@@ -65,21 +67,9 @@
 									@if ($product->long_description)
 									@else
 										{{$product->product_name}} for sale
-									@endif
+
 								</p>
-
-								<iframe width="100%" height="400" src="https://www.youtube.com/embed/LUH7njvhydE?rel=0&amp;controls=0&amp;showinfo=0"
-								 frameborder="0" allowfullscreen></iframe>
-								<p></p>
-								<p></p>
-
-							</div>
-
-							<!--============================
-                 		    = 		 SPECIFICATIONS        =
-                 		    =============================-->
-							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-								<h3 class="tab-title">Product Specifications</h3>
+								
 								<table class="table table-bordered product-table">
 									<tbody>
 										<tr>
@@ -87,14 +77,63 @@
 											<td>Ush {{number_format($product->price)}}</td>
 										</tr>
 										<tr>
-											<td>Added</td>
+											<td>Added on</td>
 											<td>{{$product->created_at}}</td>
 										</tr>
 
 										@if($user->district)
 										<tr>
-											<td>State</td>
-											<td>{{$user->district}}</td>
+											<td>Location</td>
+											<td>{{$user->district->district_name}}</td>
+										</tr>
+										@endif
+
+										@if($product->brand)
+										<tr>
+											<td>Brand</td>
+											<td>{{$product->brand}}</td>
+										</tr>
+										@endif
+
+										<tr>
+											<td>Condition</td>
+											<td>{{$product->condition}}</td>
+										</tr>
+										
+										
+										<!--<tr>
+											<td>Model</td>
+											<td>2017</td>
+										</tr>
+										<tr>
+											<td>Battery Life</td>
+											<td>23</td>
+										</tr>-->
+									</tbody>
+								</table>
+								@endif
+
+							</div>
+
+							<!--============================
+                 		    = 		 SPECIFICATIONS        =
+                 		    =============================-->
+							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+								<table class="table table-bordered product-table">
+									<tbody>
+										<tr>
+											<td>Seller Price</td>
+											<td>Ush {{number_format($product->price)}}</td>
+										</tr>
+										<tr>
+											<td>Added on</td>
+											<td>{{$product->created_at}}</td>
+										</tr>
+
+										@if($user->district)
+										<tr>
+											<td>Location</td>
+											<td>{{$user->district->district_name}}</td>
 										</tr>
 										@endif
 
@@ -125,15 +164,15 @@
 							
 							<!--============================
                  			=             REVIEW           =
-                 			=============================-->
+                 			=============================
 							<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
 								<h3 class="tab-title">Product Review</h3>
 								<div class="product-review">
 									<div class="media">
-										<!-- Avater -->
+										<!-- Avater 
 										<img src="/images/user/user-thumb.jpg" alt="avater">
 										<div class="media-body">
-											<!-- Ratings -->
+											<!-- Ratings 
 											<div class="ratings">
 												<ul class="list-inline">
 													<li class="list-inline-item">
@@ -169,7 +208,7 @@
 									</div>
 									<div class="review-submission">
 										<h3 class="tab-title">Submit your review</h3>
-										<!-- Rate -->
+										<!-- Rate
 										<div class="rate">
 											<div class="starrr"></div>
 										</div>
@@ -191,7 +230,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div>-->
 						</div>
 
 					</div>

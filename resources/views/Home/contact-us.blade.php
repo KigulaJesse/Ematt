@@ -25,7 +25,7 @@
             <div class="col-md-6">
                 <div class="contact-us-content p-4">
                     <h5>Contact Us</h5>
-                    <h1 class="pt-3">Hello {{Auth::user()->name}}, what's on your mind?</h1>
+                    <h1 class="pt-3">Hello @auth{{Auth::user()->name}}@endauth, what's on your mind?</h1>
                     <p class="pt-3 pb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elit dolor, blandit vel euismod ac, lentesque et dolor. Ut id tempus ipsum.</p>
                 </div>
             </div>
@@ -43,11 +43,10 @@
                                 </div>
                             </div>
                             <select name="" id="" class="form-control w-100">
-                                <option value="1">Select Category</option>
-                                <option value="1">Laptop</option>
-                                <option value="1">iPhone</option>
-                                <option value="1">Monitor</option>
-                                <option value="1">I need</option>
+                                <option value="">Category</option>
+                                @foreach($categories as $category)
+                                        <option value = "{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->category_name}} </option>  
+                                @endforeach
                             </select>
                             <textarea name="message" id=""  placeholder="Message *" class="border w-100 p-3 mt-3 mt-lg-4"></textarea>
                             <div class="btn-grounp">

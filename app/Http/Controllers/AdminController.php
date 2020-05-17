@@ -8,6 +8,7 @@ use App\Category;
 use App\District;
 use App\Cart;
 use App\User;
+use DB;
 
 
 class AdminController extends Controller
@@ -59,6 +60,25 @@ class AdminController extends Controller
         
         return redirect('/administrator');
 
+    }
+
+    public function getorders(){
+
+        //$orders = DB::select('SELECT * FROM cart_product WHERE ordered = "yes" AND delivered is null');
+
+        $carts = Cart::all();
+        $orders = [];
+        foreach($carts as $cart){
+            foreach($cart->products as $order){
+                if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == null) ){
+                    $orders[] = $order;
+                }
+            }
+        }
+    
+        return view('administrator.orders',[
+            'orders' => $orders,
+        ]);
     }
 
 

@@ -34,13 +34,9 @@
 					<div class="widget category-list">
 						<h4 class="widget-header">All Category</h4>
 						<ul class="category-list">
-							<form method="POST" action="/category" id="sample_form">
-								@csrf
-								@foreach($categories as $category)
-									<li><a href = "#" onclick="submitForm();">{{$category->category_name}}</a> </li> 
-									<input type="hidden" name="search" value='{{$category->category_name}}'/> 
-								@endforeach
-							</form>
+							@foreach($categories as $category)
+								<li><a href = "/category/{{$category->category_name}}">{{$category->category_name}}</a> </li>  
+							@endforeach
 						</ul>
 					</div>
 
@@ -48,11 +44,11 @@
 						<h4 class="widget-header">Nearby</h4>
 						<ul class="category-list">
 							@foreach($districts as $district)
-								<li><a href="#">{{$district->district_name}}<span></span></a></li>
+							<li><a href="/category/district/{{$district->id}}">{{$district->district_name}}<span></span></a></li>
 							@endforeach
 						</ul>
 					</div>
-					<div class="widget price-range w-100">
+				<!--	<div class="widget price-range w-100">
 						<h4 class="widget-header">Price Range</h4>
 						<div class="block">
 											<input class="range-track w-100" type="text" data-slider-min="1000" data-slider-max="500000" data-slider-step="500"
@@ -67,30 +63,43 @@
 						<h4 class="widget-header">By Condition</h4>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
+								<input class="form-check-input" name = "condition" type="radio" value="Brand New">
 								Brand New
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-								Almost New
+								<input class="form-check-input" name ="condition" type="radio" value="Like New">
+								Like New
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-								Gently New
+								<input class="form-check-input" name = "condition" type="radio" value="Fairly Used">
+								Fairly Used
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value="">
-									Havely New
+								<input class="form-check-input" name = "condition" type="radio" value="used">
+									Used
 							</label>
 						</div>
-					</div>
-
+					</div>-->
+					<script>
+						var rad = document.condition;
+						var prev = null;
+						for (var i = 0; i < rad.length; i++) {
+							rad[i].addEventListener('change', function() {
+								alert(rad[i]);
+								/*(prev) ? console.log(prev.value): null;
+								if (this !== prev) {
+									prev = this;
+								}
+								console.log(this.value)*/
+							});
+						}
+					</script>
 				</div>
 			</div>
 
@@ -103,10 +112,10 @@
 					<div class="row">
 						<div class="col-md-6">
 							<strong>Sort By</strong>
-							<form method="POST" action="/category" id="sample_form">
+							<form method="POST" action="/category" id="popularity_form">
 								@csrf
 	
-								<select name = search onchange="submitForm()">
+								<select name = search onchange="submitpopularity()">
 									<option>Most Recent</option>
 									<option value="1">Most Popular</option>
 									<option value="2">Lowest Price</option>
@@ -145,18 +154,20 @@
 										<div class="thumb-content">
 											<!-- <div class="price">$200</div> -->
 											<a href="/products/{{$product->id}}">
-												<img class="card-img-top img-fluid" src="images/products/{{$product->id}}/1.jpg" alt="Card image cap">
+												<img class="card-img-top img-fluid" src="/images/products/{{$product->id}}/1.jpg" alt="Card image cap">
 											</a>
 										</div>
 										<div class="card-body">
 											<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->product_name}}</a></h4>
 											<ul class="list-inline product-meta">
 												<li class="list-inline-item">
+													
 													<form method="POST" action="/category" id="sample_form">
 													@csrf
-														<a href="#" onclick="submitForm();"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
-														<input type="hidden" name="category" value='{{$product->category->last()->category_name}}'/>
+														<a href="#" onclick="submitForm(this);"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
+														<input type="hidden" name="search" value ='{{$product->category->last()->category_name}}'/>
 													</form>
+
 												</li>
 												<li class="list-inline-item">
 													<a href="#"><i class="fa fa-calendar"></i>26th December</a>
@@ -221,10 +232,11 @@
 
 <script>
 	function submitForm() {
-	  // Can do some validation here if needed
-	
-	  document.getElementById('sample_form').submit();  
-	
+	  document.getElementById('sample_form').submit();
+	  return true;
+	}
+	function submitpopularity() {
+	  document.getElementById('popularity_form').submit();
 	  return true;
 	}
 </script>

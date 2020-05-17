@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Product;
 use App\District;
+use App\User;
 
 class CategoryController extends Controller
 {
@@ -46,20 +47,82 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
+    public function showbyuser($id){
+        $user = User::find($id);
+        $products = $user->products;
+
+        $districts = District::take(9)->latest()->get();
+        $categories = Category::all()->whereNull('parent_id');
+        return view('Product.home',[
+            'products' => $products,
+            'categories' => $categories,
+            'searched' => $user->name,
+            'districts'=> $districts
+        ]);
+    }
+
+    public function showbydistrict($id){
+        $district = District::find($id);
+        $users = $district->users;
+        $products = [];
+        //dd($users[0]->products);
+        foreach($users as $user){
+            foreach($user->products as $product){
+                $products[]=$product;
+            }
+        }
+        $districts = District::take(9)->latest()->get();
+        $categories = Category::all()->whereNull('parent_id');
+        return view('Product.home',[
+            'products' => $products,
+            'categories' => $categories,
+            'searched' => $district->district_name,
+            'districts'=> $districts
+        ]);
+        
+    }
+
+    public function showcategory($name){
+
+        $category = Category::where('category_name','LIKE','%'.$name.'%')->get()->first();
+            if($category != null ){
+                $products = $category->products;
+            }
+        $districts = District::take(9)->latest()->get();
+        $categories = Category::all()->whereNull('parent_id');
+        return view('Product.home',[
+            'products' => $products,
+            'categories' => $categories,
+            'searched' => $name,
+            'districts'=> $districts
+        ]);
+        
+    }
     public function show(Request $request){
 
+        $search = $request->input('search');
+
         /*SEARCH BUY BRAND AND STORE PRODUCTS */
-        $products = Product::where('brand','=',$request->input('search'))->get();
+        $products = Product::where('brand','LIKE','%'.$search.'%')->get();
 
         if(count($products) == 0){
-            $products = Product::where('product_name','=',$request->input('search'))->get();
+            $products = Product::where('product_name','LIKE','%'.$search.'%')->get();
         }
         if(count($products) == 0){
-            $category = Category::where('category_name','=',$request->input('search'))->get()->first();
+            $category = Category::where('category_name','LIKE','%'.$search.'%')->get()->first();
             if($category != null ){
                 $products = $category->products;
             }
         }
+        if(count($products)==0){
+            $users = User::where('name','LIKE','%'.$search.'%')->get();
+            foreach($users as $user){
+                foreach($user->products as $product){
+                    $products[]=$product;
+                }
+            }    
+        }
+        
         $districts = District::take(9)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[

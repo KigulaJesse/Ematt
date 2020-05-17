@@ -83,11 +83,10 @@
                 </div>
                 <!-- /.row -->
                 <!-- /.row -->
-                @if(count($districts)>0)
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="white-box">
-                                <h3 class="box-title">Distritts Table <button type = "submit" class="btn btn-success" style="position:relative; left:700px;" onclick="openpopForm()">Add District</button></h3>
+                                <h3 class="box-title">Districts Table <button type = "submit" class="btn btn-success" style="position:relative; left:700px;" onclick="openpopForm()">Add District</button></h3>
                                 <div class="form-popup" id="mypopForm">
                                     <form action="/admini/district" method = "post" class="form-container">
                                         @csrf
@@ -112,8 +111,8 @@
                                             @foreach($districts as $district)
                                                 <tr>
                                                     <td>{{$district->district_name}}</td>
-                                                    <td style="position:relative; left:40px">@if(count($district->users)>0) {{count($district->users)}} @else 0 @endif</td>
-                                                    <td style="position:relative; left:17px;">{{number_format($district->delivery_fee)}}</td>
+                                                    <td><div style="position:relative; left:40px">@if(count($district->users)>0) {{count($district->users)}} @else 0 @endif</div></td>
+                                                    <td><div style="position:relative; left:17px;">{{number_format($district->delivery_fee)}}</div></td>
                                                     
                                                     <td>
                                                         <a class="edit" style="position:relative; left:10px;" data-toggle="tooltip" data-placement="top" title="Edit" onclick="openForm()">
@@ -144,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+
                 @error('district_name')
                     <span class="invalid-feedback" style="color:red;" role="alert">
                        *{{$message }}

@@ -14,16 +14,16 @@ class CartProduct extends Migration
     public function up()
     {
         Schema::create('cart_product', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity')->nullable();
-            $table->string('bought')->nullable();
+            $table->string('ordered')->nullable();
+            $table->string('delivered')->nullable();
             $table->timestamps();
 
-            $table->unique(['cart_id','product_id']);
-
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('cart_id')->references('id')->on('carts');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

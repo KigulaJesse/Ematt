@@ -17,6 +17,10 @@
                                 aria-hidden="true"></i>Edit</a>
                     </li>
                     <li>
+                        <a href="/admini/orders" class="waves-effect"><i class="fa fa-shopping-basket fa-fw"
+                                aria-hidden="true"></i>Orders</a>
+                    </li>
+                    <li>
                         <a href="/admini/profile" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i>Profile</a>
                     </li>                    

@@ -6,6 +6,7 @@ use App\Product;
 use App\District;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Traits\ImageUpload;
 use Image;
 use File;
 use DB;
@@ -13,6 +14,11 @@ use DB;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('home','create','show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,23 +34,6 @@ class ProductController extends Controller
     }
 
     
-    public function home(){
-        
-        $products = Product::take(9)->latest()->get();
-        $categories = Category::all()->whereNull('parent_id');
-        $districts = App\District::take(9)->latest()->get();
-
-        foreach($districts as $district){
-
-        }
-        dd('here');
-        
-        return view('Product.home',[
-            'products' => $products,
-            'categories' => $categories,
-            'districts' => $districts
-        ]);
-    }
     /**
      * Used to display form for creating a new product
      *
@@ -74,6 +63,7 @@ class ProductController extends Controller
             'condition'=>'required',
             'price'=>'required',
             'short'=>'max:30',
+            
             'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         

@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+<section class="page-title" style ="background-color:forestgreen;   ">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<!-- Title text -->
+                <h3>{{Auth::user()->name}}, Checkout</h3>
+			</div>
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+
 <style>
     body {font-family: Arial, Helvetica, sans-serif;}
     * {box-sizing: border-box;}
@@ -159,7 +172,7 @@
                                 <li>Delivery Fee<span class="float-right">5000</span></a></li>
                                 @php($total += 5000)
                                 <li><h3 class="widget-header"><h3> Total<span class="float-right">{{number_format($total)}}</span></h3></h3></li>
-                                <li class="list-inline-item"><a href="/carts/checkout" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white">Checkout</a></li>
+                                <li class="list-inline-item"><a href = "/carts/confirm-order/{{Auth::user()->carts->id}}}}" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white;position:relative; left:30px; ">Confirm Order</a></li>
                         </ul>
                     </div>
 				</div>
