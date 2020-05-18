@@ -54,7 +54,7 @@
                 <div class="card my-3 my-lg-0">
                     <img class="card-img-top" src="images/team/team1.jpg" class="img-fluid w-100" alt="Card image cap">
                     <div class="card-body bg-gray text-center">
-                        <h5 class="card-title">John Doe</h5>
+                        <h5 class="card-title">Andrew</h5>
                         <p class="card-text">Founder / CEO</p>
                     </div>
                 </div>
@@ -92,23 +92,22 @@
 
 <section class="section bg-gray">
     <div class="container">
-        <div class="row">
+        <div class="row" style = "position: relative; left:250px;">
             <div class="col-lg-3 col-sm-6 my-lg-0 my-3">
                 <div class="counter-content text-center bg-light py-4 rounded">
                     <i class="fa fa-smile-o d-block"></i>
-                    <span class="counter my-2 d-block" data-count="2314">0</span>
+                <span class="counter my-2 d-block">{{count(App\User::all()->whereNull('user_type'))}}</span>
                     <h5>Happy Customers</h5>
-                    </script>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6 my-lg-0 my-3">
                 <div class="counter-content text-center bg-light py-4 rounded">
                     <i class="fa fa-user-o d-block"></i>
-                    <span class="counter my-2 d-block" data-count="1013">0</span>
+                    <span class="counter my-2 d-block">{{count(App\User::all()->whereNull('user_type'))}}</span>
                     <h5>Active Members</h5>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6 my-lg-0 my-3">
+            <!--<div class="col-lg-3 col-sm-6 my-lg-0 my-3">
                 <div class="counter-content text-center bg-light py-4 rounded">
                     <i class="fa fa-bookmark-o d-block"></i>
                     <span class="counter my-2 d-block" data-count="2413">0</span>
@@ -121,7 +120,7 @@
                     <span class="counter my-2 d-block" data-count="200">0</span>
                     <h5>Happy Customers</h5>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </section>

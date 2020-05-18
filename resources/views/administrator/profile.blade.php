@@ -53,38 +53,33 @@
                     </div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form class="form-horizontal form-material" action ="#">
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe"
+                                        <input type="text" value = "{{Auth::user()->name}}"
                                             class="form-control form-control-line"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com"
+                                        <input type="email" value = "{{Auth::user()->email}}"
                                             class="form-control form-control-line" name="example-email"
                                             id="example-email"> </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" value="password" class="form-control form-control-line">
+                                        <input type="password"  class="form-control form-control-line">
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890"
+                                        <input type="text" value = "{{Auth::user()->contact}}"
                                             class="form-control form-control-line"> </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Message</label>
-                                    <div class="col-md-12">
-                                        <textarea rows="5" class="form-control form-control-line"></textarea>
-                                    </div>
-                                </div>
+                                @if(Auth::user()->address)
                                 <div class="form-group">
                                     <label class="col-sm-12">Select Country</label>
                                     <div class="col-sm-12">
@@ -97,9 +92,10 @@
                                         </select>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success">Update Profile</button>
+                                        <!--<button class="btn btn-success">Update Profile</button>-->
                                     </div>
                                 </div>
                             </form>

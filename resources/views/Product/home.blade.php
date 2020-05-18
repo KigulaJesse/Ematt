@@ -117,9 +117,9 @@
 	
 								<select name = search onchange="submitpopularity()">
 									<option>Most Recent</option>
-									<option value="1">Most Popular</option>
+									<!--<option value="1">Most Popular</option>
 									<option value="2">Lowest Price</option>
-									<option value="4">Highest Price</option>
+									<option value="4">Highest Price</option>-->
 								</select>
 							</form>
 						</div>
@@ -131,9 +131,9 @@
 									<li class="list-inline-item">
 										<a href="#" onclick="event.preventDefault();" class="text-info"><i class="fa fa-th-large"></i></a>
 									</li>
-									<li class="list-inline-item">
+									<!--<li class="list-inline-item">
 										<a href="#"><i class="fa fa-reorder"></i></a>
-									</li>
+									</li>-->
 								</ul>
 							</div>
 						</div>
@@ -147,7 +147,7 @@
 					<div class="row mt-30">
 						@if(count($products) > 0)
 							@foreach($products as $product)
-							<div class="col-sm-12 col-lg-4 col-md-6">
+							<div class="col-sm-12 col-lg-4 col-md-6" style = "overflow:auto;">
 							
 								<div class="product-item bg-light">
 									<div class="card">
@@ -161,17 +161,14 @@
 											<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->product_name}}</a></h4>
 											<ul class="list-inline product-meta">
 												<li class="list-inline-item">
-													
-													<form method="POST" action="/category" id="sample_form">
-													@csrf
-														<a href="#" onclick="submitForm(this);"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
-														<input type="hidden" name="search" value ='{{$product->category->last()->category_name}}'/>
+														<a href="/category/{{$product->category->last()->category_name}}"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
 													</form>
 
 												</li>
-												<li class="list-inline-item">
+												
+												<!--<li class="list-inline-item">
 													<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-												</li>
+												</li>-->
 											</ul>
 											@if ($product->long_description)
 												<p class="card-text">{{$product->long_description}}</p>

@@ -30,25 +30,38 @@
                 </div>
             </div>
             <div class="col-md-6">
-                    <form action="#">
+                    <form action="/contact-us" method = "post">
+                        @csrf
                         <fieldset class="p-4">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-6 py-2">
-                                        <input type="text" placeholder="Name *" class="form-control" required>
+                                        <input type="text" name ="name" placeholder="Name *" value ="{{old('name')}}" class="form-control" required>
+                                        @error('name')
+                                        <p class="alert alert-danger">{{$errors->first('name')}}</p>
+                                        @enderror
                                     </div>
                                     <div class="col-lg-6 pt-2">
-                                        <input type="email" placeholder="Email *" class="form-control" required>
+                                        <input type="email" name="email" placeholder="Email *" value ="{{old('email')}}" class="form-control" required>
+                                        @error('email')
+                                        <p class="alert alert-danger">{{$errors->first('email')}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <select name="" id="" class="form-control w-100">
+                            <select name="category" id="" class="form-control w-100">
                                 <option value="">Category</option>
                                 @foreach($categories as $category)
                                         <option value = "{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->category_name}} </option>  
                                 @endforeach
                             </select>
-                            <textarea name="message" id=""  placeholder="Message *" class="border w-100 p-3 mt-3 mt-lg-4"></textarea>
+                            @error('category')
+                            <p class="alert alert-danger">{{$errors->first('category')}}</p>
+                            @enderror
+                            <textarea name="message" id=""  placeholder="Message *" value = "{{old('message')}}" class="border w-100 p-3 mt-3 mt-lg-4"></textarea>
+                            @error('message')
+                            <p class="alert alert-danger">{{$errors->first('message')}}</p>
+                            @enderror
                             <div class="btn-grounp">
                                 <button type="submit" class="btn btn-primary mt-2 float-right">SUBMIT</button>
                             </div>

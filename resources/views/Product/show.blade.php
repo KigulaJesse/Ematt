@@ -26,7 +26,9 @@
 						<ul class="list-inline">
 							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="/category/user/{{$user->id}}">{{$user->name}}</a></li>
 							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="/category/{{$product->category->last()->category_name}}">{{$product->category->last()->category_name}}</a></li>
-							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="/category/district/{{$user->district->id}}">{{$user->district->district_name}} District</a></li>
+							@if(isset($user->district->id))
+								<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="/category/district/{{$user->district->id}}">{{$user->district->district_name}} District</a></li>
+							@endif
 						</ul>
 					</div>
 
@@ -260,35 +262,35 @@
 						<div class="map">
 							<div id="map_canvas" data-latitude="51.507351" data-longitude="-0.127758"></div>
 						</div>
-					</div>-->
+					</div>
 					<!-- Rate Widget -->
 					<div class="widget rate">
-						<!-- Heading -->
-						<h5 class="widget-header text-center">What would you rate
+						<!-- Heading--> 
+						<h5 class="widget-header text-center">Advert Space
 							<br>
-							this product</h5>
+							</h5>
 						<!-- Rate -->
-						<div class="starrr"></div>
+						<!--<div class="starrr"></div>-->
 					</div>
-					<!-- Safety tips widget -->
+					<!-- Safety tips widget-->
 					<div class="widget disclaimer">
-						<h5 class="widget-header">Safety Tips</h5>
+						<h5 class="widget-header text-center">Advert Space</h5>
 						<ul>
-							<li>Meet seller at a public place</li>
+							<!--<li>Meet seller at a public place</li>
 							<li>Check the item before you buy</li>
 							<li>Pay only after collecting the item</li>
-							<li>Pay only after collecting the item</li>
+							<li>Pay only after collecting the item</li>-->
 						</ul>
 					</div>
-					<!-- Coupon Widget -->
+					<!-- Coupon Widget 
 					<div class="widget coupon text-center">
-						<!-- Coupon description -->
+						<!-- Coupon description
 						<p>Have a great product to post ? Share it with
 							your fellow users.
 						</p>
-						<!-- Submit button -->
+						<!-- Submit button 
 						<a href="" class="btn btn-transparent-white">Submit Listing</a>
-					</div>
+					</div>-->
 
 				</div>
 			</div>

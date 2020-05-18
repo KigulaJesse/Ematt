@@ -43,15 +43,53 @@
                                     <tbody>
                                         @foreach($orders as $order)
                                             <tr>
-                                                <td>{{App\User::find($order->user_id)->name}}</td>
+                                                <td>{{App\Cart::find($order->pivot->cart_id)->user->name}}</td>
                                                 <td>{{$order->product_name}}</td>
                                                 <td>{{number_format($order->price * $order->pivot->quantity)}}</td>
-                                                <td>{{App\User::find($order->user_id)->contact}}</td> 
+                                                <td>{{App\Cart::find($order->pivot->cart_id)->user->contact}}</td> 
                                                 <td>
-                                                    <a class="edit" style="position:relative; left:10px;" data-toggle="tooltip" data-placement="top" title="Confirm delivery">
+                                                    <a href = "/admini/{{$order->pivot->product_id}}/{{$order->pivot->cart_id}}/updatecart" class="edit" style="position:relative; left:10px;" data-toggle="tooltip" data-placement="top" title="Confirm delivery">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete from orders" href="#" style="position:relative; left:20px;"  >
+                                                    <a class="delete" href="/admini/{{$order->pivot->product_id}}/{{$order->pivot->cart_id}}/delete" data-toggle="tooltip" data-placement="top" title="Delete from orders" href="#" style="position:relative; left:20px;"  >
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Ordered Table </h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>User</strong></th>
+                                            <th><strong>Product</strong></th>
+                                            <th><strong>Price</strong></th>
+                                            <th><strong>Contact</strong></th>
+                                            <th><strong>Option</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($orderedss as $ordered)
+                                            <tr>
+                                                <td>{{App\Cart::find($ordered->pivot->cart_id)->user->name}}</td>
+                                                <td>{{$ordered->product_name}}</td>
+                                                <td>{{number_format($ordered->price * $ordered->pivot->quantity)}}</td>
+                                                <td>{{App\Cart::find($ordered->pivot->cart_id)->user->contact}}</td> 
+                                                <td>
+                                                    <a class="delete" href="/admini/{{$ordered->pivot->product_id}}/{{$ordered->pivot->cart_id}}/delete" data-toggle="tooltip" data-placement="top" title="Delete from orders" href="#" style="position:relative; left:20px;"  >
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>

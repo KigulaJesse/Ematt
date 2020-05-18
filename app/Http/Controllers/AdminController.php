@@ -39,6 +39,12 @@ class AdminController extends Controller
         ]);
     }
 
+    public function updatecart($product_id, $cart_id){
+
+         DB::update('UPDATE cart_product SET delivered ="yes" WHERE cart_id = ? AND product_id = ? AND ordered = "yes"', [$cart_id,$product_id]);
+         return redirect('/admini/orders');   
+    }
+
     public function updateUser(Request $request, User $user){
         $this->validate($request,[
             'name'=> ['required', 'max:255'],
@@ -68,17 +74,30 @@ class AdminController extends Controller
 
         $carts = Cart::all();
         $orders = [];
+        $orderdss = [];
         foreach($carts as $cart){
             foreach($cart->products as $order){
                 if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == null) ){
                     $orders[] = $order;
+                }
+
+                if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == 'yes') ){
+                    $orderedss[] = $order;
                 }
             }
         }
     
         return view('administrator.orders',[
             'orders' => $orders,
+            'orderedss'=> $orderedss
         ]);
+    }
+
+    public function deletecart($product_id,$cart_id){
+        $cart = Cart::find($cart_id);
+        $cart->products()->detach($product_id);
+        return redirect('/admini/orders');
+
     }
 
 

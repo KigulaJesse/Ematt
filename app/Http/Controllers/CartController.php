@@ -42,9 +42,11 @@ class CartController extends Controller
         else {
             //an array from the cart_product table is returned
             $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]);
+            
             foreach ($full_cart as $full){
                 $products[] = Product::find($full->product_id);
             }
+            
             return view('cart.index',[
                 'products' => $products
             ]);
@@ -135,8 +137,7 @@ class CartController extends Controller
         }
 
         DB::update('UPDATE cart_product SET ordered = "yes" WHERE cart_id = ?',[$cart->id]);
-        
-        return redirect('/cart');
+        return redirect('/cart')->with('status','Order confirmed');
     }
 
     /**

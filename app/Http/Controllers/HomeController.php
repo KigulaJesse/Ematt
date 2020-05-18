@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\District;
+use App\Comment;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('home');
+        $this->middleware('auth')->except('home','contact_us');
     }
 
     /**
@@ -47,5 +48,28 @@ class HomeController extends Controller
             'categories'=>$categories,
             'districts'=>$districts,
         ]);
+    }
+
+    public function contact_us(Request $request){
+        $this->validate($request,[
+            'name'=>'required',
+            'email'=>'required',
+            'category'=>'required',
+            'message'=>'required',
+        ]);
+        
+        $comment = new Comment;
+        $comment->name = $request->input('name');
+        $comment->email = $request->input('email');
+        $comment->category = $request->input('category');
+        $comment->message = $request->input('message');
+        $comment->save();
+        
+        $value = 'Result submitted';
+        return redirect('/contact-us',[
+            'message' => $value
+        ]);
+
+        
     }
 }

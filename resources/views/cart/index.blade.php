@@ -40,62 +40,67 @@
                         </thead>
                         <tbody>
                                 @foreach(Auth::user()->carts->products as $product)
-                                    <tr>
-                                        <td class="product-thumb">
-                                            <a href="/products/{{$product->id}}"><img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></a>
-                                        </td>
-                                        <td class="product-details">
-                                            <a href="/products/{{$product->id}}"><h3 class="title">{{$product->product_name}}</h3></a>
-                                            @if($product->brand)
-                                                <span class="location"><strong>Brand:</strong>{{$product->brand}}</span>
-                                            @endif
-                                            @if($product->color)
-                                                <span class="add-id"><strong>Color:</strong>{{$product->color}}</span>
-                                            @else
-                                                <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
-                                            @endif
-                                            
-                                        </td>
-                                        <td class="product-category text-center">
-                                            <span class="categories">{{number_format($product->price)}}</span>
-                                        </td>
-                                        <td class="product-category">
-                                            <span class="categories" >
-                                                <select name = "category_{{$product->id}}" id = "inputGroupSelect_{{$product->id}}" class="w-1" onchange="subtotal(this, {{$product->id}}, {{$product->price}})">
-                                                    @for ($i = 1; $i <= $product->quantity; $i++)
-                                                        <option value="{{$i}}" @if($i == ($product->pivot->quantity)) selected @endif >{{$i}}</option>    
-                                                    @endfor
-                                                </select>            
+                                    @if($product->pivot->ordered == null)
+                                        <tr>
+                                            <td class="product-thumb">
+                                                <a href="/products/{{$product->id}}"><img width="80px" height="auto" src="images/products/{{$product->id}}/1.jpg" alt="image description"></a>
+                                            </td>
+                                            <td class="product-details">
+                                                <a href="/products/{{$product->id}}"><h3 class="title">{{$product->product_name}}</h3></a>
+                                                @if($product->brand)
+                                                    <span class="location"><strong>Brand:</strong>{{$product->brand}}</span>
+                                                @endif
+                                                @if($product->color)
+                                                    <span class="add-id"><strong>Color:</strong>{{$product->color}}</span>
+                                                @else
+                                                    <span><strong>Posted on: </strong><time>{{$product->created_at}}</time> </span>
+                                                @endif
+                                                
+                                            </td>
+                                            <td class="product-category text-center">
+                                                <span class="categories">{{number_format($product->price)}}</span>
+                                            </td>
+                                            <td class="product-category">
+                                                <span class="categories" >
+                                                    <select name = "category_{{$product->id}}" id = "inputGroupSelect_{{$product->id}}" class="w-1" onchange="subtotal(this, {{$product->id}}, {{$product->price}})">
+                                                        @for ($i = 1; $i <= $product->quantity; $i++)
+                                                            <option value="{{$i}}" @if($i == ($product->pivot->quantity)) selected @endif >{{$i}}</option>    
+                                                        @endfor
+                                                    </select>            
+                                                </span>
+                                            </td>
+                                            <td>
+                                            <span class="categories" style = "position:relative; left:12px;" name = "sub-total" id= "subtotal_{{$product->id}}">
+                                                @if($product->pivot->quantity == null)
+                                                    {{number_format($product->price)}}
+                                                @else
+                                                    {{number_format($product->price * $product->pivot->quantity)}}
+                                                @endif
                                             </span>
-                                        </td>
-                                        <td>
-                                        <span class="categories" style = "position:relative; left:12px;" name = "sub-total" id= "subtotal_{{$product->id}}">
-                                            @if($product->pivot->quantity == null)
-                                                {{number_format($product->price)}}
-                                            @else
-                                                {{number_format($product->price * $product->pivot->quantity)}}
-                                            @endif
-                                        </span>
-                                        </td>
-                                        
-                                        <td class="action" data-title="Action">
-                                            <div class="">
-                                                <ul class="list-inline justify-content-center">
-                                                    <li class="list-inline-item">
-                                                        <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete from cart" href ="/cart/{{$product->id}}/delete">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            
+                                            <td class="action" data-title="Action">
+                                                <div class="">
+                                                    <ul class="list-inline justify-content-center">
+                                                        <li class="list-inline-item">
+                                                            <a class="delete" data-toggle="tooltip" data-placement="top" title="Delete from cart" href ="/cart/{{$product->id}}/delete">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody> 
                             @else
-                                    <tr><td style = "position:relative; left:450px;" >
+                                 <tr><td style = "position:relative; left:450px;" >
                                         <i class="fa fa-trash fa-5x" style="position:relative; left:60px;"></i>
                                         <h1>Empty Cart</h1>
+                                        @if (session('status'))
+                                            <h2 style="color :red;">{{ session('status') }}</h2>
+                                        @endif
                                         <a href = "/home" style="position:relative; left:-20px;">Click Here to Continue Shopping</a>
                                     </td></tr>
                                     

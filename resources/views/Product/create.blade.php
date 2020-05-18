@@ -179,7 +179,7 @@
                                     <span class="d-block">or</span>-->
                                     <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
                                     <!--<span class="d-block">Maximum upload file size: 500 KB</span>-->
-                                    <input type="file" class="form-control-file d-none" id ="file-upload" name="file-upload" multiple>
+                                    <input type="file" class="form-control-file d-none" id ="file-upload" value = "{{old('file-upload')}}" name="file-upload" multiple>
                                 </label>
                             </div>
                             

@@ -29,8 +29,11 @@
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Help<span><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/update">Your Profile</a>
-                                        <a class="dropdown-item" href="/about-us">About-Us</a>  
+                                        @auth
+                                            <a class="dropdown-item" href="/update">Your Profile</a>
+                                        @endauth
+                                        <a class="dropdown-item" href="/about-us">About-Us</a>
+                                        <a class="dropdown-item" href="/contact-us">Contact-Us</a>
                                     </div>
                                 </li> 
 

@@ -39,6 +39,8 @@ use App\Category;
                     "categories"=>$categories
                 ]);
             });
+        //This route is for comments from users to the admins
+            Route::post('/contact-us',"HomeController@contact_us");
         //This is a route to the contact-us page to contact us
         Route::get('/Terms-and-conditions', function () {
             return view('Home.Terms-and-conditions');
@@ -54,6 +56,11 @@ use App\Category;
                     Route::get('/admini/profile','AdminController@profile');
                 //Used to show orders
                     Route::get('/admini/orders','AdminController@getorders');
+                //Used to confirm a delivery
+                    Route::get('/admini/{product_id}/{cart_id}/updatecart','AdminController@updatecart');
+                //Used to confirm a delivery
+                    Route::get('/admini/{product_id}/{cart_id}/delete','AdminController@deletecart');
+                    
                 
 
                 //Used to edit the site

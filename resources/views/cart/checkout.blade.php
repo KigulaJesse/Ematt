@@ -105,10 +105,10 @@
                     <div class="form-popup" id="myForm">
                         <form action="/carts/address" method = "post" class="form-container">
                         @csrf
-                            <h1>Add an address</h1>
-                            <input type="text" placeholder="address" name="address" required>
-                            <input type="text" placeholder="contact" name="contact" required>
-                            <button type="submit" class="btn">Add Address</button>
+                            <h1>Change address</h1>
+                            <input type="text" placeholder="address" name="address" value="{{Auth::user()->address}}" required>
+                            <input type="text" placeholder="contact" name="contact" value ="{{Auth::user()->contact}}"required>
+                            <button type="submit" class="btn">Change Address</button>
                             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                         </form>
                     </div>
@@ -172,7 +172,7 @@
                                 <li>Delivery Fee<span class="float-right">5000</span></a></li>
                                 @php($total += 5000)
                                 <li><h3 class="widget-header"><h3> Total<span class="float-right">{{number_format($total)}}</span></h3></h3></li>
-                                <li class="list-inline-item"><a href = "/carts/confirm-order/{{Auth::user()->carts->id}}}}" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white;position:relative; left:30px; ">Confirm Order</a></li>
+                                <li class="list-inline-item"><a href = "/carts/confirm-order/{{Auth::user()->carts->id}}" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3" style="color:white;position:relative; left:30px; ">Confirm Order</a></li>
                         </ul>
                     </div>
 				</div>
