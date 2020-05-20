@@ -9,6 +9,7 @@ use App\Address;
 use App\Contact;
 use Illuminate\Http\Request;
 use DB;
+use App\District;
 
 class CartController extends Controller
 {
@@ -186,6 +187,7 @@ class CartController extends Controller
         $products = [];
         $user = \Auth::user();
         $cart = $user->carts;
+        $districts = District::all()->whereNull('parent_id');
 
         $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ?', [$cart->id]);
         foreach ($full_cart as $full){
@@ -194,16 +196,17 @@ class CartController extends Controller
 
         return view('cart.checkout',[
             'products' => $products,
-            
+            'districts'=> $districts    
         ]);
     }
 
     public function address(Request $request){
         $this->validate($request,[
-            'address'=> ['required'],
+            'sublocation'=> ['required'],
             'contact'=> ['min:10' ,'max:10']
         ]);
         
+        dd($request->input('sublocation'));
         $user = \Auth::user();
         $user->address = $request->input('address');
         $user->contact = $request->input('contact');

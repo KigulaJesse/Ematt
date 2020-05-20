@@ -53,6 +53,25 @@ class DistrictController extends Controller
 
     }
 
+    public function add_location(Request $request, $id){
+        $this->validate($request,[
+            'district_name'=> ['required', 'max:30', 'unique:districts'],
+            'fee'=>'required',
+        ]);
+
+        if(preg_match("/^[0-9,]+$/", $request->input('fee'))){ 
+            $fee = str_replace(',','',$request->input('fee'));
+        }
+        $district = District::find($id);
+        $location = new District;
+        $location->parent_id =  $district->id;
+        $location->district_name = $request->input('district_name');
+        $location->delivery_fee = $fee;
+        $location->save();
+
+        return redirect('/admini/single_district/'.$id);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -92,12 +111,17 @@ class DistrictController extends Controller
         if(preg_match("/^[0-9,]+$/", $request->input('fee'))){ 
             $fee = str_replace(',','',$request->input('fee'));
         }
-       
+        
         $district->district_name = $request->input('district_name');
         $district->delivery_fee = $fee;
         $district->save();
 
-        return redirect('/admini/edit');
+        if($district->parent_id == null){
+            return redirect('/admini/edit');
+        }
+        else{
+            return redirect('/admini/single_district/'.$district->parent_id);
+        }
     }
 
     /**
@@ -111,5 +135,13 @@ class DistrictController extends Controller
         $district->delete();
 
         return redirect('/admini/edit');
+    }
+
+    public function get_sub_locations($id){
+        $output = "";    
+        $district = District::find($id);
+        $sublocations = $district->sub_locations->pluck("district_name","id");
+        
+        return json_encode($sublocations);
     }
 }

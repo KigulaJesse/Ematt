@@ -104,12 +104,42 @@
                             <form action="/carts/address" method = "post" class="form-container">
                             @csrf
                                 <h1>Add an address</h1>
-                                <input type="text" placeholder="address" name="address" required>
-                                <input type="text" value = "{{Auth::user()->contact}}" name="contact" required>
+                                <select name = "address" id = "inputGroupSelect" class="w-100" onchange = "sub(this)" required>
+                                    <option value="">District</option>   
+                                    @foreach($districts as $district)
+                                        <option value = "{{$district->id}}" @if(old('address') == $district->id) selected @endif>{{$district->district_name}} </option>  
+                                    @endforeach
+                                </select>
+                                <div style="position:relative; top:10px;">
+                                    <select name = "sublocation" id = "sublocation" class = "w-100 sublocation" style = "after{content: none}">
+                                        <option value="">Location</option>
+                                    </select> 
+                                </div>   
+                                <input type="text" style="position:relative; top:15px;"value = "{{Auth::user()->contact}}" name="contact" required>
                                 <button type="submit" class="btn">Add Address</button>
                                 <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                             </form>
                         </div>
+                        <script>  
+                            function sub(chosen){
+                                y = '/district/get_sub_locations/'+chosen.value;
+                                jQuery.ajax({
+                                    url: y,  
+                                    method:"GET",
+                                    dataType: "json",
+                                    success: function(data) {
+                                        console.log(data);
+                                        jQuery('#sublocation').empty();
+                                        jQuery('.sublocation .list').empty();
+                                        jQuery.each(data, function(key,value) {
+                                            jQuery('#sublocation').append('<option value = "'+key+'">'+value+'</option>');
+                                            jQuery('.sublocation .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                        }); 
+                                    }   
+                                });
+                            }
+                        </script>
+
                     @else 
                     <h6>{{Auth::user()->contact}} 
                     </h6>

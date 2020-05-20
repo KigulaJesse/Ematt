@@ -24,9 +24,9 @@
         <div class="row">
         
             <div class="col-lg-9 col-md-1">
-                <div class="widget dashboard-container my-adslist col-lg-20">
-                    <table class="table table-responsive product-dashboard-table" style = "overflow: visible;">
-                        @if($products)
+                <div class="widget dashboard-container my-adslist col-lg-20" @if(count($products)== 0)style = "position:relative; left:100px;"@endif>
+                    <table class="table table-responsive product-dashboard-table" style = "overflow: visible;" >
+                        @if(count($products)>0)
                         <thead>
                             <tr>
                                 <th>image</th>
@@ -95,7 +95,7 @@
                                 @endforeach
                             </tbody> 
                             @else
-                                 <tr><td style = "position:relative; left:450px;" >
+                                 <tr><td  style="position:relative; left:300px;">
                                         <i class="fa fa-trash fa-5x" style="position:relative; left:60px;"></i>
                                         <h1>Empty Cart</h1>
                                         @if (session('status'))

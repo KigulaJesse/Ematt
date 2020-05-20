@@ -22,16 +22,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->text('address')->nullable();
+            $table->unsignedBigInteger('address')->nullable();
             $table->string('payment_type')->nullable();
             $table->integer('total_rating')->nullable();
             $table->integer('no_ppl_that_rated')->nullable();
             $table->integer('average_rating')->nullable();
-            $table->unsignedBigInteger('district_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('district_id')
+            $table->foreign('address')
                   ->references('id')
                   ->on('districts');
         });

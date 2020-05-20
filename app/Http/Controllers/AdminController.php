@@ -20,9 +20,11 @@ class AdminController extends Controller
         ]);
     }
 
+
     public function profile(){
         return view('administrator.profile');
     }
+
 
     public function show($id){
         $usery = User::find($id);
@@ -31,13 +33,27 @@ class AdminController extends Controller
         ]);
     }
 
-    public function edit(){
+
+    public function edit_district(){
         $districts = District::all();
 
-        return view('administrator.edit-site',[
+        return view('administrator.districts.edit-site',[
             'districts' => $districts
         ]);
     }
+
+
+    public function single_district($id){
+
+        $district = District::find($id);
+        $locations = $district->sub_locations;
+        return view('administrator.districts.locations',[
+            'locations' => $locations,
+            'district' => $district
+        ]);
+
+    }
+
 
     public function updatecart($product_id, $cart_id){
 

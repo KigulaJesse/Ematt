@@ -64,9 +64,11 @@ use App\Category;
                 
 
                 //Used to edit the site
-                    Route::get('/admini/edit','AdminController@edit');
+                    Route::get('/admini/edit','AdminController@edit_district');
                 //Used to add a district to the database
                     Route::post('/admini/district','DistrictController@store');
+                //Used to add a location in a district to the database
+                    Route::post('/admini/district/{id}','DistrictController@add_location');
                 //Used to update a district 
                     Route::put('/admini/{district}/update','DistrictController@update');
                 //Used to delete a user from database
@@ -75,6 +77,8 @@ use App\Category;
                     
                 //Used to show a user
                     Route::get('/admini/single/{id}','AdminController@show');
+                //Used to show locations under a district
+                    Route::get('/admini/single_district/{id}','AdminController@single_district');
                 //Used to update user info by the admin
                     Route::put('/admini/{user}','AdminController@updateUser');
                 //Used to delete a user from database
@@ -114,6 +118,8 @@ use App\Category;
             Route::get('/carts/confirm-order/{cart}','CartController@order');
         //Used to confirm payment method
             Route::put('/payment','CartController@payment');
+        //Used to get sub_categories when creating a product
+            Route::get('/district/get_sub_locations/{id}','DistrictController@get_sub_locations');
 
 /*-----------------------------------------*/
 
@@ -152,6 +158,4 @@ use App\Category;
             Route::get('/category/user/{id}','CategoryController@showbyuser');
         //Used to get sub_categories when creating a product
             Route::get('/category/get_sub_categories/{id}','CategoryController@get_sub_category');
-
-
 /*------------------------------------------------*/
