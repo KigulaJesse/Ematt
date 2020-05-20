@@ -120,6 +120,8 @@ use App\Category;
             Route::put('/payment','CartController@payment');
         //Used to get sub_categories when creating a product
             Route::get('/district/get_sub_locations/{id}','DistrictController@get_sub_locations');
+        //Used to get sub_categories when creating a product
+            Route::get('/district/get_sub_locations1/{id}','DistrictController@get_sub_locations1');
 
 /*-----------------------------------------*/
 

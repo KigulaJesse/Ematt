@@ -187,30 +187,49 @@ class CartController extends Controller
         $products = [];
         $user = \Auth::user();
         $cart = $user->carts;
-        $districts = District::all()->whereNull('parent_id');
+        if($user->district_id != null){
+            $parent_district = District::find($user->district->parent_id);
+            if($parent_district != null){
+                $locations = $parent_district->sub_locations;
+            }
+            else{
+                $locations = [];
+                $parent_district = $user->district;
+            }
+        }
+        else{
+            $locations = [];
+            $parent_district = $user->district;
+        }
 
         $full_cart = DB::select('SELECT * FROM cart_product WHERE cart_id = ?', [$cart->id]);
         foreach ($full_cart as $full){
             $products[] = Product::find($full->product_id);
         }
 
+        $districts = District::all()->whereNull('parent_id');
         return view('cart.checkout',[
             'products' => $products,
-            'districts'=> $districts    
+            'districts'=> $districts,
+            'locations'=> $locations,
+            'parent_district' => $parent_district
         ]);
     }
 
     public function address(Request $request){
         $this->validate($request,[
-            'sublocation'=> ['required'],
+            'address'=> ['required'],
             'contact'=> ['min:10' ,'max:10']
         ]);
         
-        dd($request->input('sublocation'));
         $user = \Auth::user();
-        $user->address = $request->input('address');
+        if($request->input('sublocation') != null){
+            $user->district_id = $request->input('sublocation');
+        }
+        else{
+            $user->district_id = $request->input('address');
+        }
         $user->contact = $request->input('contact');
-
         $user->save();
 
         return redirect('/carts/checkout');

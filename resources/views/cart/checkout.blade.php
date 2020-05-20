@@ -82,7 +82,7 @@
                     <h3>Address Details</h3>
                     <h6>{{Auth::user()->name}}</h6>
 
-                    @if(Auth::user()->address == null)
+                    @if(Auth::user()->district_id == null)
                         <a onclick="openForm()" style="color:forestgreen;">+Add Address</a>
                         @error('address')
                             <span class="invalid-feedback" role="alert">
@@ -141,22 +141,56 @@
                         </script>
 
                     @else 
-                    <h6>{{Auth::user()->contact}} 
-                    </h6>
-                    <h6>{{Auth::user()->address}} @if(Auth::user()->district), {{Auth::user()->district->district_name}} Region @endif
-                    </h6>
-                    <a onclick="openForm()" style="color:forestgreen;">Change Address</a>
+                        <h6>{{Auth::user()->contact}} 
+                        </h6>
+                        <h6>{{Auth::user()->district->district_name}} 
+                            @if(App\District::find(Auth::user()->district->parent_id))
+                                , {{$parent_district->district_name}} Region 
+                            @endif
+                        </h6>
+                        <a onclick="openForm()" style="color:forestgreen;">Change Address</a>
 
-                    <div class="form-popup" id="myForm">
-                        <form action="/carts/address" method = "post" class="form-container">
-                        @csrf
-                            <h1>Change address</h1>
-                            <input type="text" placeholder="address" name="address" value="{{Auth::user()->address}}" required>
-                            <input type="text" placeholder="contact" name="contact" value ="{{Auth::user()->contact}}"required>
-                            <button type="submit" class="btn">Change Address</button>
-                            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-                        </form>
-                    </div>
+                        <div class="form-popup" id="myForm">
+                            <form action="/carts/address" method = "post" class="form-container">
+                            @csrf
+                                <h1>Change address</h1>
+                                <select name = "address" id = "inputGroupSelect1" class="w-100" onchange = "sub1(this)" required>   
+                                    @foreach($districts as $district)
+                                        <option value = "{{$district->id}}" @if($parent_district->id == $district->id) selected @endif>{{$district->district_name}} </option>  
+                                    @endforeach
+                                </select>
+                                <div style="position:relative; top:10px;">
+                                    <select name = "sublocation" id = "sublocation1" class = "w-100 sublocation1" style = "after{content: none}">
+                                        @foreach($locations as $location)
+                                            <option value = "{{$location->id}}" @if(Auth::user()->district_id == $location->id) selected @endif>{{$location->district_name}} </option>  
+                                        @endforeach
+                                    </select> 
+                                </div>
+                                <input type="text" style="position:relative; top:15px;" placeholder="contact" name="contact" value ="{{Auth::user()->contact}}"required>
+                                <button type="submit" class="btn">Change Address</button>
+                                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                            </form>
+                            <script>  
+                                function sub1(chosen){
+                                    y = '/district/get_sub_locations1/'+chosen.value;
+                                    $("#sublocation option:selected").attr('disabled','disabled').siblings().removeAttr('disabled');                 
+                                    jQuery.ajax({
+                                        url: y,  
+                                        method:"GET",
+                                        dataType: "json",
+                                        success: function(data) {
+                                            console.log(data);
+                                            jQuery('#sublocation1').empty();
+                                            jQuery('.sublocation1 .list').empty();
+                                            jQuery.each(data, function(key,value) {
+                                                jQuery('#sublocation1').append('<option value = "'+key+'">'+value+'</option>');
+                                                jQuery('.sublocation1 .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                            }); 
+                                        }   
+                                    });
+                                }
+                            </script>    
+                        </div>
                     @endif
 
                     <script>

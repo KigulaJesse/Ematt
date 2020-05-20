@@ -35,8 +35,7 @@ class AdminController extends Controller
 
 
     public function edit_district(){
-        $districts = District::all();
-
+        $districts = District::all()->whereNull('parent_id');
         return view('administrator.districts.edit-site',[
             'districts' => $districts
         ]);

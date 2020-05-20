@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('address')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->string('payment_type')->nullable();
             $table->integer('total_rating')->nullable();
             $table->integer('no_ppl_that_rated')->nullable();
@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('address')
+            $table->foreign('district_id')
                   ->references('id')
                   ->on('districts');
         });

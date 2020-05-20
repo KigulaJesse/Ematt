@@ -144,4 +144,12 @@ class DistrictController extends Controller
         
         return json_encode($sublocations);
     }
+
+    public function get_sub_locations1($id){
+        $output = "";    
+        $district = District::find($id);
+        $sublocations = $district->sub_locations->pluck("district_name","id");
+        
+        return json_encode($sublocations);
+    }
 }

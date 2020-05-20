@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="white-box">
-                                <h3 class="box-title">Locations in {{$district->district_name}}<a href="/admini/edit" class="btn btn-danger" style = "position:relative; left:580px;">return</a><button type = "submit" class="btn btn-success" style="position:relative; left:600px;" onclick="openpopForm()">Add location</button></h3>
+                                <h3 class="box-title">Locations in {{$district->district_name}}<a href="/admini/edit" class="btn btn-danger" style = "position:relative; left:580px;">back</a><button type = "submit" class="btn btn-success" style="position:relative; left:600px;" onclick="openpopForm()">Add location</button></h3>
                                 <div class="form-popup" id="mypopForm">
                                     <form action="/admini/district/{{$district->id}}" method = "post" class="form-container">
                                         @csrf
