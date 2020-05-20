@@ -84,13 +84,28 @@
 
                     @if(Auth::user()->address == null)
                         <a onclick="openForm()" style="color:forestgreen;">+Add Address</a>
+                        @error('address')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        
+                        @error('contact')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        
+                        @if(session('error_status'))
+                            <h6 style="color :red;">{{ session('error_status') }}</h6>
+                        @endif
 
                         <div class="form-popup" id="myForm">
                             <form action="/carts/address" method = "post" class="form-container">
                             @csrf
                                 <h1>Add an address</h1>
                                 <input type="text" placeholder="address" name="address" required>
-                                <input type="text" placeholder="contact" name="contact" required>
+                                <input type="text" value = "{{Auth::user()->contact}}" name="contact" required>
                                 <button type="submit" class="btn">Add Address</button>
                                 <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                             </form>
@@ -132,16 +147,38 @@
                 @enderror
 				<div class="block comment">
                     <span class="mb-3 d-block">Please select the preferred payment method:</span>
+                    <form method = "post" action = "/payment">
+                        @csrf
+                        @method('put')
                         <ul>
                             <li>
-                                <input type="radio" id="bank-transfer" name="adfeature">
+                                <input type="radio" 
+                                    id="bank-transfer" 
+                                    name="payment" 
+                                    value = "POD" 
+                                    @if(Auth::user()->payment_type == 'POD') checked @endif>
                                 <label for="bank-transfer" class="font-weight-bold text-dark py-1">Pay On Delivery</label>
                             </li>
                             <li>
-                                <input type="radio" id="Cheque-Payment" name="adfeature">
+                                <input 
+                                    type="radio" 
+                                    id="Cheque-Payment" 
+                                    name="payment" 
+                                    value = "mobile money" 
+                                    @if(Auth::user()->payment_type == 'mobile money') checked @endif>
                                 <label for="Cheque-Payment" class="font-weight-bold text-dark py-1">Mobile Money</label>
                             </li>
                         </ul>
+                        @error('payment')
+                            <h6 style="color :red;">*Please choose a payment option</h6>
+                        @enderror
+                        @if(session('error_payment'))
+                            <h6 style="color :red;">{{ session('error_payment') }}</h6>
+                        @endif
+                        <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
+                            {{ __('Add') }}
+                        </button>
+                    </form>
                 </div>		
 			</div>
 			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
@@ -152,20 +189,22 @@
                         <ul class="category-list">
                             @php($total = 0)
                                 @foreach(Auth::user()->carts->products as $product)
-                                    @if($product->pivot->quantity == null)
-                                        <li>{{$product->product_name}}
-                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
-                                                {{number_format($product->price)}}
-                                            </span>
-                                        </li>
-                                            @php($total += $product->price)
-                                    @else
-                                        <li>{{$product->product_name}}
-                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
-                                                {{number_format($product->price * $product->pivot->quantity )}}
-                                            </span>
-                                        </li>
-                                            @php($total += $product->price * $product->pivot->quantity)
+                                @if($product->pivot->ordered == null)
+                                        @if($product->pivot->quantity == null)
+                                            <li>{{$product->product_name}}
+                                                <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                    {{number_format($product->price)}}
+                                                </span>
+                                            </li>
+                                                @php($total += $product->price)
+                                        @else
+                                            <li>{{$product->product_name}}
+                                                <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                    {{number_format($product->price * $product->pivot->quantity )}}
+                                                </span>
+                                            </li>
+                                                @php($total += $product->price * $product->pivot->quantity)
+                                        @endif
                                     @endif
                                 @endforeach
                                 <li>Discount <span class="float-right">---</span></a></li>

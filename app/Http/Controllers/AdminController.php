@@ -41,8 +41,12 @@ class AdminController extends Controller
 
     public function updatecart($product_id, $cart_id){
 
-         DB::update('UPDATE cart_product SET delivered ="yes" WHERE cart_id = ? AND product_id = ? AND ordered = "yes"', [$cart_id,$product_id]);
-         return redirect('/admini/orders');   
+        $subtract = DB::select('SELECT * FROM cart_product WHERE cart_id=? AND product_id =? AND ordered = "yes" AND delivered is null',[$cart_id,$product_id]);
+        DB::update('UPDATE cart_product SET delivered ="yes" WHERE cart_id = ? AND product_id = ? AND ordered = "yes"', [$cart_id,$product_id]);
+        $product = Product::find($product_id);
+        $product->quantity = $product->quantity - $subtract[0]->quantity;
+        $product->save();
+        return redirect('/admini/orders');   
     }
 
     public function updateUser(Request $request, User $user){
@@ -74,7 +78,7 @@ class AdminController extends Controller
 
         $carts = Cart::all();
         $orders = [];
-        $orderdss = [];
+        $orderedss = [];
         foreach($carts as $cart){
             foreach($cart->products as $order){
                 if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == null) ){

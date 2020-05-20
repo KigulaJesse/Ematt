@@ -28,7 +28,7 @@ class ProductController extends Controller
     {
         $user = \Auth::user();
         $products = $user->products;
-        return view('Product.index',[
+        return view('Product.seller.index',[
            'products' => $products
        ]);
     }
@@ -39,14 +39,50 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {   
+
+    public function create(){
         $categories = Category::all()->whereNull('parent_id');   
-        return view('Product.create',[
+        return view('Product.seller.create',[
             'categories' => $categories
         ]);
     }
-    
+
+    public function orders(){
+
+        $user       = \Auth::user();
+        $products   = $user->products; //used to get all products of this user
+        $orders     = []; //empty array where will store all orders that are for this users products
+
+        foreach($products as $product){
+            foreach($product->carts as $order){
+                if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == null) ){
+                    $orders[] = $order;
+                }
+            }
+        }
+
+        return view('Product.seller.orders',[
+            'orders'=>$orders
+        ]);
+    }
+
+    public function ordered(){
+        $user       = \Auth::user();
+        $products   = $user->products; //used to get all products of this user
+        $ordered     = []; //empty array where will store all orders that are for this users products
+
+        foreach($products as $product){
+            foreach($product->carts as $order){
+                if(($order->pivot->ordered == "yes") and ($order->pivot->delivered == 'yes') ){
+                    $ordered[] = $order;
+                }
+            }
+        }
+
+        return view('Product.seller.ordered',[
+            'ordered'=>$ordered
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *

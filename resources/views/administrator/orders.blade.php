@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Orders Table </h3>
+                            <h3 class="box-title">Order Table </h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -64,7 +64,8 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+            
+            @if($orderedss)
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -102,7 +103,8 @@
                     </div>
                 </div>
                 <!-- /.row -->
-   
+            @endif
+                
 </div>
 <!-- /.container-fluid -->
 <footer class="footer text-center"> 2020 &copy; Ematt Admin :) </footer>

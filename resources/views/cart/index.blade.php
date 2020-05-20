@@ -101,6 +101,9 @@
                                         @if (session('status'))
                                             <h2 style="color :red;">{{ session('status') }}</h2>
                                         @endif
+                                        @if (session('status_placed_order'))
+                                            <h2 style="color :red; position:relative; left:-80px;">{{ session('status_placed_order') }}</h2>
+                                        @endif
                                         <a href = "/home" style="position:relative; left:-20px;">Click Here to Continue Shopping</a>
                                     </td></tr>
                                     
@@ -119,20 +122,22 @@
                             @php($total = 0)
                            
                                 @foreach(Auth::user()->carts->products as $product)
-                                    @if($product->pivot->quantity == null)
-                                        <li>{{$product->product_name}}
-                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
-                                                {{number_format($product->price)}}
-                                            </span>
-                                        </li>
-                                            @php($total += $product->price)
-                                    @else
-                                        <li>{{$product->product_name}}
-                                            <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
-                                                {{number_format($product->price * $product->pivot->quantity )}}
-                                            </span>
-                                        </li>
-                                            @php($total += $product->price * $product->pivot->quantity)
+                                    @if($product->pivot->ordered == null)
+                                        @if($product->pivot->quantity == null)
+                                            <li>{{$product->product_name}}
+                                                <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                    {{number_format($product->price)}}
+                                                </span>
+                                            </li>
+                                                @php($total += $product->price)
+                                        @else
+                                            <li>{{$product->product_name}}
+                                                <span class="float-right" id = 'side_sub_total_{{$product->id}}' >
+                                                    {{number_format($product->price * $product->pivot->quantity )}}
+                                                </span>
+                                            </li>
+                                                @php($total += $product->price * $product->pivot->quantity)
+                                        @endif
                                     @endif
                                 @endforeach
                                 <li>Discount <span class="float-right">---</span></a></li>

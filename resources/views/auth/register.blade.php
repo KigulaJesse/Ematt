@@ -42,6 +42,7 @@
                                 @enderror
                     
                                 <input id="password-confirm" placeholder="Confirm Password*"  type="password" class="border p-3 w-100 my-2 form-control" name="password_confirmation" required autocomplete="new-password">
+
                                 <div class="loggedin-forgot d-inline-flex my-3">
                                     <input name = 'terms' type="checkbox" id="registering" class="mt-1">
                                     <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="/Terms-and-conditions">Terms & Conditions</a></label>

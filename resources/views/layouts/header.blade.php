@@ -22,7 +22,11 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/product">Add Product</a>
-                                        <a class="dropdown-item" href="/products">View Your Products</a>  
+                                        @auth
+                                            @if(count(Auth::user()->products) > 0)
+                                            <a class="dropdown-item" href="/products">View Your Products</a>
+                                            @endif
+                                        @endauth  
                                     </div>
                                 </li>
                                 <li class="{{Request::is('about-us') || Request::is('update')  ? 'nav-item active' : ''}} nav-item dropdown dropdown-slide">

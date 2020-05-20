@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('address')->nullable();
+            $table->string('payment_type')->nullable();
             $table->integer('total_rating')->nullable();
             $table->integer('no_ppl_that_rated')->nullable();
             $table->integer('average_rating')->nullable();

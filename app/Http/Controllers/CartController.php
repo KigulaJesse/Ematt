@@ -133,11 +133,33 @@ class CartController extends Controller
         //check if the items are already in the database;
         $check = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]); 
         if(!$check){
-            return 0;
+            return redirect('/cart')->with('status_placed_order','You already placed that order');
         }
 
-        DB::update('UPDATE cart_product SET ordered = "yes" WHERE cart_id = ?',[$cart->id]);
-        return redirect('/cart')->with('status','Order confirmed');
+        if($user->address == null){
+            return redirect('/carts/checkout')->with('error_status','*Please add an address first');
+        }
+
+        if($user->payment_type == null){
+            return redirect('/carts/checkout')->with('error_payment','*Please choose a payment option first');
+        }
+        else {
+            DB::update('UPDATE cart_product SET ordered = "yes" WHERE cart_id = ?',[$cart->id]);
+            return redirect('/cart')->with('status','Order confirmed');
+        }
+    }
+
+    public function payment(Request $request){
+        
+        $this->validate($request,[
+            'payment'=> ['required']
+        ]);
+
+        $user = \Auth::user();
+        $user->payment_type = $request->input('payment');
+        $user->save();
+        
+        return redirect('/carts/checkout');
     }
 
     /**
@@ -179,7 +201,7 @@ class CartController extends Controller
     public function address(Request $request){
         $this->validate($request,[
             'address'=> ['required'],
-            'contact'=> ['required', 'min:10' ,'max:10']
+            'contact'=> ['min:10' ,'max:10']
         ]);
         
         $user = \Auth::user();

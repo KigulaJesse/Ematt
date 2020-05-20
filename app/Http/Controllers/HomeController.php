@@ -39,7 +39,7 @@ class HomeController extends Controller
 
     public function home()
     {
-        $products = Product::take(9)->latest()->get();
+        $products = Product::take(9)->where('quantity','>','0')->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         $districts = District::take(9)->latest()->get();
 

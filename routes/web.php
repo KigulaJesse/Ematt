@@ -98,10 +98,11 @@ use App\Category;
 /*-------------CART ROUTES-------------*/
 
         //
+    
             Route::get('/cart','CartController@index');
         //
             Route::get('/cart/{cart}','CartController@create');
-        // Is a route to the CartController destroy method used to delete products from cart_product
+        //Is a route to the CartController destroy method used to delete products from cart_product
             Route::get('/cart/{product}/delete','CartController@destroy');
         //
             Route::get('/carts/checkout','CartController@checkout');
@@ -111,6 +112,8 @@ use App\Category;
             Route::get('/UpdateQuantity/{id}/{qty}','CartController@quantity');
         //Used to confirm order
             Route::get('/carts/confirm-order/{cart}','CartController@order');
+        //Used to confirm payment method
+            Route::put('/payment','CartController@payment');
 
 /*-----------------------------------------*/
 
@@ -132,6 +135,10 @@ use App\Category;
             Route::put('/products/{product}','ProductController@update');     
         //Used to delete a product from database
             Route::get('/products/{product}/delete','ProductController@destroy');
+        //Used to get and show clients pending orders by a seller
+            Route::get('/orders','ProductController@orders');
+        //Used to get show items delivered to a client for a specific seller
+            Route::get('/ordered','ProductController@ordered');
 /*----------------------------------------------*/
 
 /*----------------CATEGORY ROUTES-----------------*/
