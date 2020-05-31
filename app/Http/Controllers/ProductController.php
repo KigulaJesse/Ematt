@@ -90,7 +90,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {       
         $this->validate($request,[
             'product_name'=> ['required', 'max:255'],
             'terms'=>'required',
@@ -100,7 +100,8 @@ class ProductController extends Controller
             'price'=>'required',
             'short'=>'max:30',
             
-            'file-upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'files' => 'required',
+            'files.*' =>'|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         
         if(preg_match("/^[0-9,]+$/", $request->input('price'))){ 
@@ -129,15 +130,27 @@ class ProductController extends Controller
             $subcategory->products()->attach($product->id);
         }    
     
-        if ($request->hasFile('file-upload')){
-            
-            $image                   =       $request->file('file-upload'); 
-            $img                     =       Image::make($image);
+        if ($files = $request->file('files')){
             $destinationPath         =       public_path('/images/products');
             $path                    =       $destinationPath.'/'.$product->id;
             File::makeDirectory($path);
+            $x = 1;
+
+            if(count($files) < 5)
+            $count=1;
+            for($i = 1; $i<=5;$i++){
+                foreach($files as $file){
+                    $image                   =       $file; 
+                    $img                     =       Image::make($image);
+                    $img->resize(480,480)->save($path.'/'.$x.'.jpg');
+                    $x = $x + 1;
+                    $count = $count + 1;
+                    if($count > 5){ break;}
+                }
+                if($count > 5){ break;}
+            }
             
-            $img->resize(480,480)->save($path.'/1.jpg');
+            
         }
 
         return redirect('/products');
@@ -153,9 +166,15 @@ class ProductController extends Controller
     public function show(Product $product)
     {     
         $user = $product->user;
+        $destinationPath         =       public_path('/images/products');
+        $path                    =       $destinationPath.'/'.$product->id;
+
+        $images = File::allFiles($path);
+
         return view('Product.show',[
             'product'=>$product,
-            'user' => $user
+            'user' => $user,
+            'images'=> $images
             ]);
     }
 
@@ -168,9 +187,15 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all()->whereNull('parent_id');
-        return view('Product.update',[
+        $super_category = $product->category->whereNull('parent_id')->first();
+        $chosen_sub = $product->category->whereNotNull('parent_id')->first();
+        $child_categories = $super_category->sub_category;
+        return view('Product.seller.update',[
             'product'=>$product,
-            'categories'=>$categories
+            'categories'=>$categories,
+            'super_category'=>$super_category,
+            'child_categories'=> $child_categories,
+            'chosen_sub'=>$chosen_sub
         ]);
     }
 
@@ -188,10 +213,12 @@ class ProductController extends Controller
             'quantity'=>'required',
             'condition'=>'required',
             'price'=>'required',
+            'category'=>'required',
             'short'=>'max:30',
         ]);
     
         $user = \Auth::user();
+        DB::delete('DELETE FROM category_product WHERE product_id = ?',[$product->id]);
         
         $product->product_name = $request->input('product_name');
         $product->price = $request->input('price');
@@ -204,6 +231,15 @@ class ProductController extends Controller
             
         //This persists the product in the database
         $product->save();
+
+        //Updates the category of the product
+        $category = Category::find($request->input('category'));
+        $category->products()->attach($product->id);
+
+        if($request->input('subcategory')){
+            $subcategory = Category::find($request->input('subcategory'));
+            $subcategory->products()->attach($product->id);
+        } 
 
         return redirect('/products');
         

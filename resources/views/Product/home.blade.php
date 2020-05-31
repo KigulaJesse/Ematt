@@ -48,18 +48,44 @@
 							@endforeach
 						</ul>
 					</div>
-				<!--	<div class="widget price-range w-100">
+					<div class="widget price-range w-100">
 						<h4 class="widget-header">Price Range</h4>
 						<div class="block">
-											<input class="range-track w-100" type="text" data-slider-min="1000" data-slider-max="500000" data-slider-step="500"
-											data-slider-value="[1000,500000]">
-									<div class="d-flex justify-content-between mt-2">
-											<span class="value">Ush1000 - Ush500000</span>
-									</div>
+							<input 	class="range-track w-100" 
+									type="text" 
+									id = "price_span"
+									data-slider-min="1000" 
+									data-slider-max="5000000" 
+									data-slider-step="500"
+									data-slider-value="[1000,500000]">
+							<div class="d-flex justify-content-between mt-2">
+								<span class="value" id="price_range"></span>
+							</div>
 						</div>
 					</div>
+					<script>
+						var amountmonday = $('#price_span');
+						var slidermonday = $('#price_range');
+						slidermonday.slider({
+						range: true,
+						min: 1000,
+						max: 5000000,
+						values: [1000, 5000000],
+						create: function() {
+							var max = $(this).slider('values', 1);
+							var min = $(this).slider('values', 0);
+							amountmonday.val(max - min);
+						},
+						slide: function Total(event, ui) {
+							amountmonday.val(ui.values[1] - ui.values[0]);
+						}
 
-					<div class="widget product-shorting">
+						});
+						
+					</script>
+						
+
+				<!--	<div class="widget product-shorting">
 						<h4 class="widget-header">By Condition</h4>
 						<div class="form-check">
 							<label class="form-check-label">

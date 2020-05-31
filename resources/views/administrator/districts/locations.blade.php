@@ -91,7 +91,7 @@
                                     <form action="/admini/district/{{$district->id}}" method = "post" class="form-container">
                                         @csrf
                                         <h1>Add Location</h1>
-                                        <input type="text"  placeholder="District name" name="district_name" required>
+                                        <input type="text"  placeholder="Location name" name="district_name" required>
                                         <input type="text" placeholder="10,000" name="fee" required>
                                         <button type="submit" class="btn">Add location</button>
                                         <button type="button" class="btn cancel" onclick="closepopForm()">Close</button>

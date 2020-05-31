@@ -51,7 +51,7 @@ class CategoryController extends Controller
         $user = User::find($id);
         $products = $user->products;
 
-        $districts = District::take(9)->latest()->get();
+        $districts = District::whereNull('parent_id')->take(5)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,
@@ -63,15 +63,30 @@ class CategoryController extends Controller
 
     public function showbydistrict($id){
         $district = District::find($id);
-        $users = $district->users;
+        $locations = $district->sub_locations;
+        $users1 = [];
         $products = [];
-        //dd($users[0]->products);
-        foreach($users as $user){
+
+        if(count($district->users) != 0){
+            foreach($users as $user){
+                $users1[] = $user;
+            }
+        }
+
+        foreach($locations as $location){
+            $users = $location->users;
+            foreach($users as $user){
+                $users1[] = $user;
+            }
+        }
+
+        foreach($users1 as $user){
             foreach($user->products as $product){
                 $products[]=$product;
             }
         }
-        $districts = District::take(9)->latest()->get();
+
+        $districts = District::whereNull('parent_id')->take(5)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,
@@ -88,7 +103,7 @@ class CategoryController extends Controller
             if($category != null ){
                 $products = $category->products;
             }
-        $districts = District::take(9)->latest()->get();
+        $districts = District::whereNull('parent_id')->take(5)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,
@@ -123,7 +138,7 @@ class CategoryController extends Controller
             }    
         }
         
-        $districts = District::take(9)->latest()->get();
+        $districts = District::whereNull('parent_id')->take(5)->latest()->get();
         $categories = Category::all()->whereNull('parent_id');
         return view('Product.home',[
             'products' => $products,

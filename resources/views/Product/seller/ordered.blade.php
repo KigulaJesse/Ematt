@@ -24,7 +24,7 @@
                 @include('layouts.product.sidebar')
             </div>
             <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-                <div class="widget dashboard-container my-adslist">
+                <div class="widget dashboard-container my-adslist" @if(!$ordered)style="position: relative; left: 50px; top:100px;"@endif>
                     @if($ordered)
                         <table class="table table-responsive">
                             <thead>
@@ -49,7 +49,7 @@
                             </tbody>
                         </table>
                     @else 
-                        <h1 style="position: relative; left: 200px; top:100px;">No ordered products to show</h1>
+                        <h1 style="">No ordered products to show</h1>
                     @endif
                 </div>
             </div>

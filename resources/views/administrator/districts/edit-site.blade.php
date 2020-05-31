@@ -109,8 +109,8 @@
                                         </thead>
                                         <tbody>
                                             @foreach($districts->whereNull('parent_id') as $district)
-                                                <tr onclick = "document.location = '/admini/single_district/{{$district->id}}'">
-                                                    <td>{{$district->district_name}}</td>
+                                                <tr>
+                                                    <td onclick = "document.location = '/admini/single_district/{{$district->id}}'">{{$district->district_name}}</td>
                                                     <td><div style="position:relative; left:40px">@if(count($district->users)>0) {{count($district->users)}} @else 0 @endif</div></td>
                                                     <td><div style="position:relative; left:17px;">{{number_format($district->delivery_fee)}}</div></td>
                                                     

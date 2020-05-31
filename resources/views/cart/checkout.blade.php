@@ -182,10 +182,18 @@
                                             console.log(data);
                                             jQuery('#sublocation1').empty();
                                             jQuery('.sublocation1 .list').empty();
-                                            jQuery.each(data, function(key,value) {
-                                                jQuery('#sublocation1').append('<option value = "'+key+'">'+value+'</option>');
-                                                jQuery('.sublocation1 .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
-                                            }); 
+                                            jQuery('.sublocation1 .current').empty();
+                                            jQuery('.sublocation1 .current').append('<span class = "current">choose location</span>');
+                                            if (!$.trim(data)){   
+                                                jQuery('#sublocation1').append('<option value = "">No locations to choose from</option>');
+                                                jQuery('.sublocation1 .list').append('<li data-value = "" class = "option">No locations to choose from</li>');  
+                                            }
+                                            else{
+                                                jQuery.each(data, function(key,value) {
+                                                    jQuery('#sublocation1').append('<option value = "'+key+'">'+value+'</option>');
+                                                    jQuery('.sublocation1 .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                                });
+                                            } 
                                         }   
                                     });
                                 }

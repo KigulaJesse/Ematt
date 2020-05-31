@@ -32,16 +32,19 @@
 						</ul>
 					</div>
 
-					<!-- PICTURE AND PICTURES AT THE BOTTOM SLIDING 
-					<div class="product-slider">
-						<!-- a foreach loop might help -->
-						<div class="product-slider-item my-4" data-image="/images/products/{{$product->id}}">
-							<img class="img-fluid w-50" style = "position:relative; left:160px" src="/images/products/{{$product->id}}/1.jpg" alt="product-img">
-						</div>
-					<!--</div>-->
+					<!-- PICTURE AND PICTURES AT THE BOTTOM SLIDING-->
+					<div class="product-slider" style = "">
+						@php($x = 1)
+						@foreach($images as $image)
+							<div class="product-slider-item my-4" width = "50" height = "50" data-image="/images/products/{{$product->id}}/{{$x}}.jpg">	
+								<img class="d-block img-fluid " style = "position:relative; left:160px;" src="/images/products/{{$product->id}}/{{$x}}.jpg" alt="product-img">
+							</div>
+							@php($x = $x + 1)
+						@endforeach
+					</div>
 
 					<!-- PRODUCT DESCRIPTION,SPECIFICATIONS, AND REVIEW -->
-					<div class="content mt-5 pt-5" style = "position: relative; top:-80px;">
+					<div class="content mt-5 pt-5">
 						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"

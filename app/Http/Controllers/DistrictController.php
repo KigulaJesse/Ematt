@@ -104,7 +104,7 @@ class DistrictController extends Controller
     public function update(Request $request, District $district)
     {
         $this->validate($request,[
-            'district_name'=> ['required', 'max:30', 'unique:districts'],
+            'district_name'=> ['required', 'max:30'],
             'fee'=>'required',
         ]);
 

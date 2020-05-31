@@ -58,20 +58,23 @@
                         </div>
                         
                         <div class="col-lg-6">
-                            <!---------Category under which product falls 
+                            <!---------Category under which product falls--> 
                             <h6 class="font-weight-bold pt-4 pb-1">Select Category:</h6>
                             <select name = "category" id = "inputGroupSelect" class="w-100" onchange = "sub(this)" >
                                     <option value="">Category</option>   
                                     @foreach($categories as $category)
-                                        <option value = "{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->category_name}} </option>  
+                                        <option value = "{{$category->id}}" @if($super_category->id == $category->id) selected @endif>{{$category->category_name}} </option>  
                                     @endforeach
                             </select>
 
                             <h6 class="font-weight-bold pt-4 pb-1">Select Sub Category:</h6>
                             <select name = "subcategory" id = "subcategory" class = "w-100 subcategory" style = "after{content: none}">
                                 <option value="">Sub category</option>
+                                @foreach($child_categories as $child_category)
+                                    <option value="{{$child_category->id}}" @if($chosen_sub->id == $child_category->id) selected @endif>{{$child_category->category_name}}</option>
+                                @endforeach
                             </select>
-
+                
                             <script>  
                                 function sub(chosen){
                                     y = '/category/get_sub_categories/'+chosen.value;
@@ -83,19 +86,27 @@
                                             console.log(data);
                                             jQuery('#subcategory').empty();
                                             jQuery('.subcategory .list').empty();
-                                            jQuery.each(data, function(key,value) {
-                                                jQuery('#subcategory').append('<option value = "'+key+'">'+value+'</option>');
-                                                jQuery('.subcategory .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
-                                            }); 
+                                            jQuery('.subcategory .current').empty();
+                                            jQuery('.subcategory .current').append('<span class = "current" style="color:grey;">Choose a sub category</span>');
+                                            if (!$.trim(data)){   
+                                                jQuery('#subcategory').append('<option value = "">No sub categories to choose from</option>');
+                                                jQuery('.subcategory .list').append('<li data-value = "" class = "option">No sub categories to choose from</li>');  
+                                            }
+                                            else{   
+                                                jQuery.each(data, function(key,value) {
+                                                    jQuery('#subcategory').append('<option value = "'+key+'">'+value+'</option>');
+                                                    jQuery('.subcategory .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                                });
+                                            }
                                         }   
                                     });
                                 }
                             </script>
     
-                            
                             @error('category')
                             <p class="alert alert-danger">{{$errors->first('category')}}</p>
                             @enderror
+                            
                             <!------------end of category ------------------->
                             
                             <!------------price and quantity ----------------------------->
@@ -150,18 +161,7 @@
 
 
                             <!--------------------uploading image/images of product -------------->
-                            <div class="choose-file text-center my-4 py-4 rounded">
-                                <label for="file-upload">
-                                    <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
-                                    <span class="d-block">or</span>
-                                    <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
-                                    <span class="d-block">Maximum upload file size: 500 KB</span>
-                                    <input type="file" class="form-control-file d-none" id="file-upload" name="file-upload">
-                                </label>
-                            </div>
-                            @error('file-upload')
-                                <p class="alert alert-danger">{{$errors->first('file-upload')}}</p>
-                            @enderror
+                            
                             <!-------------------end of image upload------------------------>
                         </div>
                     </div>

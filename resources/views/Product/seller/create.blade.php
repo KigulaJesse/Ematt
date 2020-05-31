@@ -20,7 +20,7 @@
 
 <section class="ad-post bg-gray py-5">
     <div class="container">
-        <form method="POST" action="{{url('/products')}}"enctype="multipart/form-data">
+        <form method="POST" action="{{url('/products')}}" enctype="multipart/form-data">
             @csrf
             <!-- Post Your ad start -->
             <fieldset class="border border-gary p-4 mb-5">
@@ -31,9 +31,6 @@
                         <div class="col-lg-6">
                             <!--product name -->
                             <h6 class="font-weight-bold pt-4 pb-1">Name Of Product:</h6>
-                            @if($errors->any())
-                                {{ implode('', $errors->all('<div>:message</div>')) }}
-                            @endif
                             <input type="text" 
                                    name='product_name' 
                                    class="border w-100 p-2 bg-white text-capitalize" 
@@ -82,10 +79,18 @@
                                         <option value = "{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->category_name}} </option>  
                                     @endforeach
                             </select>
+                            @error('category')
+                            <p class="alert alert-danger">{{$errors->first('category')}}</p>
+                            @enderror   
 
                             <h6 class="font-weight-bold pt-4 pb-1">Select Sub Category:</h6>
                             <select name = "subcategory" id = "subcategory" class = "w-100 subcategory" style = "after{content: none}">
-                                <option value="">Sub category</option>
+                                <option value="" style="color:grey;">Choose a sub category</option>
+                                @if(old('category'))
+                                    @foreach(App\Category::find(old('category'))->sub_category as $sub_category)
+                                            <option value = "{{$sub_category->id}}" @if( old('subcategory')== $sub_category->id) selected @endif>{{$sub_category->category_name}} </option>  
+                                    @endforeach
+                                @endif
                             </select>
 
                             <script>  
@@ -99,19 +104,23 @@
                                             console.log(data);
                                             jQuery('#subcategory').empty();
                                             jQuery('.subcategory .list').empty();
-                                            jQuery.each(data, function(key,value) {
-                                                jQuery('#subcategory').append('<option value = "'+key+'">'+value+'</option>');
-                                                jQuery('.subcategory .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
-                                            }); 
+                                            jQuery('.subcategory .current').empty();
+                                            jQuery('.subcategory .current').append('<span class = "current" style = "color:grey;" >Choose a sub category</span>');
+                                            if (!$.trim(data)){   
+                                                jQuery('#subcategory').append('<option value = "" style = "color:grey;">No sub categories to choose from</option>');
+                                                jQuery('.subcategory .list').append('<li data-value = "" class = "option" style="color:grey;">No sub categories to choose from</li>');  
+                                            }
+                                            else{   
+                                                jQuery.each(data, function(key,value) {
+                                                    jQuery('#subcategory').append('<option value = "'+key+'">'+value+'</option>');
+                                                    jQuery('.subcategory .list').append('<li data-value = "'+key+'" class = "option">'+value+'</li>');
+                                                });
+                                            } 
                                         }   
                                     });
                                 }
                             </script>
     
-                            
-                            @error('category')
-                            <p class="alert alert-danger">{{$errors->first('category')}}</p>
-                            @enderror
                             <!------------end of category ------------------->
                             
                             <!------------price and quantity ----------------------------->
@@ -120,7 +129,7 @@
                                 <div class="row px-3">
                                     <div class="col-lg-4 mr-lg-4 rounded bg-white my-2 ">
                                         <input type="text" name="price" class="border-0 py-2 w-100 price" placeholder="Price"
-                                            id="price" value = "{{number_format(old('price'))}}">
+                                            id="price" value = "{{old('price')}}">
                                     </div>
 
                                     <div class="col-lg-4 mrx-4  bg-white my-2 ">
@@ -165,44 +174,67 @@
                                 <p class="alert alert-danger">{{$errors->first('condition')}}</p>
                             @enderror
                             <!---------------end of condition of the product----------------->
-                            
-                            <style>
-                                .show {
-                                    display:none;
-                                }
-                            </style>
 
                             <!--------------------uploading image/images of product -------------->
+
                             <div class="choose-file text-center my-4 py-4 rounded">
-                                <label for="file-upload">
-                                    <!--<span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
-                                    <span class="d-block">or</span>-->
-                                    <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
-                                    <!--<span class="d-block">Maximum upload file size: 500 KB</span>-->
-                                    <input type="file" class="form-control-file d-none" id ="file-upload" value = "{{old('file-upload')}}" name="file-upload" multiple>
-                                </label>
+                                <div id="filediv">
+                                    <input name="files[]" type="file" id="file"/><br/>
+                                </div>
+                                <input type="button" id="add_more" class="upload" value="Add More Files"/>
                             </div>
-                            
-                            <script type="text/javascript">
-                                
-                                $(function() {
-                                    $(":file").change(function() {
+                            <script>
+                                var abc = 0;      
+                                // Declaring and defining global increment variable.
+                                $(document).ready(function() {
+                                //  To add new input file field dynamically, on click of "Add More Files" button below function will be executed.
+                                    $('#add_more').click(function() {
+                                        $(this).before($("<div/>", {
+                                            id: 'filediv'
+                                        }).fadeIn('slow').append($("<input/>", {
+                                            name: 'files[]',
+                                            type: 'file',
+                                            id: 'file'
+                                        }), $("<br/>")));
+                                    });
+                                // Following function will executes on change event of file input to select different file.
+                                    $('body').on('change', '#file', function() {
                                         if (this.files && this.files[0]) {
-                                            for (var i = 0; i < this.files.length; i++) {
-                                                var reader = new FileReader();
-                                                reader.onload = imageIsLoaded;
-                                                reader.readAsDataURL(this.files[i]);
-                                            }
+                                            abc += 1; // Incrementing global variable by 1.
+                                            var z = abc - 1;
+                                            var x = $(this).parent().find('#previewimg' + z).remove();
+                                            $(this).before("<div id='abcd" + abc + "' class='abcd'><img width = '100' height = '100' id='previewimg" + abc + "' src=''/></div>");
+                                            var reader = new FileReader();
+                                            reader.onload = imageIsLoaded;
+                                            reader.readAsDataURL(this.files[0]);
+                                            $(this).hide();
+                                            $("#abcd" + abc).append($("<img/>", {
+                                                id: 'img',
+                                                src: '/images/x.png',
+                                                style: 'position:relative; left:-15px; top:-40px',
+                                                alt: 'delete'
+                                            }).click(function() {
+                                                    $(this).parent().parent().remove();
+                                                })
+                                            );
+                                        }
+                                    });
+                                // To Preview Image
+                                    function imageIsLoaded(e) {
+                                        $('#previewimg' + abc).attr('src', e.target.result);
+                                    };
+                                    $('#upload').click(function(e) {
+                                        var name = $(":file").val();
+                                        if (!name) {
+                                            alert("First Image Must Be Selected");
+                                            e.preventDefault();
                                         }
                                     });
                                 });
-                                function imageIsLoaded(e) {
-                                    $('#fileyes').append('<img src=' + e.target.result + '>');
-                                };
                             </script>
                             
-                            @error('file-upload')
-                                <p class="alert alert-danger">{{$errors->first('file-upload')}}</p>
+                            @error('files')
+                                <p class="alert alert-danger">{{$errors->first('files')}}</p>
                             @enderror
                             <!-------------------end of image upload------------------------>
                         </div>
@@ -286,7 +318,7 @@
 
             <!-- submit button -->
             <div class="checkbox d-inline-flex">
-                <input type="checkbox" id="terms-&-condition" name = 'terms' class="mt-1">
+                <input type="checkbox" id="terms-&-condition" name = 'terms' @if(old('terms')) checked @endif class="mt-1">
                 <label for="terms-&-condition" class="ml-2">By click you must agree with our
                     <span> <a class="text-success" href="terms-condition.html">Terms & Condition and Posting Rules.</a></span>
                 </label>
