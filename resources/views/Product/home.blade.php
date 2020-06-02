@@ -171,36 +171,43 @@
 				=============================-->
 				<div class="product-grid-list">
 					<div class="row mt-30">
+						<style>
+						.hide {
+							display: none;
+						  }
+							  
+						.myDIV:hover .hide {
+							display: block;
+							color: red;
+						}
+						</style>
 						@if(count($products) > 0)
 							@foreach($products as $product)
-							<div class="col-sm-12 col-lg-4 col-md-6" style = "overflow:auto;">
-							
+							<div class="col-sm-12 col-lg-4 col-md-6 myDIV" style = "overflow:auto;">
 								<div class="product-item bg-light">
 									<div class="card">
 										<div class="thumb-content">
-											<!-- <div class="price">$200</div> -->
+											<div class="price hide">Ush {{number_format($product->price)}}</div> 
+											<div class="price" style ="position: relative; left:220px; background-color:blue;"><a href="/cart/{{$product->id}}">+</a></div>
 											<a href="/products/{{$product->id}}">
 												<img class="card-img-top img-fluid" src="/images/products/{{$product->id}}/1.jpg" alt="Card image cap">
 											</a>
 										</div>
 										<div class="card-body">
-											<h4 class="card-title"><a href="/products/{{$product->id}}">{{$product->product_name}}</a></h4>
+											<a href="/products/{{$product->id}}">{{$product->product_name}}</a>
 											<ul class="list-inline product-meta">
 												<li class="list-inline-item">
 														<a href="/category/{{$product->category->last()->category_name}}"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
-													</form>
-
 												</li>
-												
-												<!--<li class="list-inline-item">
-													<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-												</li>-->
 											</ul>
-											@if ($product->long_description)
-												<p class="card-text">{{$product->long_description}}</p>
+											@if ($product->short_description)
+												<p class="card-text">{{$product->short_description}}</p>
 											@else
 												<p class="card-text">This {{$product->product_name}} is for sale</p>
 											@endif
+											<!--<div class="product-ratings">
+												<b>Ushs {{number_format($product->price)}}</b>
+											</div>-->
 											<div class="product-ratings">
 												<ul class="list-inline">
 													<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
@@ -210,10 +217,12 @@
 													<li class="list-inline-item"><i class="fa fa-star"></i></li>
 												</ul>
 											</div>
+											
 										</div>
 									</div>
 								</div>
 							</div>
+							
 							@endforeach
 						@else
 						<h1 style='position:relative; left:200px'>No Products to show</h1>

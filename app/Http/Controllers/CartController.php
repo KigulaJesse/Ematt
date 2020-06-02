@@ -71,7 +71,7 @@ class CartController extends Controller
             $this->store($product,$cart);
         }
 
-        return redirect('/products/'.$id);
+        return redirect()->back();
     }
 
     /**

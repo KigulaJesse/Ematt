@@ -98,7 +98,7 @@ class ProductController extends Controller
             'quantity'=>'required',
             'condition'=>'required',
             'price'=>'required',
-            'short'=>'max:30',
+            'short'=>'max:90',
             
             'files' => 'required',
             'files.*' =>'|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -214,7 +214,7 @@ class ProductController extends Controller
             'condition'=>'required',
             'price'=>'required',
             'category'=>'required',
-            'short'=>'max:30',
+            'short'=>'max:90',
         ]);
     
         $user = \Auth::user();
