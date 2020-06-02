@@ -190,12 +190,17 @@ class ProductController extends Controller
         $super_category = $product->category->whereNull('parent_id')->first();
         $chosen_sub = $product->category->whereNotNull('parent_id')->first();
         $child_categories = $super_category->sub_category;
+        $destinationPath         =       public_path('/images/products');
+        $path                    =       $destinationPath.'/'.$product->id;
+        $images = File::allFiles($path);
+
         return view('Product.seller.update',[
             'product'=>$product,
             'categories'=>$categories,
             'super_category'=>$super_category,
             'child_categories'=> $child_categories,
-            'chosen_sub'=>$chosen_sub
+            'chosen_sub'=>$chosen_sub,
+            'images'=> $images
         ]);
     }
 
