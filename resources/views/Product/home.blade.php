@@ -5,7 +5,7 @@
 @include('layouts.product.header')
 
 <section class="section" > 
-	<div class="container" style = "position:relative; top:-70px;">
+	<div class="container" style = "position:relative; top:-10ex;">
 		<div class="row">
 			<div class="col-md-12" >
 				<div class="search-result bg-gray">
@@ -17,7 +17,15 @@
 						Top Results on page
 						@endif 
 					</h2>
-					<p>123 Results on 12 December, 2017</p>
+					<p>Results in <script>
+						var monthNames = ["January", "February", "March", "April", "May", "June",
+											"July", "August", "September", "October", "November", "December"
+											];
+					var d = new Date;
+					var CurrentYear = d.getFullYear();
+					var currentMonth = d.getMonth();
+					document.write(monthNames[d.getMonth()]);
+					document.write(" of " + CurrentYear); </script></p>
 				</div>
 			</div>
 		</div>
@@ -48,7 +56,7 @@
 							@endforeach
 						</ul>
 					</div>
-					<div class="widget price-range w-100">
+					<!--<div class="widget price-range w-100">
 						<h4 class="widget-header">Price Range</h4>
 						<div class="block">
 							<input 	class="range-track w-100" 
@@ -82,7 +90,7 @@
 
 						});
 						
-					</script>
+					</script>-->
 						
 
 				<!--	<div class="widget product-shorting">
@@ -150,7 +158,7 @@
 							</form>
 						</div>
 						
-						<div class="col-md-6">
+						<!--<div class="col-md-6">
 							<div class="view">
 								<strong>Views</strong>
 								<ul class="list-inline view-switcher">
@@ -159,10 +167,10 @@
 									</li>
 									<!--<li class="list-inline-item">
 										<a href="#"><i class="fa fa-reorder"></i></a>
-									</li>-->
+									</li>
 								</ul>
 							</div>
-						</div>
+						</div>-->
 					</div>
 				</div>
 
@@ -183,15 +191,15 @@
 						</style>
 						@if(count($products) > 0)
 							@foreach($products as $product)
-							<div class="col-sm-12 col-lg-4 col-md-6 myDIV" style = "overflow:auto;">
+							<div class="col-sm-12 col-lg-4 col-md-6 myDIV" style = "overflow:auto; ">
 								<div class="product-item bg-light">
 									<div class="card">
 										<div class="thumb-content">
-											<div class="price hide">Ush {{number_format($product->price)}}</div> 
-											<div class="price" style ="position: relative; left:220px; background-color:blue;"><a href="/cart/{{$product->id}}">+</a></div>
-											<a href="/products/{{$product->id}}">
+											<a href="/products/{{$product->id}}" style ="position: relative; ">
 												<img class="card-img-top img-fluid" src="/images/products/{{$product->id}}/1.jpg" alt="Card image cap">
 											</a>
+											<!--<div class="price hide" style="background-color:dodgerblue;">Ush {{number_format($product->price)}}</div> 
+											<div class="price" style ="position: relative; top:-30em; left:85%; background-color:blue;"><a href="/cart/{{$product->id}}">+</a></div>-->
 										</div>
 										<div class="card-body">
 											<a href="/products/{{$product->id}}">{{$product->product_name}}</a>
@@ -200,12 +208,12 @@
 														<a href="/category/{{$product->category->last()->category_name}}"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
 												</li>
 											</ul>
-											@if ($product->short_description)
+											<!--@if ($product->short_description)
 												<p class="card-text">{{$product->short_description}}</p>
-											@else
+											@else-->
 												<p class="card-text">This {{$product->product_name}} is for sale</p>
-											@endif
-											<!--<div class="product-ratings">
+											<!--@endif-->
+											<!--<div>
 												<b>Ushs {{number_format($product->price)}}</b>
 											</div>-->
 											<div class="product-ratings">

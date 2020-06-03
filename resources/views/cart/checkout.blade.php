@@ -218,7 +218,7 @@
                     <p class="alert alert-danger">{{$errors->first('contact')}}</p>
                 @enderror
 				<div class="block comment">
-                    <span class="mb-3 d-block">Please select the preferred payment method:</span>
+                    <span class="mb-3 d-block"><h3>Please select the preferred payment method:</h3></span>
                     <form method = "post" action = "/payment">
                         @csrf
                         @method('put')
@@ -229,7 +229,7 @@
                                     name="payment" 
                                     value = "POD" 
                                     @if(Auth::user()->payment_type == 'POD') checked @endif>
-                                <label for="bank-transfer" class="font-weight-bold text-dark py-1">Pay On Delivery</label>
+                                <label for="bank-transfer" ><h6>Pay On Delivery</h6></label>
                             </li>
                             <li>
                                 <input 
@@ -238,7 +238,7 @@
                                     name="payment" 
                                     value = "mobile money" 
                                     @if(Auth::user()->payment_type == 'mobile money') checked @endif>
-                                <label for="Cheque-Payment" class="font-weight-bold text-dark py-1">Mobile Money</label>
+                                <label for="Cheque-Payment"><h6>Mobile Money</h6></label>
                             </li>
                         </ul>
                         @error('payment')

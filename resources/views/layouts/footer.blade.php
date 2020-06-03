@@ -31,7 +31,7 @@
         <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0">
           <div class="block">
             <h4>Admin Pages</h4>
-            <ul>
+            <!--<ul>
               <li><a href="category.html">Category</a></li>
               <li><a href="single.html">Single Page</a></li>
               <li><a href="store.html">Store Single</a></li>
@@ -41,7 +41,7 @@
   
   
   
-            </ul>
+            </ul>-->
           </div>
         </div>
         <!-- Promotion -->
@@ -76,16 +76,16 @@
             <p>Copyright © <script>
                 var CurrentYear = new Date().getFullYear()
                 document.write(CurrentYear)
-              </script>. All Rights Reserved, theme by <a class="text-primary" href="https://themefisher.com" target="_blank">themefisher.com</a></p>
+              </script>. All Rights Reserved, Developed by<a class="text-primary" href="#" target="_blank"> Jarla</a></p>
           </div>
         </div>
         <div class="col-sm-6 col-12">
           <!-- Social Icons -->
           <ul class="social-media-icons text-right">
-            <li><a class="fa fa-facebook" href="https://www.facebook.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-twitter" href="https://www.twitter.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-pinterest-p" href="https://www.pinterest.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-vimeo" href=""></a></li>
+            <li><a class="fa fa-facebook" href="#" target="_blank"></a></li>
+            <li><a class="fa fa-twitter" href="#" target="_blank"></a></li>
+            <li><a class="fa fa-pinterest-p" href="#" target="_blank"></a></li>
+            <li><a class="fa fa-vimeo" href="#"></a></li>
           </ul>
         </div>
       </div>

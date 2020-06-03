@@ -34,7 +34,7 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         @auth
-                                            <a class="dropdown-item" href="/update">Your Profile</a>
+                                            <!--<a class="dropdown-item" href="/update">Your Profile</a>-->
                                         @endauth
                                         <a class="dropdown-item" href="/about-us">About-Us</a>
                                         <a class="dropdown-item" href="/contact-us">Contact-Us</a>
@@ -103,9 +103,13 @@
 							
                         </ul>
                         @guest
+
 						<ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
 								<a class="nav-link login-button" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+								<a class="nav-link login-button" href="{{ route('register') }}">Register</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-white add-button" href="#"><i class="fa fa-shopping-cart"></i></a>

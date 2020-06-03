@@ -46,13 +46,13 @@
                                 <div class="loggedin-forgot d-inline-flex my-3">
                                     <input name = 'terms' type="checkbox" id="registering" class="mt-1">
                                     <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="/Terms-and-conditions">Terms & Conditions</a></label>
+                                
                                 </div>
                                 @error('terms')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                    
+                                        <div style="color: red;"><strong>*{{$errors->first('terms')}}</strong></div>
+                                    @enderror
+                                
+
 
                                 <button type="submit" class="d-block py-3 px-4 bg-primary text-white border-0 rounded font-weight-bold">
                                     {{ __('Register') }}

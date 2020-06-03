@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\District;
-use App\Comment;
+use App\Comments;
 
 class HomeController extends Controller
 {
@@ -58,7 +58,7 @@ class HomeController extends Controller
             'message'=>'required',
         ]);
         
-        $comment = new Comment;
+        $comment = new Comments;
         $comment->name = $request->input('name');
         $comment->email = $request->input('email');
         $comment->category = $request->input('category');
@@ -66,9 +66,8 @@ class HomeController extends Controller
         $comment->save();
         
         $value = 'Result submitted';
-        return redirect('/contact-us',[
-            'message' => $value
-        ]);
+
+        return redirect('/contact-us')->with('status','Message submitted');
 
         
     }

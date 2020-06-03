@@ -19,8 +19,8 @@
         <ul>
             <li><h2 style ="position:relative; text-align:center;">{{ Auth::user()->name }} Manage products</h2></li>
             <li class="{{Request::is('products') ? 'nav-item active' : ''}}"><a href="/products"><i class="fa fa-user"></i> My products</a></li>
-            <li class="{{Request::is('orders') ? 'nav-item active' : ''}}"  ><a href="/orders"><i class="fa fa-bookmark-o"></i>Pending orders<span>5</span></a></li>
-            <li class="{{Request::is('ordered') ? 'nav-item active' : ''}}"><a href="/ordered"><i class="fa fa-file-archive-o"></i>Ordered history<span>12</span></a></li>
+            <li class="{{Request::is('orders') ? 'nav-item active' : ''}}"  ><a href="/orders"><i class="fa fa-bookmark-o"></i>Pending orders<span>0</span></a></li>
+            <li class="{{Request::is('ordered') ? 'nav-item active' : ''}}"><a href="/ordered"><i class="fa fa-file-archive-o"></i>Ordered history<span>0</span></a></li>
            <!-- <li><a href="dashboard-pending-ads.html"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a></li>-->
             <li><a href="{{route('logout')}}" href="{{ route('logout') }}"onclick="event.preventDefault();
             document.getElementById('logout-form-product-index').submit();"><i class="fa fa-cog"></i>{{ __('Logout') }}</a></li>

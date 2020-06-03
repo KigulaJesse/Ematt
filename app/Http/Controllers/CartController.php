@@ -130,14 +130,15 @@ class CartController extends Controller
     public function order(Cart $cart){
 
         $user = \Auth::user();
-
+        
         //check if the items are already in the database;
-        $check = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]); 
+        $check = DB::select('SELECT * FROM cart_product WHERE cart_id = ? AND ordered is null', [$cart->id]);
+         
         if(!$check){
             return redirect('/cart')->with('status_placed_order','You already placed that order');
         }
 
-        if($user->address == null){
+        if($user->district_id == null){
             return redirect('/carts/checkout')->with('error_status','*Please add an address first');
         }
 

@@ -84,7 +84,7 @@ class AdminController extends Controller
     public function updateUser(Request $request, User $user){
         $this->validate($request,[
             'name' => ['required', 'string', 'max:255'],
-            'contact'=>['required','string','max:10','min:10'],
+            'contact'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
             'email' => ['required', 'string', 'email', 'max:255'],
         ]);
         $user->name = $request->input('name');

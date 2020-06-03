@@ -28,7 +28,7 @@
             <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
                 
                 <!-- Recently Favorited -->
-                <div class="widget dashboard-container my-adslist" @if(count($products)==0) style = "position:relative; top:50px; " @endif>
+                <div class="widget dashboard-container my-adslist" @if(count($products)==0) style = "" @endif>
                     @if(count($products)>0)
                         <table class="table table-responsive product-dashboard-table">
                               <thead>

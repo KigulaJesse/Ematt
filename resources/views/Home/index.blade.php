@@ -88,38 +88,45 @@
 			<div class="col-lg-12">
 				<div class="trending-ads-slide">
 					@foreach($products as $product)
-						<div class="col-sm-12 col-lg-4">
-							<div class="product-item bg-light">
-								<div class="card">
-									<div class="thumb-content">
-										<a href="/products/{{$product->id}}">
-											<img class="card-img-top img-fluid" src="images/products/{{$product->id}}/1.jpg" alt="Card image cap">
-										</a>
-									</div>
-									<div class="card-body">
-										<h4 class="card-title"><a href="">{{$product->product_name}}</a></h4>
-										<ul class="list-inline product-meta">
-											<li class="list-inline-item">
-												<a href="/products/{{$product->id}}"><i class="fa fa-folder-open-o"></i>Electronics</a>
-											</li>
-											<li class="list-inline-item">
-												<a href="#"><i class="fa fa-calendar"></i>26th December</a>
-											</li>
+					<div class="col-sm-12 col-lg-4 col-md-6 myDIV" style = "overflow:auto; ">
+						<div class="product-item bg-light">
+							<div class="card">
+								<div class="thumb-content">
+									<a href="/products/{{$product->id}}" style ="position: relative; ">
+										<img class="card-img-top img-fluid" src="/images/products/{{$product->id}}/1.jpg" alt="Card image cap">
+									</a>
+									<!--<div class="price hide" style="background-color:dodgerblue;">Ush {{number_format($product->price)}}</div> 
+									<div class="price" style ="position: relative; top:-30em; left:85%; background-color:blue;"><a href="/cart/{{$product->id}}">+</a></div>-->
+								</div>
+								<div class="card-body">
+									<a href="/products/{{$product->id}}">{{$product->product_name}}</a>
+									<ul class="list-inline product-meta">
+										<li class="list-inline-item">
+												<a href="/category/{{$product->category->last()->category_name}}"><i class="fa fa-folder-open-o"></i>{{$product->category->last()->category_name}}</a>
+										</li>
+									</ul>
+									<!--@if ($product->short_description)
+										<p class="card-text">{{$product->short_description}}</p>
+									@else-->
+										<p class="card-text">This {{$product->product_name}} is for sale</p>
+									<!--@endif-->
+									<!--<div>
+										<b>Ushs {{number_format($product->price)}}</b>
+									</div>-->
+									<div class="product-ratings">
+										<ul class="list-inline">
+											<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item"><i class="fa fa-star"></i></li>
 										</ul>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-										<div class="product-ratings">
-											<ul class="list-inline">
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
 									</div>
+									
 								</div>
 							</div>
 						</div>
+					</div>
 					@endforeach
 				</div>
 			</div>

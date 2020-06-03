@@ -125,15 +125,14 @@
                             
                             <!------------price and quantity ----------------------------->
                             <div class="price">
-                                <h6 class="font-weight-bold pt-3 pb-1">Item Price (Ush):  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Quantity:</h6>
                                 <div class="row px-3">
                                     <div class="col-lg-4 mr-lg-4 rounded bg-white my-2 ">
                                         <input type="text" name="price" class="border-0 py-2 w-100 price" placeholder="Price"
                                             id="price" value = "{{old('price')}}">
                                     </div>
-
+                                
                                     <div class="col-lg-4 mrx-4  bg-white my-2 ">
-                                        <input type="text" name = 'quantity' class="border-0 py-2 w-100 price" id="Negotiable" value = "{{old('quantity')}}">
+                                        <input type="text" name = 'quantity' placeholder="Quantity" class="border-0 py-2 w-100 price" id="Negotiable" value = "{{old('quantity')}}">
                                     </div>
                                 </div>
                                 @error('price')
@@ -148,14 +147,13 @@
 
                             <!-------------------- Brand and color ------------------------>
                             <div class="price">
-                                <h6 class="font-weight-bold pt-3 pb-1">Brand:  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Color:</h6>
                                 <div class="row px-3">
                                     <div class="col-lg-4 mr-lg-4 rounded bg-white my-2 ">
                                         <input type="text" name="brand" class="border-0 py-2 w-100 price" placeholder="Brand" id="price" value = "{{old('brand')}}">
                                     </div>
-
+                            
                                     <div class="col-lg-4 mrx-4  bg-white my-2 ">
-                                        <input type="text" name = 'color' class="border-0 py-2 w-100 price" id="Negotiable" value = "{{old('color')}}"> 
+                                        <input type="text" name = 'color' Placeholder = "Colour" class="border-0 py-2 w-100 price" id="Negotiable" value = "{{old('color')}}"> 
                                     </div>
                                 </div>
                             </div>

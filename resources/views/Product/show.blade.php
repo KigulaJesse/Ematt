@@ -24,7 +24,7 @@
 					<!--META-INFORMATION AT THE TOP OF IMAGES -->
 					<div class="product-meta">
 						<ul class="list-inline">
-							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="/category/user/{{$user->id}}">{{$user->name}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-user-o"></i> Seller <a href="/category/user/{{$user->id}}">{{$user->name}}</a></li>
 							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="/category/{{$product->category->last()->category_name}}">{{$product->category->last()->category_name}}</a></li>
 							@if(isset($user->district->id))
 								<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="/category/district/{{$user->district->id}}">{{$user->district->district_name}} District</a></li>
