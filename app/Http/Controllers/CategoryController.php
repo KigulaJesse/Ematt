@@ -38,7 +38,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-              
+        $this->validate($request,[
+            'category_name'=> ['required', 'unique:categories'],
+        ]);
+
+        $category = new Category;
+        $category->category_name = $request->input('category_name');
+        $category->save();
+
+        return redirect('/admini/categories');
+
+    }
+
+    public function add_sub_category(Request $request, $id){
+        $this->validate($request,[
+            'category_name'=> ['required', 'max:30', 'unique:categories'],
+        ]);
+
+        $category = Category::find($id);
+        $sub_category = new Category;
+        $sub_category->parent_id =  $category->id;
+        $sub_category->category_name = $request->input('category_name');
+        $sub_category->save();
+
+        return redirect('/admini_get/catso/'.$id);
     }
 
     /**
@@ -169,7 +192,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->validate($request,[
+            'category_name'=> ['required', 'max:30', 'unique:categories'],
+        ]);
+        
+        $category->category_name = $request->input('category_name');
+        $category->save();
+
+        if($category->parent_id == null){
+            return redirect('/admini/categories');
+        }
+        else{
+            return redirect('/admini_get/catso/'.$category->parent_id);
+        }
     }
 
     /**
@@ -180,8 +215,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect('/admini/categories');
     }
+
+    public function destroySub_category(Category $sub_category, $id){
+        $sub_category->delete();
+
+        $category = Category::find($id);
+        return redirect('/admini_get/catso/'.$category->id);
+    }
+
     public function get_sub_category($id){
         $output = "";    
         $category = Category::find($id);

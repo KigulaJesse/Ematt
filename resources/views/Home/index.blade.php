@@ -281,7 +281,7 @@
 					grow your business</h2>
 					<ul class="list-inline mt-30">
 						<li class="list-inline-item"><a class="btn btn-main" href="/product">Add Listing</a></li>
-						<li class="list-inline-item"><a class="btn btn-secondary" href="/home">Browser Products</a></li>
+						<li class="list-inline-item"><a class="btn btn-secondary" href="/home">Browse Products</a></li>
 					</ul>
 				</div>
 			</div>

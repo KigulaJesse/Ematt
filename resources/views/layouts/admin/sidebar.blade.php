@@ -14,7 +14,11 @@
                     </li>
                     <li>
                         <a href="/admini/edit" class="waves-effect"><i class="fa fa-edit fa-fw"
-                                aria-hidden="true"></i>Edit</a>
+                                aria-hidden="true"></i>Locations</a>
+                    </li>
+                    <li>
+                        <a href="/admini/categories" class="waves-effect"><i class="fa fa-list-alt fa-fw"
+                                aria-hidden="true"></i>Categories</a>
                     </li>
                     <li>
                         <a href="/admini/orders" class="waves-effect"><i class="fa fa-shopping-basket fa-fw"

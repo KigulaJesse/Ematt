@@ -71,8 +71,10 @@ use App\Category;
                     Route::post('/admini/district/{id}','DistrictController@add_location');
                 //Used to update a district 
                     Route::put('/admini/{district}/update','DistrictController@update');
-                //Used to delete a user from database
+                //Used to delete a district from database
                     Route::get('/admini/{district}/deleteDistrict','DistrictController@destroy');
+                //Used to delete a district from database
+                    Route::get('/admini/{location}/deleteLocation/{id}','DistrictController@destroyLocation');
 
                     
                 //Used to show a user
@@ -87,6 +89,24 @@ use App\Category;
 
                 //Used to delete a product from database
                     Route::get('/admini/{product}/delete','AdminController@destroy');
+
+                
+                //Used to get the categories page
+                    Route::get('/admini/categories','AdminController@get_categories');
+                //Used to add a district to the database
+                    Route::post('/admini/category','CategoryController@store');
+                //Used to update a district 
+                    Route::put('/admini_category/{category}/update','CategoryController@update');
+                //Used to show locations under a district
+                    Route::get('/admini_get/catso/{id}','AdminController@single_category');
+                //Used to add a sub_category in a category to the database
+                    Route::post('/admini/category/{id}','CategoryController@add_sub_category');
+                //Used to delete a district from database
+                    Route::get('/admini/{category}/deleteCategory','CategoryController@destroy');
+                //Used to delete a subcategory from database
+                    Route::get('/admini/{sub_category}/deleteSub_category/{id}','CategoryController@destroySub_category');
+
+                
         }); 
 /*-------------------------------------------*/
 

@@ -25,7 +25,6 @@ class AdminController extends Controller
         return view('administrator.profile');
     }
 
-
     public function show($id){
         $usery = User::find($id);
         return view('administrator.single',[
@@ -41,6 +40,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function get_categories(){
+        $categories = Category::all()->whereNull('parent_id');
+        return view('administrator.categories.index',[
+            'categories' => $categories,
+        ]);
+    }
+
 
     public function single_district($id){
 
@@ -49,6 +55,17 @@ class AdminController extends Controller
         return view('administrator.districts.locations',[
             'locations' => $locations,
             'district' => $district
+        ]);
+
+    }
+
+    public function single_category($id){
+
+        $category = Category::find($id);
+        $sub_categories = $category->sub_category;
+        return view('administrator.categories.sub_categories',[
+            'sub_categories' => $sub_categories,
+            'category' => $category
         ]);
 
     }
@@ -66,9 +83,9 @@ class AdminController extends Controller
 
     public function updateUser(Request $request, User $user){
         $this->validate($request,[
-            'name'=> ['required', 'max:255'],
-            'email'=>'required',
-            'contact'=>'required'
+            'name' => ['required', 'string', 'max:255'],
+            'contact'=>['required','string','max:10','min:10'],
+            'email' => ['required', 'string', 'email', 'max:255'],
         ]);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
