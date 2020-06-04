@@ -202,7 +202,7 @@
                         @endforeach
                         <form action = "#" method = "POST" >
                             @csrf
-                            <!--------------------uploading image/images of product -------------->
+                            <!--------------------uploading image/images of product ------------
                             <div class="choose-file text-center my-4 py-4 rounded">
                                 <div id="filediv">
                                     <input name="files[]" type="file" id="file"/><br/>

@@ -220,7 +220,7 @@ class CartController extends Controller
     public function address(Request $request){
         $this->validate($request,[
             'address'=> ['required'],
-            'contact'=> ['min:10' ,'max:10']
+            'contact'=> 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
         ]);
         
         $user = \Auth::user();

@@ -9,14 +9,16 @@ use App\District;
 use App\Cart;
 use App\User;
 use DB;
-
+use App\Comments;
 
 class AdminController extends Controller
 {
     public function dashboard(){
         $users = User::all()->whereNull('user_type');
+        $comments =Comments::take(3)->latest()->get();
         return view('administrator.dashboard',[
-            'users' => $users
+            'users' => $users,
+            'comments'=>$comments
         ]);
     }
 

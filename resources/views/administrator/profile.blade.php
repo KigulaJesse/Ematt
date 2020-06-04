@@ -30,8 +30,8 @@
                                     <div class="user-content">
                                         <a href="javascript:void(0)"><img src="../plugins/images/users/genu.jpg"
                                                 class="thumb-lg img-circle" alt="img"></a>
-                                        <h4 class="text-white">User Name</h4>
-                                        <h5 class="text-white">info@myadmin.com</h5>
+                                        <h4 class="text-white">{{Auth::user()->name}}</h4>
+                                        <h5 class="text-white">{{Auth::user()->email}}</h5>
                                     </div>
                                 </div>
                             </div>
