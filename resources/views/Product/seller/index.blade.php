@@ -19,6 +19,9 @@
 
 <section class="dashboard section">
     <div class="container">
+        @if (session('order_status'))
+            <p class="alert alert-danger">{{session('order_status')}}</p>
+        @endif
         <!-- Row Start -->
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
@@ -87,7 +90,10 @@
                               </tbody>
                         </table>
                     @else
-                        <h1 style = "position:relative; left: 90px;"> Deleted all products</h1>
+                        <h1 style = "margin: 0 auto;
+                        // For grow & shrink as per screen size change values as per your requirements
+                        width: 80%;
+                        height: 50%;"> Deleted all products</h1>
                     @endif
                 </div>
 

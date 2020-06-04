@@ -9,9 +9,11 @@
     .form-popup {
       display: none;
       position: absolute;
-      top: 20px;
-      left: 300px;
-      
+      top: 50%; 
+            left: 50%; 
+            margin-top: -150px; 
+            margin-left: -150px; 
+        
       border: 3px solid #f1f1f1;
       z-index: 9;
     }

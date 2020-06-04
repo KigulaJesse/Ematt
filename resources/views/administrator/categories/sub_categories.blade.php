@@ -9,9 +9,11 @@
     .form-popup {
       display: none;
       position: absolute;
-      top: 20px;
-      left: 300px;
-      
+      top: 50%; 
+            left: 50%; 
+            margin-top: -150px; 
+            margin-left: -150px; 
+        
       border: 3px solid #f1f1f1;
       z-index: 9;
     }
@@ -86,7 +88,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="white-box">
-                                <h3 class="box-title">{{$category->category_name}}<a href="/admini/categories" class="btn btn-danger" style = "position:absolute; left:800px;">back</a><button type = "submit" class="btn btn-success" style="position:absolute; left:900px;" onclick="openpopForm()">Add sub_category</button></h3>
+                                <h3 class="box-title">{{$category->category_name}}<button type = "submit" class="btn btn-success w-10 h-10" style="float:right;" onclick="openpopForm()">Add sub_category</button><a href="/admini/categories" class="btn btn-danger w-25 h-25" style = "float:right;position:relative; right:10px; ">back</a></h3>
                                 <div class="form-popup" id="mypopForm">
                                     <form action="/admini/category/{{$category->id}}" method = "post" class="form-container">
                                         @csrf
@@ -111,7 +113,7 @@
                                                 @foreach($sub_categories as $sub_category)
                                                     <tr>
                                                         <td>{{$sub_category->id}}</td>
-                                                        <td><div style="position:relative; left:40px">{{$sub_category->category_name}}</div></td>
+                                                        <td><div >{{$sub_category->category_name}}</div></td>
                                                         <td><div style="position:relative; left:17px;">0</div></td>
                                                         
                                                         <td>

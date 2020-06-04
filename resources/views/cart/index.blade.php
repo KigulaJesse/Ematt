@@ -64,8 +64,14 @@
                                                 <span class="categories" >
                                                     <select name = "category_{{$product->id}}" id = "inputGroupSelect_{{$product->id}}" class="w-1" onchange="subtotal(this, {{$product->id}}, {{$product->price}})">
                                                         @for ($i = 1; $i <= $product->quantity; $i++)
-                                                            <option value="{{$i}}" @if($i == ($product->pivot->quantity)) selected @endif >{{$i}}</option>    
+                                                            <option value="{{$i}}" @if($i == ($product->pivot->quantity)) selected @endif >{{$i}}</option>  
+                                                            @if($i == 5)
+                                                                @break
+                                                            @endif  
                                                         @endfor
+                                                            @if($product->quantity > 5)
+                                                                <option value="{{$product->quantity}}" @if($product->quantity == ($product->pivot->quantity)) selected @endif >{{$product->quantity}}</option>
+                                                            @endif
                                                     </select>            
                                                 </span>
                                             </td>
@@ -105,8 +111,7 @@
                                             <h2 style="color :red; position:relative; left:-80px;">{{ session('status_placed_order') }}</h2>
                                         @endif
                                         <a href = "/home" style="position:relative; left:-20px;">Click Here to Continue Shopping</a>
-                                    </td></tr>
-                                    
+                                    </td></tr>  
                             @endif
                     </table>
                 </div>

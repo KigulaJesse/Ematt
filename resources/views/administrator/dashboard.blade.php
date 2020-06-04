@@ -84,24 +84,24 @@
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
                             <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
-                                <select class="form-control pull-right row b-none">
+                                <!--<select class="form-control pull-right row b-none">
                                     <option>March 2017</option>
                                     <option>April 2017</option>
                                     <option>May 2017</option>
                                     <option>June 2017</option>
                                     <option>July 2017</option>
-                                </select>
+                                </select>-->
                             </div>
-                            <h3 class="box-title">Recent sales</h3>
+                            <h3 class="box-title">All Clients</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>id</th>
                                             <th>NAME</th>
-                                            <th>STATUS</th>
-                                            <th>DATE</th>
-                                            <th></th>
+                                            <th>CONTACT</th>
+                                            <th>LOCATION</th>
+                                            <th>Transactions</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,9 +109,13 @@
                                         <tr onclick = "document.location = '/admini/single/{{$user->id}}'">
                                             <td>{{$user->id}}</td>
                                             <td class="txt-oflo">{{$user->name}}</td>
-                                            <td>SALE</td>
-                                            <td class="txt-oflo">April 18, 2017</td>
-                                            <td><span class="text-success">$24</span></td>
+                                            <td>{{$user->contact}}</td>
+                                            @if($user->district)
+                                                <td class="txt-oflo">{{$user->district->district_name}}</td>
+                                            @else
+                                                <td class="txt-oflo">unknown</td>
+                                            @endif
+                                            <td><span class="text-success" style ="position: relative; left:10px;" >0</span></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

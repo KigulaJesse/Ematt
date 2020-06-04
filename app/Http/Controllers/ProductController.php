@@ -92,7 +92,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {       
         $this->validate($request,[
-            'product_name'=> ['required', 'max:255'],
+            'product_name'=> ['required', 'max:20'],
             'terms'=>'required',
             'category'=>'required',
             'quantity'=>'required',
@@ -135,20 +135,17 @@ class ProductController extends Controller
             $path                    =       $destinationPath.'/'.$product->id;
             File::makeDirectory($path);
             $x = 1;
-
-            if(count($files) < 5)
             $count=1;
-            for($i = 1; $i<=5;$i++){
-                foreach($files as $file){
-                    $image                   =       $file; 
-                    $img                     =       Image::make($image);
-                    $img->resize(480,480)->save($path.'/'.$x.'.jpg');
-                    $x = $x + 1;
-                    $count = $count + 1;
-                    if($count > 5){ break;}
-                }
+            foreach($files as $file){
+                $image                   =       $file; 
+                $img                     =       Image::make($image);
+                $img->resize(480,480)->save($path.'/'.$x.'.jpg');
+                $x = $x + 1;
+                $count = $count + 1;
                 if($count > 5){ break;}
             }
+            
+            
             
             
         }
@@ -214,7 +211,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->validate($request,[
-            'product_name'=> ['required', 'max:255'],
+            'product_name'=> ['required', 'max:20'],
             'quantity'=>'required',
             'condition'=>'required',
             'price'=>'required',
@@ -262,12 +259,18 @@ class ProductController extends Controller
             abort(404);
         }
 
-        $destinationPath         =       public_path('/images/products');
-        $path                    =       $destinationPath.'/'.$product->id;
+        $check = DB::select("SELECT * FROM cart_product WHERE product_id = ? AND ordered = 'yes'",[$product->id]);
+        if($check){
+            return redirect()->back()->with('order_status','Someone ordered item, cannot delete');
+        }
+        else{
+            $destinationPath         =       public_path('/images/products');
+            $path                    =       $destinationPath.'/'.$product->id;
         
-        $rm =$this->deleteDirectory($path);
-
-        $product->delete();
+            $rm =$this->deleteDirectory($path);
+        
+            $product->delete()->with('order_status','Deleted a product');
+        }
 
         return redirect('/products');
     }

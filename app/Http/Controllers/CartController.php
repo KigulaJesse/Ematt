@@ -62,16 +62,24 @@ class CartController extends Controller
         $cart = $user->carts;
 
         if ($cart){
-            $this->store($product,$cart);
+            $num = $this->store($product,$cart);
+            if($num == 1){
+                $status = "This product has been added to cart";
+            }
+            else{
+                $status = "This product is already in cart";
+            }
+        
         }
         else {
             $cart = new Cart;
             $cart->user_id = $user->id;
             $cart->save();
             $this->store($product,$cart);
+            $status = "This product has been added to cart";
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('cart add',$status);
     }
 
     /**
@@ -89,7 +97,7 @@ class CartController extends Controller
         }
 
         $cart->products()->attach($product->id,['quantity'=>1]);
-        return 0;
+        return 1;
     }
 
     /**
@@ -161,7 +169,7 @@ class CartController extends Controller
         $user->payment_type = $request->input('payment');
         $user->save();
         
-        return redirect('/carts/checkout');
+        return redirect('/carts/checkout')->with('payment','Payment option changed');
     }
 
     /**
@@ -226,14 +234,16 @@ class CartController extends Controller
         $user = \Auth::user();
         if($request->input('sublocation') != null){
             $user->district_id = $request->input('sublocation');
+            $status = 'Address added';
         }
         else{
             $user->district_id = $request->input('address');
+            $status = 'Address changed';
         }
         $user->contact = $request->input('contact');
         $user->save();
 
-        return redirect('/carts/checkout');
+        return redirect('/carts/checkout')->with('address_status',$status);
         
     }
     

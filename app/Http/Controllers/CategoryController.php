@@ -85,39 +85,45 @@ class CategoryController extends Controller
     }
 
     public function showbydistrict($id){
+
         $district = District::find($id);
-        $locations = $district->sub_locations;
-        $users1 = [];
-        $products = [];
+        if($district->parent_id == null){
+            $locations = $district->sub_locations;
+            $users1 = [];
+            $products = [];
 
-        if(count($district->users) != 0){
-            foreach($users as $user){
-                $users1[] = $user;
+            if(count($district->users) != 0){
+                foreach($users as $user){
+                    $users1[] = $user;
+                }
             }
-        }
 
-        foreach($locations as $location){
-            $users = $location->users;
-            foreach($users as $user){
-                $users1[] = $user;
+            foreach($locations as $location){
+                $users = $location->users;
+                foreach($users as $user){
+                    $users1[] = $user;
+                }
             }
-        }
 
-        foreach($users1 as $user){
-            foreach($user->products as $product){
-                $products[]=$product;
+            foreach($users1 as $user){
+                foreach($user->products as $product){
+                    $products[]=$product;
+                }
             }
-        }
 
-        $districts = District::whereNull('parent_id')->take(5)->latest()->get();
-        $categories = Category::all()->whereNull('parent_id');
-        return view('Product.home',[
-            'products' => $products,
-            'categories' => $categories,
-            'searched' => $district->district_name,
-            'districts'=> $districts
-        ]);
-        
+            $districts = District::whereNull('parent_id')->take(5)->latest()->get();
+            $categories = Category::all()->whereNull('parent_id');
+            return view('Product.home',[
+                'products' => $products,
+                'categories' => $categories,
+                'searched' => $district->district_name,
+                'districts'=> $districts
+            ]);
+        }
+        else{
+            return redirect()->back();
+        }
+            
     }
 
     public function showcategory($name){

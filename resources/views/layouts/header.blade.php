@@ -1,13 +1,31 @@
 
 <section>
+    <style>
+    #container {
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+      #navi,
+      #infoi {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #infoi {
+        z-index: 10;
+      }
+    </style>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-expand-lg navbar-light navigation">
 					<a class="navbar-brand" href="/">
 						<img src="/images/logo.png" style="postion:relative;" width="200" alt="">
-					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -125,7 +143,7 @@
                                 </form>
 							</li>
 							<li class="nav-item">
-                                <a class="nav-link text-white add-button" href="/cart"><i class="fa fa-shopping-cart"></i></a>
+                                <a class="nav-link text-white add-button" href="/cart" title="cart"><i class="fa fa-shopping-cart"></i></a>
                             </li>
                         </ul>
                         @endguest

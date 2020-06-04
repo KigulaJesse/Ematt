@@ -7,11 +7,13 @@
     
     /* The popup form - hidden by default */
     .form-popup {
-      display: none;
-      position: absolute;
-      top: 20px;
-      left: 300px;
-      
+        display: none;
+        position: absolute;
+        top: 50%; 
+            left: 50%; 
+            margin-top: -150px; 
+            margin-left: -150px; 
+        
       border: 3px solid #f1f1f1;
       z-index: 9;
     }
@@ -86,7 +88,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="white-box">
-                                <h3 class="box-title">Categories Table <button type = "submit" class="btn btn-success" style="position:relative; left:700px;" onclick="openpopForm()">Add category</button></h3>
+                                <h3 class="box-title">Categories Table <button type = "submit" class="btn btn-success" style="float:right;" onclick="openpopForm()">Add category</button></h3>
                                 <div class="form-popup" id="mypopForm">
                                     <form action="/admini/category" method = "POST" class="form-container">
                                         @csrf
@@ -110,19 +112,19 @@
                                             @foreach($categories->whereNull('parent_id') as $category)
                                                 <tr>
                                                     <td onclick = "document.location = '/admini_get/catso/{{$category->id}}'">{{$category->id}}</td>
-                                                    <td onclick = "document.location = '/admini_get/catso/{{$category->id}}'"><div style="position:relative; left:40px"></div>{{$category->category_name}}</td>
+                                                    <td onclick = "document.location = '/admini_get/catso/{{$category->id}}'">{{$category->category_name}}</td>
                                                     <td><div style="position:relative; left:17px;"></div></td>
                                                     
                                                     <td>
-                                                        <a class="edit" style="position:relative; left:10px;" data-toggle="tooltip" data-placement="top" title="Edit" onclick="openForm()">
+                                                        <a class="edit" style="float:left;" data-toggle="tooltip" value = "{{$category->id}}"data-placement="top" title="Edit" onclick="openForm(this, {{$category->id}})">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         <div class="form-popup" id="myForm">
                                                             <form action="/admini_category/{{$category->id}}/update" method = "post" class="form-container">
                                                                 @csrf
                                                                 @method('put')
-                                                                <h1>Edit {{$category->category_name}}</h1>
-                                                                <input type="text" value="{{$category->category_name}}" name="category_name" required>
+                                                                <h1 id = "one">Edit {{$category->category_name}}</h1>
+                                                                <input type="text" id ="two" value="{{$category->category_name}}" name="category_name" required>
                                                                 <button type="submit" class="btn">Edit category</button>
                                                                 <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                                                             </form>
@@ -134,6 +136,24 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <script>
+                                                function openForm(ya,category) {
+                                                    var d = document.getElementById("myForm");
+                                                    d.style.display = "block";
+                                                }
+                            
+                                                function closeForm() {
+                                                document.getElementById("myForm").style.display = "none";
+                                                }
+                                                function openpopForm() {
+                                                document.getElementById("mypopForm").style.display = "block";
+                                                }
+                            
+                                                function closepopForm() {
+                                                document.getElementById("mypopForm").style.display = "none";
+                                                }
+                                            </script>
+                                            
                                             
                                         </tbody>
                                     </table>
@@ -152,22 +172,6 @@
                        *{{ $message }}
                     </span>
                 @enderror
-                <script>
-                    function openForm() {
-                    document.getElementById("myForm").style.display = "block";
-                    }
-
-                    function closeForm() {
-                    document.getElementById("myForm").style.display = "none";
-                    }
-                    function openpopForm() {
-                    document.getElementById("mypopForm").style.display = "block";
-                    }
-
-                    function closepopForm() {
-                    document.getElementById("mypopForm").style.display = "none";
-                    }
-                </script>
                     <!-- /.row -->
                        
                     </div>
